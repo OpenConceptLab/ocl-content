@@ -1,0 +1,413 @@
+# LOINC to OCL Transformation Rules - Version 1 (Enhanced)
+# This file defines the business logic for transforming LOINC data into OCL objects
+# Updated based on "LOINC Model Revamp within OCL July 2025" requirements
+
+version: v1
+target_loinc_version: '2.80'
+created_date: '2025-07-30'
+description: 'Enhanced transformation rules for LOINC 2.80 to OCL conversion with realistic validation'
+
+# Status Field Mappings (From LOINC Model Requirements)
+# Maps LOINC STATUS values to OCL retired field
+# Decision: Only "DEPRECATED" maps to retired=true
+status_mappings:
+  retired_false:
+    - 'ACTIVE'
+    - 'TRIAL' 
+    - 'DISCOURAGED'
+  retired_true:
+    - 'DEPRECATED'
+
+# Container Concepts for Orphaned Items
+# These containers will hold parts/concepts that don't have clear hierarchical parents
+container_concepts:
+  - id: 'LOINC_COMPONENT'
+    name: 'LOINC Component'
+    description: 'Component parts without clear hierarchy'
+    concept_class: 'Misc'
+    
+  - id: 'LOINC_PROPERTY'
+    name: 'LOINC Property'
+    description: 'Property parts without clear hierarchy'
+    concept_class: 'Misc'
+    
+  - id: 'LOINC_TIME'
+    name: 'LOINC Time'
+    description: 'Time aspects without clear hierarchy' 
+    concept_class: 'Misc'
+    
+  - id: 'LOINC_SYSTEM'
+    name: 'LOINC System'
+    description: 'System parts without clear hierarchy'
+    concept_class: 'Misc'
+    
+  - id: 'LOINC_SCALE'
+    name: 'LOINC Scale'
+    description: 'Scale types without clear hierarchy'
+    concept_class: 'Misc'
+    
+  - id: 'LOINC_METHOD'
+    name: 'LOINC Method'
+    description: 'Method parts without clear hierarchy'
+    concept_class: 'Misc'
+    
+  - id: 'OTHER'
+    name: 'Other'
+    description: 'Uncategorized parts and concepts'
+    concept_class: 'Misc'
+
+# LOINC Term Mappings (From LOINC Model Requirements)
+# Defines how LOINC.csv fields map to OCL concept fields
+# Decision: Use LONG_COMMON_NAME as primary display name
+loinc_term_mappings:
+  # Core OCL fields
+  id: 'LOINC_NUM'                    # OCL concept ID
+  display_name: 'LONG_COMMON_NAME'   # Primary display name (always filled)
+  concept_class: 'CLASS'             # LOINC class
+  retired: 'STATUS'                  # Use status_mappings for boolean conversion
+  
+  # Names array (multiple name variants)
+  names:
+    primary_name: 'LONG_COMMON_NAME'       # Always present, fully specified
+    short_name: 'SHORTNAME'                # Optional, shorter version
+    display_name: 'DISPLAY_NAME'           # Optional, from some LOINC files
+    consumer_name: 'CONSUMER_NAME'         # Consumer-friendly name (future)
+  
+  # OCL extras (additional LOINC-specific data)
+  extras:
+    class: 'CLASS'                         # Laboratory, Survey, Clinical, etc.
+    component: 'COMPONENT'                 # What is measured/observed
+    property: 'PROPERTY'                   # How it's measured (mass, volume, etc.)
+    time_aspect: 'TIME_ASPCT'              # Point in time vs. period
+    system: 'SYSTEM'                       # Specimen/system type
+    scale_type: 'SCALE_TYP'                # Scale of measurement
+    method_type: 'METHOD_TYP'              # Method of measurement
+    common_test_rank: 'COMMON_TEST_RANK'   # Usage frequency ranking
+    common_order_rank: 'COMMON_ORDER_RANK' # Order frequency ranking
+    common_si_test_rank: 'COMMON_SI_TEST_RANK' # SI unit ranking
+    definition_description: 'DefinitionDescription'  # Extended definition
+    example_units: 'EXAMPLE_UNITS'         # Example units
+    example_si_ucum_units: 'EXAMPLE_SI_UCUM_UNITS'  # SI/UCUM units
+    status: 'STATUS'                       # LOINC status (ACTIVE, DEPRECATED, etc.)
+    
+# Part Mappings (From LOINC Model Requirements)
+# Defines how Part.csv fields map to OCL concept fields
+part_mappings:
+  # Core OCL fields  
+  id: 'PartNumber'                   # Part number (e.g., "LP12345-6")
+  display_name: 'PartDisplayName'    # Primary display name
+  concept_class: 'PartTypeName'      # COMPONENT, PROPERTY, SYSTEM, etc.
+  
+  # Names array
+  names:
+    primary_name: 'PartDisplayName'        # Main display name
+    part_name: 'PartName'                  # Alternative name (if different)
+    
+  # OCL extras (Part-specific data)
+  extras:
+    part_number: 'PartNumber'              # LP code
+    part_type: 'PartTypeName'              # Type classification
+    status: 'Status'                       # ACTIVE, DEPRECATED, etc.
+    created_on: 'CreatedOn'                # Creation date
+    modified_on: 'ModifiedOn'              # Last modification date
+
+# Answer List Mappings (From LOINC Model Requirements)
+# Defines how AnswerList.csv fields map to OCL concept fields
+answer_list_mappings:
+  # Core OCL fields
+  id: 'AnswerListId'                 # Answer list ID (e.g., "LL123-4")
+  display_name: 'AnswerListName'     # Answer list name
+  concept_class: 'AnswerList'        # Fixed class for all answer lists
+  
+  # Names array
+  names:
+    primary_name: 'AnswerListName'         # Display name for the list
+    
+  # OCL extras (Answer List-specific data)
+  extras:
+    answer_list_id: 'AnswerListId'         # LL code
+    answer_list_oid: 'AnswerListOID'       # Object identifier
+    externally_defined: 'ExtDefinedYN'     # Y/N flag
+    external_code_system: 'ExtDefinedAnswerListCodeSystem'  # External system
+    external_link: 'ExtDefinedAnswerListLink'  # External reference URL
+    anchored_to: 'AnchoredTo'              # What this list is anchored to
+
+# Individual Answer Mappings (Extracted from AnswerList or Answer tables)
+individual_answer_mappings:
+  # Core OCL fields
+  id: 'AnswerStringId'               # Answer ID (e.g., "LA123-4") 
+  display_name: 'DisplayText'        # Answer display text
+  concept_class: 'Answer'            # Fixed class for individual answers
+  
+  # Names array
+  names:
+    primary_name: 'DisplayText'            # Main display text
+    
+  # OCL extras (Answer-specific data)
+  extras:
+    answer_string_id: 'AnswerStringId'     # LA code
+    answer_list_id: 'AnswerListId'         # Parent list (LL code)
+    sequence_number: 'SequenceNumber'      # Order within list
+    answer_code: 'AnswerCode'              # Code value
+    score: 'Score'                         # Numeric score (if applicable)
+    external_code: 'ExternalCode'          # External terminology code
+    external_system: 'ExternalCodeSystem' # External code system
+
+# Hierarchy Configuration (From ComponentHierarchyBySystem.csv)
+hierarchy_configuration:
+  enabled: true
+  source_file: 'ComponentHierarchyBySystem.csv'
+  path_field: 'PATH_TO_ROOT'
+  create_containers: true
+  
+  # Decision: Use Component-by-System hierarchy only (from LOINC Model)
+  # Will not replicate "Hide LOINCs" feature - some relationships as mappings instead
+
+# Enhanced Data Quality Rules (Realistic Validation)
+quality_rules:
+  # Critical validation (ERROR level - blocks transformation)
+  critical_fields:
+    'Loinc.csv': ['LOINC_NUM', 'LONG_COMMON_NAME', 'STATUS']
+    'Part.csv': ['PartNumber', 'PartDisplayName', 'PartTypeName']
+    'AnswerList.csv': ['AnswerListId', 'AnswerListName']
+    
+  # Format validation patterns
+  format_patterns:
+    loinc_code: '^\\d{1,6}-\\d{1,2}$'        # N-N to NNNNNN-N (FIXED)
+    part_number: '^LP\\d+(-\\d+)?$'          # LP12345-6
+    answer_list_id: '^LL\\d+-\\d+$'          # LL123-4
+    answer_string_id: '^LA\\d+-\\d+$'        # LA123-4
+    
+  # Business rule validation (WARNING level - quality issues)
+  business_rules:
+    valid_statuses: ['ACTIVE', 'TRIAL', 'DISCOURAGED', 'DEPRECATED']
+    max_name_length: 500
+    min_name_length: 3
+    
+  # Validation thresholds (realistic for LOINC data)
+  validation_thresholds:
+    max_missing_critical_fields: 50    # % - ERROR if more than 50% missing
+    max_missing_optional_fields: 95    # % - WARNING if more than 95% missing
+    max_invalid_format: 5              # % - WARNING if more than 5% invalid format
+    
+  # Files in scope (LOINC Model requirement)
+  in_scope_files:
+    - 'Loinc.csv'           # ~104K LOINC terms
+    - 'Part.csv'            # ~40K parts
+    - 'AnswerList.csv'      # Answer lists
+    # Groups are out of scope per LOINC Model decision
+
+# ============================================================================
+# MAPPING TYPES (PHASE 1 - IN SCOPE FOR ROUND 1)
+# ============================================================================
+# These 5 mapping types are all part of Phase 1 implementation
+# Based on LOINC Model Revamp - Mapping Option Overview
+
+mapping_types:
+  # 1. Panel-to-test mappings (Source: PanelsAndForms.csv)
+  panel_structure:
+    description: 'Panel-to-test mappings'
+    source_file: 'PanelsAndForms.csv'
+    in_scope_round_1: true
+    map_type: 'has element'
+    from_concept_source: 'LOINC'
+    to_concept_source: 'LOINC'
+    ocl_mapping_structure:
+      type: 'Mapping'
+      map_type: 'has element'
+      from_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{ParentLoinc}/'
+      to_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{LoincNumber}/'
+      source: 'LOINC'
+      owner_type: 'Organization'
+      owner: 'Regenstrief-Institute'
+      extras:
+        sequence: 'SequenceInPanel'
+        required: 'Required'
+        cardinality: 'CardinalityMin..CardinalityMax'  # Combined format
+        answer_list_override: 'AnswerListIdOverride'
+        answer_list_type_override: 'AnswerListTypeOverride'
+  
+  # 2. Question-to-answer mappings (Source: LoincAnswerListLink.csv)
+  has_answer:
+    description: 'Question-to-answer mappings'
+    source_file: 'LoincAnswerListLink.csv'
+    in_scope_round_1: true
+    map_type: 'has answer'
+    from_concept_source: 'LOINC'  
+    to_concept_source: 'LOINC'
+    ocl_mapping_structure:
+      type: 'Mapping'
+      map_type: 'has answer'
+      from_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{LoincNumber}/'
+      to_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{AnswerListId}/'
+      source: 'LOINC'
+      owner_type: 'Organization'
+      owner: 'Regenstrief-Institute'
+      extras:
+        answer_list_name: 'AnswerListName'
+        external_code_id: 'ExtCodeId'
+        external_code_display_name: 'ExtCodeDisplayName'
+        external_code_system: 'ExtCodeSystem'
+        external_code_system_version: 'ExtCodeSystemVersion'
+  
+  # 3. Ask at Order Entry Mappings (Source: Main LOINC table fields)
+  order_entry:
+    description: 'Ask at Order Entry Mappings (Test Codes to Common question panel)'
+    source_file: 'Loinc.csv'  # Fields from main LOINC table
+    source_fields: ['ASK_AT_ORDER_ENTRY', 'COMMON_PANEL_LOINC', 'TEST_LOINC_NUM']
+    in_scope_round_1: true
+    map_type: 'Ask At Order Entry'
+    from_concept_source: 'LOINC'
+    to_concept_source: 'LOINC'
+    ocl_mapping_structure:
+      type: 'Mapping'
+      map_type: 'Ask At Order Entry'
+      from_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{TEST_LOINC_NUM}/'
+      to_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{COMMON_PANEL_LOINC}/'
+      source: 'LOINC'
+      owner_type: 'Organization'
+      owner: 'Regenstrief-Institute'
+  
+  # 4. Code evolution (Source: MapTo.csv)
+  code_evolution:
+    description: 'Code evolution (Old Concept maps to New Concept)'
+    source_file: 'MapTo.csv'
+    in_scope_round_1: true
+    map_type: 'Map To'
+    from_concept_source: 'LOINC'
+    to_concept_source: 'LOINC'
+    ocl_mapping_structure:
+      type: 'Mapping'
+      map_type: 'Map To'
+      from_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{LOINC}/'
+      to_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{MAP_TO}/'
+      source: 'LOINC'
+      owner_type: 'Organization'
+      owner: 'Regenstrief-Institute'
+      extras:
+        comment: 'COMMENT'
+        content_origin: 'ContentOrigin'
+  
+  # 5. Associated Observations (Source: Main LOINC table fields)
+  associated_observations:
+    description: 'Associated Observations (Related Clinical Measures)'
+    source_file: 'Loinc.csv'  # Fields from main LOINC table
+    source_fields: ['RELATED_LOINC', 'ASSOCIATED_OBSERVATIONS']
+    in_scope_round_1: true
+    map_type: 'Associated with'
+    from_concept_source: 'LOINC'
+    to_concept_source: 'LOINC'
+    ocl_mapping_structure:
+      type: 'Mapping'
+      map_type: 'Associated with'
+      from_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{LOINC_NUM}/'
+      to_concept_url: '/orgs/Regenstrief-Institute/sources/LOINC/concepts/{RELATED_LOINC}/'
+      source: 'LOINC'
+      owner_type: 'Organization'
+      owner: 'Regenstrief-Institute'
+      extras:
+        relationship_type: 'ASSOCIATED_OBSERVATIONS'
+
+# ============================================================================
+# MAPPING TYPES DEFERRED TO PHASE 2 (ENRICHMENT)
+# ============================================================================
+# These mapping types are explicitly out of scope for Round 1
+
+deferred_mapping_types:
+  # Multi-axial Part mappings (NOT in scope for Round 1)
+  multi_axial_part_mappings:
+    description: 'Mapping to a LOINC from each axis Part (Components, Property, Time, Scale, Method, System)'
+    source_files: ['LoincPartLink_Primary.csv', 'LoincPartLink_Supplementary.csv']
+    in_scope_round_1: false
+    deferred_to: 'Phase 2: Enrichment'
+    reason: 'Complex six-axis mappings require additional infrastructure'
+  
+  # Part-to-Part mapping (NOT in scope for Round 1)
+  part_to_part_mappings:
+    description: 'Part-to-Part mapping (would this replicate hierarchy?)'
+    source_files: ['LoincPartLink_Primary.csv', 'LoincPartLink_Supplementary.csv']
+    in_scope_round_1: false
+    deferred_to: 'Phase 2: Enrichment'
+    reason: 'May conflict with hierarchy creation; needs further analysis'
+
+# Output Generation Rules
+output_rules:
+  # JSON formatting
+  json_format:
+    indent: 2
+    ensure_ascii: false
+    sort_keys: true
+    
+  # File organization  
+  file_organization:
+    concepts_per_file: 10000
+    mappings_per_file: 5000
+    separate_mappings: true
+    include_validation_report: true
+    
+  # OCL-specific formatting
+  ocl_format:
+    source_id: 'LOINC'
+    source_version: '2.80'
+    default_public_access: 'View'
+    include_checksums: true
+
+# UMLS Enhancement Rules (Phase 5 - Future)
+umls_enhancement:
+  enabled: true
+  
+  # Target concepts for UMLS lookup
+  target_concepts:
+    - 'LOINC_TERMS'      # Main LOINC codes
+    - 'LOINC_PARTS'      # LOINC parts
+    - 'ANSWER_LISTS'     # Answer lists
+    - 'ANSWERS'          # Individual answers
+    
+  # Search strategies
+  search_strategies:
+    exact_match: true
+    fuzzy_match: false
+    multi_word_search: true
+    
+  # Result filtering
+  result_filtering:
+    min_confidence: 0.8
+    preferred_sources: ['LNC', 'SNOMEDCT_US']
+    exclude_obsolete: true
+
+# Processing Configuration
+processing_config:
+  # Batch sizes for memory management
+  batch_sizes:
+    concept_creation: 1000
+    mapping_creation: 500   # NEW: Added for mapping processing
+    validation: 5000
+    output_generation: 2000
+    
+  # Performance settings
+  parallel_processing: false
+  max_workers: 4
+  
+  # Logging levels by phase
+  logging_levels:
+    data_loading: 'INFO'
+    validation: 'INFO'
+    transformation: 'DEBUG'
+    mapping_creation: 'INFO'  # NEW: Added for mapping phase
+    output: 'INFO'
+
+# Version Management
+version_info:
+  rules_version: 'v1.1'
+  loinc_version: '2.80'
+  ocl_compatibility: '2024'
+  last_updated: '2025-07-31'
+  
+  # Changelog
+  changes:
+    - version: 'v1.1'
+      date: '2025-07-31'
+      description: 'MAJOR FIX: Moved 5 mapping types from Phase 3-Future to Phase 1-Current. Added detailed OCL mapping structures based on LOINC Model Revamp requirements.'
+    - version: 'v1.0'
+      date: '2025-07-31'
+      description: 'Fixed LOINC code format pattern to support 1-6 digits (was 1-5)'

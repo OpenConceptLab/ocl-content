@@ -1,0 +1,79 @@
+# LOINC to OCL Transformation - Runtime Settings Configuration
+# This file contains all runtime configuration settings for the transformation process
+
+# Project Information
+project_name: LOINC_OCL_Transform
+loinc_version: '2.80'
+transformation_rules_version: v1
+log_level: INFO
+
+# Directory Configuration
+directories:
+  # Input directory containing LOINC 2.80 files
+  input_dir: 'C:\Users\jamlung\Documents\LOINC\Loinc_2.80'
+  
+  # Output directory for generated OCL files
+  output_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\output'
+  
+  # Temporary directory for intermediate files
+  temp_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\temp'
+  
+  # Log directory for all logging output
+  logs_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\logs'
+
+# Processing Configuration
+batch_sizes:
+  # Batch size for concept creation (Phase 2)
+  concept_batch: 1000
+  
+  # Batch size for mapping creation (Phase 3)
+  mapping_batch: 500
+  
+  # Batch size for UMLS API calls (Phase 5)
+  umls_batch: 100
+
+# UMLS API Configuration (for Phase 5)
+umls_api:
+  enabled: true
+  rate_limit: 20        # requests per second
+  timeout: 30           # seconds
+  retry_attempts: 3
+  base_url: 'https://uts-ws.nlm.nih.gov/rest'
+
+# Performance Settings
+parallel_processing: false    # Enable parallel processing (experimental)
+max_workers: 4               # Maximum worker threads for parallel processing
+memory_optimization: true    # Enable memory optimization techniques
+
+# Validation Settings
+validation:
+  enabled: true
+  strict_mode: false          # Strict validation mode (fail on warnings)
+  max_error_samples: 10       # Maximum error samples to collect per type
+  
+# Output Format Settings
+output_format:
+  json_indent: 2              # JSON indentation for readability
+  chunk_size: 10000          # Records per output file chunk
+  include_metadata: true      # Include metadata in output files
+  validate_output: true       # Validate generated JSON before writing
+
+#Output Generation Settings
+output_generation:
+  test_mode:
+    enabled: true
+    max_concepts: 300
+    max_mappings: 200
+    sample_strategy: "representative"  # or "random", "stratified"
+    include_hierarchies: true
+    coverage_requirements:
+      loinc_types: ["laboratory", "survey", "panel"]
+      part_types: ["component", "property", "system", "method"]
+      mapping_types: ["panel_qa", "answer_links", "code_evolution", "associated_obs", "order_entry"]
+
+# Development/Debug Settings
+debug:
+  save_intermediate_files: false    # Save intermediate processing files
+  detailed_progress: true           # Show detailed progress information
+  memory_profiling: false          # Enable memory usage profiling
+  performance_timing: true         # Track detailed performance timing
