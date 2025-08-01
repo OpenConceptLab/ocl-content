@@ -1,0 +1,11 @@
+{
+  "field_mappings": {
+    "TIME_ASPCT": "timing",
+    "time_aspect": "timing", 
+    "SCALE_TYP": "scale",
+    "scale_type": "scale",
+    "METHOD_TYP": "method",
+    "method_type": "method",
+    "HL7_ATTACHMENT_STRUCTURE": "hl7_attachment"
+  }
+}

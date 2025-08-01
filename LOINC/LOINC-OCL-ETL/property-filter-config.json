@@ -10,19 +10,19 @@
     {"code": "scale", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
     {"code": "method", "type": "string", "description": "Method of observation"},
     {"code": "panel_type", "type": "string", "description": "Panel type classification"},
+    {"code": "tags", "type": "string", "description": "Tags"},
     {"code": "code_systems", "type": "string", "description": "Associated code systems"},
     {"code": "version_first_released", "type": "string", "description": "Version when first released"},
     {"code": "version_last_changed", "type": "string", "description": "Version when last changed"},
-    {"code": "category", "type": "string", "description": "LOINC category"},
-    {"code": "name", "type": "string", "description": "LOINC name variations"},
-    
-    // Additional comprehensive LOINC fields from your transformation system
+    {"code": "hl7_attachment", "type": "string", "description": "HL7 attachment information"},
+    {"code": "externally_defined", "type": "string", "description": "Whether answer list is externally defined (Y/N)"},
+    {"code": "external_code_system", "type": "string", "description": "External code system for externally defined lists"},
+    {"code": "external_link", "type": "string", "description": "External link/URL for externally defined lists"},
+    {"code": "answer_list_oid", "type": "string", "description": "Object identifier for answer list"},
+    {"code": "anchored_to", "type": "string", "description": "What the answer list is anchored to"},
+    {"code": "answers", "type": "string", "description": "Number of answers in the list (numeric ranges)"},
+    {"code": "loincs", "type": "string", "description": "Number of LOINC terms using this list (numeric ranges)"},
     {"code": "component", "type": "string", "description": "What is measured/observed"},
-    {"code": "time_aspect", "type": "string", "description": "Time aspect (alternative field name)"},
-    {"code": "scale_type", "type": "string", "description": "Scale type (alternative field name)"},
-    {"code": "method_type", "type": "string", "description": "Method type (alternative field name)"},
-    {"code": "shortname", "type": "string", "description": "LOINC short name"},
-    {"code": "long_common_name", "type": "string", "description": "LOINC long common name"},
     {"code": "answer_list_id", "type": "string", "description": "Associated answer list ID"},
     {"code": "associated_observations", "type": "string", "description": "Related observations"},
     {"code": "ask_at_order_entry", "type": "string", "description": "Ask at order entry flag"},
@@ -46,6 +46,11 @@
       "code": "class", 
       "operator": ["=", "in"], 
       "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
+    },
+    {
+      "code": "order_observation", 
+      "operator": ["=", "in"], 
+      "description": "Filter by order/observation status"
     },
     {
       "code": "property", 
@@ -78,14 +83,34 @@
       "description": "Filter by panel type"
     },
     {
-      "code": "category", 
+      "code": "tags", 
       "operator": ["=", "in"], 
-      "description": "Filter by LOINC category"
+      "description": "Filter by tags"
+    },{
+      "code": "code_systems", 
+      "operator": ["=", "in"], 
+      "description": "Filter by associated code systems"
     },
     {
-      "code": "component", 
-      "operator": ["=", "contains", "starts_with"], 
-      "description": "Search by component (what is measured)"
+      "code": "hl7_attachment", 
+      "operator": ["=", "in"], 
+      "description": "Filter by HL7 attachment"
+    },
+    {
+      "code": "externally_defined", 
+      "operator": ["="], 
+      "description": "Filter by externally defined status (Y/N)",
+      "value": "Y,N"
+    },
+    {
+      "code": "answers", 
+      "operator": ["=", ">=", "<=", "in"], 
+      "description": "Filter by number of answers in list (numeric ranges)"
+    },
+    {
+      "code": "loincs", 
+      "operator": ["=", ">=", "<=", "in"], 
+      "description": "Filter by number of LOINC terms using this list (numeric ranges)"
     },
     {
       "code": "version_first_released", 
