@@ -13,13 +13,13 @@ directories:
   input_dir: 'C:\Users\jamlung\Documents\LOINC\Loinc_2.80'
   
   # Output directory for generated OCL files
-  output_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\output'
+  output_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\output'
   
   # Temporary directory for intermediate files
-  temp_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\temp'
+  temp_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\temp'
   
   # Log directory for all logging output
-  logs_dir: 'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\logs'
+  logs_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\logs'
 
 # Processing Configuration
 batch_sizes:

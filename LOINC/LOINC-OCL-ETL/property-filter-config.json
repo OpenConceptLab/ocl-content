@@ -1,0 +1,101 @@
+{
+  "properties": [
+    {"code": "status", "type": "string", "description": "LOINC status (ACTIVE, TRIAL, DISCOURAGED, DEPRECATED)"},
+    {"code": "type", "type": "string", "description": "LOINC type classification"},
+    {"code": "class", "type": "string", "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"},
+    {"code": "obsolete_observation", "type": "string", "description": "Obsolete/Observation status"},
+    {"code": "property", "type": "string", "description": "Property observed (Mass, Volume, Time, etc.)"},
+    {"code": "timing", "type": "string", "description": "Time aspect (Pt, 24H, etc.)"},
+    {"code": "system", "type": "string", "description": "Specimen/system (Blood, Urine, Serum, etc.)"},
+    {"code": "scale", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
+    {"code": "method", "type": "string", "description": "Method of observation"},
+    {"code": "panel_type", "type": "string", "description": "Panel type classification"},
+    {"code": "code_systems", "type": "string", "description": "Associated code systems"},
+    {"code": "version_first_released", "type": "string", "description": "Version when first released"},
+    {"code": "version_last_changed", "type": "string", "description": "Version when last changed"},
+    {"code": "category", "type": "string", "description": "LOINC category"},
+    {"code": "name", "type": "string", "description": "LOINC name variations"},
+    
+    // Additional comprehensive LOINC fields from your transformation system
+    {"code": "component", "type": "string", "description": "What is measured/observed"},
+    {"code": "time_aspect", "type": "string", "description": "Time aspect (alternative field name)"},
+    {"code": "scale_type", "type": "string", "description": "Scale type (alternative field name)"},
+    {"code": "method_type", "type": "string", "description": "Method type (alternative field name)"},
+    {"code": "shortname", "type": "string", "description": "LOINC short name"},
+    {"code": "long_common_name", "type": "string", "description": "LOINC long common name"},
+    {"code": "answer_list_id", "type": "string", "description": "Associated answer list ID"},
+    {"code": "associated_observations", "type": "string", "description": "Related observations"},
+    {"code": "ask_at_order_entry", "type": "string", "description": "Ask at order entry flag"},
+    {"code": "common_panel_loinc", "type": "string", "description": "Common panel LOINC reference"},
+    {"code": "test_loinc_num", "type": "string", "description": "Test LOINC number reference"}
+  ],
+  
+  "filters": [
+    {
+      "code": "status", 
+      "operator": ["=", "in"], 
+      "description": "Filter by LOINC status",
+      "value": "ACTIVE,TRIAL,DISCOURAGED,DEPRECATED"
+    },
+    {
+      "code": "type", 
+      "operator": ["=", "in"], 
+      "description": "Filter by LOINC type"
+    },
+    {
+      "code": "class", 
+      "operator": ["=", "in"], 
+      "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
+    },
+    {
+      "code": "property", 
+      "operator": ["=", "in"], 
+      "description": "Filter by property type (Mass, Volume, Time, etc.)"
+    },
+    {
+      "code": "timing", 
+      "operator": ["=", "in"], 
+      "description": "Filter by time aspect (Pt, 24H, etc.)"
+    },
+    {
+      "code": "system", 
+      "operator": ["=", "in", "contains"], 
+      "description": "Filter by specimen/system (Blood, Urine, etc.)"
+    },
+    {
+      "code": "scale", 
+      "operator": ["=", "in"], 
+      "description": "Filter by measurement scale (Qn, Ord, Nom)"
+    },
+    {
+      "code": "method", 
+      "operator": ["=", "in"], 
+      "description": "Filter by observation method"
+    },
+    {
+      "code": "panel_type", 
+      "operator": ["=", "in"], 
+      "description": "Filter by panel type"
+    },
+    {
+      "code": "category", 
+      "operator": ["=", "in"], 
+      "description": "Filter by LOINC category"
+    },
+    {
+      "code": "component", 
+      "operator": ["=", "contains", "starts_with"], 
+      "description": "Search by component (what is measured)"
+    },
+    {
+      "code": "version_first_released", 
+      "operator": ["=", ">=", "<="], 
+      "description": "Filter by release version"
+    },
+    {
+      "code": "version_last_changed", 
+      "operator": ["=", ">=", "<="], 
+      "description": "Filter by last changed version"
+    }
+  ]
+}
