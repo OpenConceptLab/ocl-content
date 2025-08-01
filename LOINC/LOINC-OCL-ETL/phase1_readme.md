@@ -70,11 +70,8 @@ pip install pandas chardet pyyaml
 
 ### **Quick Start**
 ```bash
-# Navigate to project directory
-cd "C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80"
-
-# Run complete validation and loading
-python main.py
+# Navigate to project directory and run complete validation and loading
+python phase_1_main.py
 
 # Expected output:
 # ✅ VALIDATION PASSED - Ready for OCL transformation
@@ -86,13 +83,13 @@ python main.py
 ### **Advanced Usage**
 ```bash
 # Test configuration and file discovery only
-python main.py --dry-run
+python phase_1_main.py --dry-run
 
 # Enable detailed debug logging
-python main.py --log-level DEBUG
+python phase_1_main.py --log-level DEBUG
 
 # Skip validation for faster processing (development only)
-python main.py --skip-validation
+python phase_1_main.py --skip-validation
 
 # Test enhanced validation specifically
 python test_enhanced_validation.py --detailed --save-report
@@ -110,7 +107,7 @@ ETL Development - LOINC 2-80/
 │   ├── validator.py               # LOINC Model compliant validation
 │   ├── data_loader.py             # Orchestrates entire loading process
 │   ├── logger.py                  # Professional logging with progress tracking
-│   └── main.py                    # CLI entry point and orchestration
+│   └── phase_1_main.py                    # CLI entry point and orchestration
 ├── ⚙️ **Configuration Files**
 │   ├── settings.yaml              # Runtime configuration
 │   ├── transformation_rules_v1.yaml # LOINC to OCL mapping rules
@@ -236,10 +233,10 @@ Create the **5 mapping types in scope for Round 1**:
 ### **Next Phase Commands** (When ready)
 ```bash
 # Phase 1 complete - ready for Phase 2 development
-python main.py --phase=2
+python phase_1_main.py --phase=2
 
 # After Phase 2 complete - ready for Phase 3 development  
-python main.py --phase=3
+python phase_1_main.py --phase=3
 ```
 
 ---
@@ -276,13 +273,13 @@ batch_sizes:
   concept_batch: 500  # Reduce from 1000
 
 # Or run without validation temporarily
-python main.py --skip-validation
+python phase_1_main.py --skip-validation
 ```
 
 #### **Unicode/encoding issues (Rare)**
 ```bash
 # Enable debug logging to see encoding details
-python main.py --log-level DEBUG
+python phase_1_main.py --log-level DEBUG
 
 # The system auto-detects encoding and handles 23M+ Unicode characters
 ```

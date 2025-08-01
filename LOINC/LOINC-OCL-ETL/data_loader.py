@@ -390,7 +390,7 @@ class DataLoader:
             validation_data = {name: dataset.data for name, dataset in self.datasets.items()}
             
             # Run validation
-            validation_report = self.validator.validate_all_files(validation_data)
+            validation_report = self.validator.validate_data(validation_data)
             summary.validation_report = validation_report
             
             # Update dataset records with validation results

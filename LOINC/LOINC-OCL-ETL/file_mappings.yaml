@@ -96,7 +96,7 @@ loinc_files:
     expected_size_mb: 1
 
   # Individual Answers (from AnswerList table or similar)
-  'Answer.csv':
+  'AnswerList.csv':
     description: 'Individual answer options within answer lists'
     required: false  # May be embedded in other files
     priority: 4

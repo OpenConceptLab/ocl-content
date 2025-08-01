@@ -186,7 +186,7 @@ def test_enhanced_validation(detailed: bool = False, save_report: bool = False):
         print()
         print("🚀 Ready for Phase 2?")
         if validation_report.is_valid():
-            print("   YES - You can now run: python main.py")
+            print("   YES - You can now run: python phase_1_main.py")
         else:
             print("   NO - Fix critical errors first, then re-test")
         

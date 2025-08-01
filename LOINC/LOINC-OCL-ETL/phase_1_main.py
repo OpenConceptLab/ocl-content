@@ -11,7 +11,7 @@ LOINC to OCL transformation project. Phase 1 focuses on:
 5. Foundation setup for subsequent phases
 
 Usage:
-    python main.py [options]
+    python phase_1_main.py [options]
 
 Author: LOINC OCL Transform Project
 Date: July 2025
@@ -39,11 +39,11 @@ def setup_command_line_args() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-    python main.py                          # Run with default settings
-    python main.py --config ./config       # Use specific config directory
-    python main.py --log-level DEBUG       # Enable debug logging
-    python main.py --skip-validation       # Skip data validation (faster)
-    python main.py --test-mode             # Run in test mode with sample data
+    python phase_1_main.py                          # Run with default settings
+    python phase_1_main.py --config ./config       # Use specific config directory
+    python phase_1_main.py --log-level DEBUG       # Enable debug logging
+    python phase_1_main.py --skip-validation       # Skip data validation (faster)
+    python phase_1_main.py --test-mode             # Run in test mode with sample data
         """
     )
     
