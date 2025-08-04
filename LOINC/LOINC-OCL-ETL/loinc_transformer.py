@@ -65,8 +65,9 @@ class LoincTermsTransformer(BaseTransformer):
                 dataset = self.context.source_datasets[candidate]
                 if hasattr(dataset, 'row_count') and dataset.row_count > 50000:
                     return candidate
-                elif hasattr(dataset, 'data') and len(dataset.data) > 50000:
-                    return candidate
+                elif hasattr(dataset, 'data'):
+                    if len(dataset.data) > 50000:
+                        return candidate
         
         # Look for datasets with 'loinc' in the name and reasonable size
         for dataset_name, dataset in self.context.source_datasets.items():
@@ -74,11 +75,12 @@ class LoincTermsTransformer(BaseTransformer):
                 'part' not in dataset_name.lower() and
                 'answer' not in dataset_name.lower() and
                 'link' not in dataset_name.lower()):
-                
                 # Check size indicators
-                row_count = getattr(dataset, 'row_count', len(getattr(dataset, 'data', [])))
-                if row_count > 50000:  # LOINC terms should have 100K+ records
+                if hasattr(dataset, 'row_count') and dataset.row_count > 50000:
                     return dataset_name
+                elif hasattr(dataset, 'data'):
+                    if len(dataset.data) > 50000:
+                        return dataset_name
         
         return None
     
