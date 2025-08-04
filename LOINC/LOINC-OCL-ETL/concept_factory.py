@@ -219,11 +219,13 @@ class ConceptFactory:
 
         self.output_dir = self.config_manager.paths.output_dir / "phase2_concepts"
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.logger.info(f"✅ Prerequisites initialized successfully")
+        self._apply_dataset_aliases()
+        self.logger.info(f"   [OK] Prerequisites initialized successfully")
         self.logger.info(f"   Loaded {self.loading_summary.total_rows_loaded:,} records from Phase 1")
         self.logger.info(f"   Output directory: {self.output_dir}")
         return True
     
+
     def _setup_transformation_context(self) -> None:
         """Set up transformation context for all transformers"""
         self.logger.info("🔧 Step 2: Setting up transformation context...")
@@ -270,6 +272,17 @@ class ConceptFactory:
         """Run all transformers in sequence"""
         self.logger.info("⚙️ Step 3: Running transformers...")
         
+        # DEFENSIVE CHECK: Ensure transformation context is properly set up
+        if not self.transformation_context:
+            raise RuntimeError("Transformation context not initialized")
+        
+        if not hasattr(self.transformation_context, 'source_datasets'):
+            raise RuntimeError("Transformation context missing source_datasets")
+        
+        if not isinstance(self.transformation_context.source_datasets, dict):
+            raise RuntimeError(f"source_datasets is {type(self.transformation_context.source_datasets)}, expected dict")
+    
+
         summary = ConceptCreationSummary(
             start_time=self.start_time,
             end_time=0  # Will be set later
@@ -306,26 +319,55 @@ class ConceptFactory:
                         if progress_callback:
                             progress_callback(overall_progress, f"{transformer_name} - {status}")
                     
-                    # Generate container concepts
-                    container_concepts = transformer.create_all_container_concepts()
-                    
-                    # Create result collection
-                    result_collection = ConceptCollection(
-                        collection_name=f"{transformer_name}_Concepts",
-                        batch_size=self.transformation_context.batch_size
-                    )
-                    
-                    for concept in container_concepts:
-                        result_collection.add_concept(concept)
-                    
-                    # Create transformation result
-                    result = TransformationResult(
-                        concepts=result_collection,
-                        success_count=len(container_concepts),
-                        error_count=0,
-                        warning_count=0,
-                        processing_time_seconds=0.1  # Minimal processing time for generated concepts
-                    )
+                    try:
+                        # Generate container concepts with error handling
+                        container_concepts = transformer.create_all_container_concepts()
+                        self.logger.info(f"Generated {len(container_concepts)} container concepts")
+                        
+                        # Create result collection with defensive programming
+                        result_collection = ConceptCollection(
+                            collection_name=f"{transformer_name}_Concepts",
+                            batch_size=self.transformation_context.batch_size
+                        )
+                        
+                        # Add concepts to collection with error handling
+                        valid_concepts = 0
+                        for concept in container_concepts:
+                            try:
+                                result_collection.add_concept(concept)
+                                valid_concepts += 1
+                            except Exception as e:
+                                self.logger.warning(f"Failed to add container concept {getattr(concept, 'id', 'UNKNOWN')}: {e}")
+                        
+                        # Create transformation result with defensive checks
+                        result = TransformationResult(
+                            concepts=result_collection,
+                            success_count=valid_concepts,
+                            error_count=len(container_concepts) - valid_concepts,
+                            warning_count=0,
+                            processing_time_seconds=0.1  # Minimal processing time for generated concepts
+                        )
+                        
+                        self.logger.info(f"Container concepts result: {valid_concepts} valid, {result.error_count} errors")
+                        
+                    except Exception as e:
+                        self.logger.error(f"Container concepts generation failed: {e}")
+                        import traceback
+                        self.logger.error(f"Full traceback: {traceback.format_exc()}")
+                        
+                        # Create empty result on failure
+                        result_collection = ConceptCollection(
+                            collection_name=f"{transformer_name}_Concepts",
+                            batch_size=self.transformation_context.batch_size
+                        )
+                        
+                        result = TransformationResult(
+                            concepts=result_collection,
+                            success_count=0,
+                            error_count=1,
+                            warning_count=0,
+                            processing_time_seconds=0.0
+                        )
                     
                 else:
                     # Standard transformer processing
@@ -529,6 +571,91 @@ class ConceptFactory:
         self.logger.info(f"Output Files: {len(summary.output_files_created)}")
         self.logger.info(f"Multi-language Support: {summary.performance_metrics['multi_language_support']} locales")
         self.logger.info("=" * 60)
+    def _apply_dataset_aliases(self):
+        """Apply dataset name aliases for transformer compatibility"""
+        datasets = self.loading_summary.datasets
+        
+        # Critical aliases for transformer compatibility
+        if 'Loinc.csv' in datasets and 'loinc_terms' not in datasets:
+            datasets['loinc_terms'] = datasets['Loinc.csv']
+        
+        if 'Part.csv' in datasets and 'loinc_parts' not in datasets:
+            datasets['loinc_parts'] = datasets['Part.csv']
+            
+        if 'AnswerList.csv' in datasets and 'answer_lists' not in datasets:
+            datasets['answer_lists'] = datasets['AnswerList.csv']
+    def _apply_dataset_aliases(self) -> None:
+        """
+        Apply dataset name aliases for transformer compatibility.
+        
+        Maps actual dataset names discovered from LOINC files to the logical names
+        that transformers expect. This fixes the dataset name mismatch issue.
+        """
+        self.logger.info("🔗 Applying dataset aliases...")
+        
+        datasets = self.loading_summary.datasets
+        aliases_applied = []
+        
+        # LOINC Terms dataset aliasing
+        # Look for: Loinc.csv -> alias as: loinc_terms
+        terms_candidates = ['Loinc.csv', 'loinc_table', 'loinc_data']
+        for candidate in terms_candidates:
+            if candidate in datasets and 'loinc_terms' not in datasets:
+                # Use .data if it's a LoadedDataset object, otherwise use directly
+                source_data = datasets[candidate]
+                if hasattr(source_data, 'data'):
+                    datasets['loinc_terms'] = source_data.data
+                else:
+                    datasets['loinc_terms'] = source_data
+                aliases_applied.append(f"'{candidate}' -> 'loinc_terms'")
+                break
+        
+        # LOINC Parts dataset aliasing  
+        # Look for: Part.csv -> alias as: loinc_parts
+        parts_candidates = ['Part.csv', 'parts', 'loinc_part']
+        for candidate in parts_candidates:
+            if candidate in datasets and 'loinc_parts' not in datasets:
+                source_data = datasets[candidate]
+                if hasattr(source_data, 'data'):
+                    datasets['loinc_parts'] = source_data.data
+                else:
+                    datasets['loinc_parts'] = source_data
+                aliases_applied.append(f"'{candidate}' -> 'loinc_parts'")
+                break
+        
+        # Answer Lists dataset aliasing
+        # Look for: AnswerList.csv -> alias as: answer_lists  
+        answer_candidates = ['AnswerList.csv', 'answerlist', 'answer_list']
+        for candidate in answer_candidates:
+            if candidate in datasets and 'answer_lists' not in datasets:
+                source_data = datasets[candidate]
+                if hasattr(source_data, 'data'):
+                    datasets['answer_lists'] = source_data.data
+                else:
+                    datasets['answer_lists'] = source_data
+                aliases_applied.append(f"'{candidate}' -> 'answer_lists'")
+                break
+        
+        # Log results
+        if aliases_applied:
+            self.logger.info(f"✅ Applied {len(aliases_applied)} dataset aliases:")
+            for alias in aliases_applied:
+                self.logger.info(f"   {alias}")
+        else:
+            self.logger.warning("⚠️ No dataset aliases were applied")
+            
+        # Verify critical datasets are now available
+        required_datasets = ['loinc_terms', 'loinc_parts', 'answer_lists']
+        missing_datasets = [ds for ds in required_datasets if ds not in datasets]
+        
+        if missing_datasets:
+            self.logger.error(f"❌ Still missing required datasets: {missing_datasets}")
+            available = list(datasets.keys())[:10]  # Show first 10
+            self.logger.error(f"   Available datasets: {available}...")
+            raise RuntimeError(f"Required datasets not found after aliasing: {missing_datasets}")
+        else:
+            self.logger.info("✅ All required datasets are now available")
+
 
 
 # Example usage and testing

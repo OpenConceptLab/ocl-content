@@ -63,6 +63,28 @@ class ContainerConceptsTransformer(BaseTransformer):
         self.logger.info(f"Container Concepts Transformer initialized")
         self.logger.info(f"Will generate organizational container concepts")
     
+    def _get_dataset_safely(self, dataset_name: str):
+        """
+        Safely get dataset from context, handling LoadedDataset objects.
+        
+        Args:
+            dataset_name: Name of the dataset to retrieve
+            
+        Returns:
+            DataFrame or None if not available
+        """
+        if dataset_name not in self.context.source_datasets:
+            return None
+            
+        dataset = self.context.source_datasets[dataset_name]
+        
+        # Handle LoadedDataset objects by extracting the .data attribute
+        if hasattr(dataset, 'data'):
+            return dataset.data
+        
+        # Return the dataset directly if it's already a DataFrame
+        return dataset
+
     def get_transformer_name(self) -> str:
         """Get transformer name"""
         return self.transformer_name
@@ -133,6 +155,7 @@ class ContainerConceptsTransformer(BaseTransformer):
         Returns:
             List of container OCL concepts
         """
+        self.debug_context_structure()
         self.logger.info("Creating container concepts based on LOINC data analysis...")
         
         containers = []
@@ -153,25 +176,41 @@ class ContainerConceptsTransformer(BaseTransformer):
         return containers
     
     def _load_container_rules(self) -> None:
-        """Load container generation rules from transformation rules"""
+        """Load container generation rules from transformation rules with error handling"""
         self.container_rules = {}
         
-        if hasattr(self.context.transformation_rules, 'container_concepts'):
-            self.container_rules = self.context.transformation_rules.container_concepts.copy()
+        try:
+            if hasattr(self.context, 'transformation_rules') and self.context.transformation_rules:
+                if hasattr(self.context.transformation_rules, 'container_concepts'):
+                    rules = self.context.transformation_rules.container_concepts
+                    # Defensive check - ensure it's a dict, not a list
+                    if isinstance(rules, dict):
+                        self.container_rules = rules.copy()
+                    elif isinstance(rules, list):
+                        self.logger.warning("Container concepts rules is a list, expected dict. Using defaults.")
+                        self.container_rules = {}
+                    else:
+                        self.logger.warning(f"Container concepts rules is {type(rules)}, expected dict. Using defaults.")
+                        self.container_rules = {}
+        except Exception as e:
+            self.logger.warning(f"Error loading container rules: {e}. Using defaults.")
+            self.container_rules = {}
         
-        # Default container rules if not configured
+        # Default container rules if not configured or if loading failed
         if not self.container_rules:
             self.container_rules = self._get_default_container_rules()
+            self.logger.info("Using default container generation rules")
+    
     
     def _get_default_container_rules(self) -> Dict[str, Any]:
-        """Get default container generation rules"""
+        """Get default container generation rules with defensive programming"""
         return {
             'generate_component_containers': True,
             'generate_property_containers': True,
             'generate_system_containers': True,
             'generate_class_containers': True,
-            'min_concepts_for_container': 5,  # Minimum concepts to justify a container
-            'max_containers_per_type': 50,    # Maximum containers per type
+            'min_concepts_for_container': 5,
+            'max_containers_per_type': 50,
             'container_name_patterns': {
                 'component': '{component} Components',
                 'property': '{property} Properties', 
@@ -189,25 +228,23 @@ class ContainerConceptsTransformer(BaseTransformer):
         
         containers = []
         
-        # Analyze LOINC terms for components
-        if 'loinc_terms' in self.context.source_datasets:
-            loinc_df = self.context.source_datasets['loinc_terms']
+        # FIXED: Use safe dataset access
+        loinc_df = self._get_dataset_safely('loinc_terms')
+        if loinc_df is not None and 'COMPONENT' in loinc_df.columns:
+            # Count component usage
+            component_counts = loinc_df['COMPONENT'].value_counts()
+            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
             
-            if 'COMPONENT' in loinc_df.columns:
-                # Count component usage
-                component_counts = loinc_df['COMPONENT'].value_counts()
-                min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-                
-                # Create containers for frequent components
-                top_components = component_counts[component_counts >= min_concepts].head(
-                    self.container_rules.get('max_containers_per_type', 50)
-                )
-                
-                for component, count in top_components.items():
-                    if pd.notna(component) and component.strip():
-                        container = self._create_component_container(component, count)
-                        containers.append(container)
-                        self.container_stats['component_containers'] += 1
+            # Create containers for frequent components
+            top_components = component_counts[component_counts >= min_concepts].head(
+                self.container_rules.get('max_containers_per_type', 50)
+            )
+            
+            for component, count in top_components.items():
+                if pd.notna(component) and component.strip():
+                    container = self._create_component_container(component, count)
+                    containers.append(container)
+                    self.container_stats['component_containers'] += 1
         
         self.logger.info(f"Created {len(containers)} component containers")
         return containers
@@ -270,25 +307,23 @@ class ContainerConceptsTransformer(BaseTransformer):
         
         containers = []
         
-        # Analyze LOINC terms for properties
-        if 'loinc_terms' in self.context.source_datasets:
-            loinc_df = self.context.source_datasets['loinc_terms']
+        # FIXED: Use safe dataset access
+        loinc_df = self._get_dataset_safely('loinc_terms')
+        if loinc_df is not None and 'PROPERTY' in loinc_df.columns:
+            # Count property usage
+            property_counts = loinc_df['PROPERTY'].value_counts()
+            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
             
-            if 'PROPERTY' in loinc_df.columns:
-                # Count property usage
-                property_counts = loinc_df['PROPERTY'].value_counts()
-                min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-                
-                # Create containers for frequent properties
-                top_properties = property_counts[property_counts >= min_concepts].head(
-                    self.container_rules.get('max_containers_per_type', 50)
-                )
-                
-                for property_name, count in top_properties.items():
-                    if pd.notna(property_name) and property_name.strip():
-                        container = self._create_property_container(property_name, count)
-                        containers.append(container)
-                        self.container_stats['property_containers'] += 1
+            # Create containers for frequent properties
+            top_properties = property_counts[property_counts >= min_concepts].head(
+                self.container_rules.get('max_containers_per_type', 50)
+            )
+            
+            for property_name, count in top_properties.items():
+                if pd.notna(property_name) and property_name.strip():
+                    container = self._create_property_container(property_name, count)
+                    containers.append(container)
+                    self.container_stats['property_containers'] += 1
         
         self.logger.info(f"Created {len(containers)} property containers")
         return containers
@@ -351,29 +386,27 @@ class ContainerConceptsTransformer(BaseTransformer):
         
         containers = []
         
-        # Analyze LOINC terms for systems
-        if 'loinc_terms' in self.context.source_datasets:
-            loinc_df = self.context.source_datasets['loinc_terms']
+        # FIXED: Use safe dataset access
+        loinc_df = self._get_dataset_safely('loinc_terms')
+        if loinc_df is not None and 'SYSTEM' in loinc_df.columns:
+            # Count system usage
+            system_counts = loinc_df['SYSTEM'].value_counts()
+            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
             
-            if 'SYSTEM' in loinc_df.columns:
-                # Count system usage
-                system_counts = loinc_df['SYSTEM'].value_counts()
-                min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-                
-                # Create containers for frequent systems
-                top_systems = system_counts[system_counts >= min_concepts].head(
-                    self.container_rules.get('max_containers_per_type', 50)
-                )
-                
-                for system_name, count in top_systems.items():
-                    if pd.notna(system_name) and system_name.strip():
-                        container = self._create_system_container(system_name, count)
-                        containers.append(container)
-                        self.container_stats['system_containers'] += 1
+            # Create containers for frequent systems
+            top_systems = system_counts[system_counts >= min_concepts].head(
+                self.container_rules.get('max_containers_per_type', 50)
+            )
+            
+            for system_name, count in top_systems.items():
+                if pd.notna(system_name) and system_name.strip():
+                    container = self._create_system_container(system_name, count)
+                    containers.append(container)
+                    self.container_stats['system_containers'] += 1
         
         self.logger.info(f"Created {len(containers)} system containers")
         return containers
-    
+   
     def _create_system_container(self, system_name: str, concept_count: int) -> OCLConcept:
         """Create a container concept for a specific system"""
         # Generate container ID
@@ -423,6 +456,7 @@ class ContainerConceptsTransformer(BaseTransformer):
         
         return concept
     
+
     def _create_class_containers(self) -> List[OCLConcept]:
         """Create containers for LOINC classes"""
         if not self.container_rules.get('generate_class_containers', True):
@@ -432,23 +466,21 @@ class ContainerConceptsTransformer(BaseTransformer):
         
         containers = []
         
-        # Analyze LOINC terms for classes
-        if 'loinc_terms' in self.context.source_datasets:
-            loinc_df = self.context.source_datasets['loinc_terms']
+        # FIXED: Use safe dataset access
+        loinc_df = self._get_dataset_safely('loinc_terms')
+        if loinc_df is not None and 'CLASS' in loinc_df.columns:
+            # Count class usage
+            class_counts = loinc_df['CLASS'].value_counts()
+            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
             
-            if 'CLASS' in loinc_df.columns:
-                # Count class usage
-                class_counts = loinc_df['CLASS'].value_counts()
-                min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-                
-                # Create containers for all significant classes
-                top_classes = class_counts[class_counts >= min_concepts]
-                
-                for class_name, count in top_classes.items():
-                    if pd.notna(class_name) and class_name.strip():
-                        container = self._create_class_container(class_name, count)
-                        containers.append(container)
-                        self.container_stats['class_containers'] += 1
+            # Create containers for all significant classes
+            top_classes = class_counts[class_counts >= min_concepts]
+            
+            for class_name, count in top_classes.items():
+                if pd.notna(class_name) and class_name.strip():
+                    container = self._create_class_container(class_name, count)
+                    containers.append(container)
+                    self.container_stats['class_containers'] += 1
         
         self.logger.info(f"Created {len(containers)} class containers")
         return containers
@@ -571,33 +603,46 @@ class ContainerConceptsTransformer(BaseTransformer):
         return mapping.get(container_type.lower(), 'Container')
     
     def validate_prerequisites(self) -> bool:
-        """
-        Validate that prerequisites for container generation are met.
-        
-        Returns:
-            bool: True if ready to generate containers
-        """
-        # Check that we have LOINC data to analyze
-        required_datasets = ['loinc_terms']
-        available_datasets = list(self.context.source_datasets.keys())
-        
-        missing_datasets = []
-        for dataset in required_datasets:
-            if dataset not in available_datasets:
-                missing_datasets.append(dataset)
-        
-        if missing_datasets:
-            self.logger.warning(f"Missing datasets for container analysis: {missing_datasets}")
-            # We can still generate some containers, so don't fail completely
-        
-        # Check that we have transformation rules
-        if not hasattr(self.context, 'transformation_rules') or not self.context.transformation_rules:
-            self.logger.warning("No transformation rules available")
-        
-        self.logger.info("Container concepts prerequisites check passed")
-        self.logger.info(f"Available datasets for analysis: {available_datasets}")
-        
-        return True
+        """Validate prerequisites with better error handling"""
+        try:
+            # Check that we have LOINC data to analyze
+            required_datasets = ['loinc_terms']
+            
+            # Defensive check for source_datasets
+            if not hasattr(self.context, 'source_datasets'):
+                self.logger.error("Transformation context has no source_datasets")
+                return False
+            
+            source_datasets = self.context.source_datasets
+            if not isinstance(source_datasets, dict):
+                self.logger.error(f"source_datasets is {type(source_datasets)}, expected dict")
+                return False
+            
+            available_datasets = list(source_datasets.keys())
+            
+            missing_datasets = []
+            for dataset in required_datasets:
+                if dataset not in available_datasets:
+                    missing_datasets.append(dataset)
+            
+            if missing_datasets:
+                self.logger.warning(f"Missing datasets for container analysis: {missing_datasets}")
+                # We can still generate some containers, so don't fail completely
+            
+            # Check that we have transformation rules
+            if not hasattr(self.context, 'transformation_rules') or not self.context.transformation_rules:
+                self.logger.warning("No transformation rules available")
+            
+            self.logger.info("Container concepts prerequisites check passed")
+            self.logger.info(f"Available datasets for analysis: {available_datasets}")
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Prerequisites validation failed: {e}")
+            import traceback
+            self.logger.error(f"Full traceback: {traceback.format_exc()}")
+            return False
     
     def get_transformation_summary(self) -> Dict[str, Any]:
         """Get summary of container transformation configuration"""
@@ -622,7 +667,32 @@ class ContainerConceptsTransformer(BaseTransformer):
             "container_rules_applied": self.container_rules,
             "generation_successful": self.container_stats['total_containers'] > 0
         }
-
+    def debug_context_structure(self):
+        """Debug method to inspect the transformation context structure"""
+        print(f"=== CONTAINER TRANSFORMER DEBUG ===")
+        print(f"Context type: {type(self.context)}")
+        
+        if hasattr(self.context, 'source_datasets'):
+            datasets = self.context.source_datasets
+            print(f"source_datasets type: {type(datasets)}")
+            if isinstance(datasets, dict):
+                print(f"Available dataset keys: {list(datasets.keys())[:5]}...")
+                for key in list(datasets.keys())[:3]:
+                    dataset = datasets[key]
+                    print(f"  {key}: {type(dataset)}")
+                    if hasattr(dataset, 'data'):
+                        print(f"    .data: {type(dataset.data)}")
+            else:
+                print(f"❌ source_datasets is not a dict: {datasets}")
+        
+        if hasattr(self.context, 'transformation_rules'):
+            rules = self.context.transformation_rules
+            print(f"transformation_rules type: {type(rules)}")
+            if hasattr(rules, 'container_concepts'):
+                container_rules = rules.container_concepts
+                print(f"container_concepts type: {type(container_rules)}")
+        
+        print(f"=== END DEBUG ===")
 
 # Example usage and testing
 if __name__ == "__main__":

@@ -376,8 +376,8 @@ class BaseTransformer(ABC):
         """Get the owner organization from configuration"""
         if hasattr(self.context.transformation_rules, 'loinc_term_mappings'):
             mappings = self.context.transformation_rules.loinc_term_mappings
-            return mappings.get('owner', 'LOINC_ORG')
-        return 'LOINC_ORG'
+            return mappings.get('owner', 'Regenstrief')
+        return 'Regenstrief'
     
     def _get_supported_locales(self) -> List[str]:
         """Get list of supported locales from language datasets"""

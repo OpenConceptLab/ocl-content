@@ -248,7 +248,7 @@ class Phase2IntegrationTest:
             concept = OCLConcept(
                 id="12345-6",
                 concept_class="Laboratory",
-                owner="LOINC_ORG"
+                owner="Regenstrief"
             )
             
             # Add names (required for usable concepts)

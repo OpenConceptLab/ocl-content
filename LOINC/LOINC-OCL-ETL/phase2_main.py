@@ -113,16 +113,16 @@ def validate_environment() -> bool:
     
     # Check Python version
     if sys.version_info < (3, 8):
-        print("❌ Python 3.8+ required")
+        print("[FAIL] Python 3.8+ required")
         return False
     
     # Check required modules
     try:
         import pandas as pd
         import yaml
-        print(f"✅ Required modules available (pandas {pd.__version__})")
+        print(f"[OK] Required modules available (pandas {pd.__version__})")
     except ImportError as e:
-        print(f"❌ Missing required module: {e}")
+        print(f"[FAIL] Missing required module: {e}")
         return False
     
     # Check that we have Phase 1 infrastructure
@@ -139,11 +139,11 @@ def validate_environment() -> bool:
             missing_files.append(filename)
     
     if missing_files:
-        print(f"❌ Missing Phase 1 files: {missing_files}")
+        print(f"[FAIL] Missing Phase 1 files: {missing_files}")
         print("   Please ensure Phase 1 infrastructure is available")
         return False
     
-    print("✅ Environment validation passed")
+    print("[OK] Environment validation passed")
     return True
 
 
@@ -162,7 +162,7 @@ def run_phase2_transformation(args) -> bool:
     logger_system = TransformationLogger(log_level=log_level)
     logger = logger_system.get_logger("phase2_main")
     
-    logger.info("🚀 Starting Phase 2: Concept Creation")
+    logger.info("[READY] Starting Phase 2: Concept Creation")
     logger.info("=" * 60)
     
     try:
@@ -180,7 +180,7 @@ def run_phase2_transformation(args) -> bool:
                 config_manager.paths.output_dir = Path(args.output_dir)
                 config_manager.paths.create_directories()
             
-            logger.info("✅ Configuration loaded successfully")
+            logger.info("[OK] Configuration loaded successfully")
             logger_system.log_statistics("Configuration", {
                 "LOINC Version": config_manager.settings.get('loinc_version', 'Unknown'),
                 "Transformation Rules": config_manager.transformation_rules.version,
@@ -197,7 +197,7 @@ def run_phase2_transformation(args) -> bool:
             if args.concepts_per_file:
                 concept_factory.concepts_per_file = args.concepts_per_file
             
-            logger.info("✅ Concept Factory initialized")
+            logger.info("[OK] Concept Factory initialized")
         
         # Dry run mode - validate setup only
         if args.dry_run:
@@ -205,10 +205,10 @@ def run_phase2_transformation(args) -> bool:
             
             # Test configuration and data access
             if concept_factory._initialize_prerequisites():
-                logger.info("✅ Dry run successful - ready for concept creation")
+                logger.info("[OK] Dry run successful - ready for concept creation")
                 return True
             else:
-                logger.error("❌ Dry run failed - prerequisites not met")
+                logger.error("[FAIL] Dry run failed - prerequisites not met")
                 return False
         
         # Run the complete concept creation process
@@ -225,7 +225,7 @@ def run_phase2_transformation(args) -> bool:
             
             # Check results
             if summary.is_successful:
-                logger.info("✅ Phase 2 completed successfully!")
+                logger.info("[OK] Phase 2 completed successfully!")
                 
                 # Log final statistics
                 logger_system.log_statistics("Phase 2 Results", {
@@ -238,17 +238,17 @@ def run_phase2_transformation(args) -> bool:
                 
                 return True
             else:
-                logger.error("❌ Phase 2 completed with errors")
+                logger.error("[FAIL] Phase 2 completed with errors")
                 logger.error(f"Failed concepts: {summary.failed_concepts}")
                 logger.error(f"Validation errors: {len(summary.validation_errors)}")
                 return False
     
     except KeyboardInterrupt:
-        logger.warning("⚠️ Process interrupted by user")
+        logger.warning("[WARNING] Process interrupted by user")
         return False
     
     except Exception as e:
-        logger.error(f"❌ Unexpected error: {str(e)}")
+        logger.error(f"[FAIL] Unexpected error: {str(e)}")
         logger.debug("Full traceback:", exc_info=True)
         return False
 
@@ -268,7 +268,7 @@ def main():
     
     # Validate environment
     if not validate_environment():
-        print("\n❌ Environment validation failed")
+        print("\n[FAIL] Environment validation failed")
         print("Please resolve the issues above before running Phase 2")
         return 1
     
@@ -284,12 +284,12 @@ def main():
             print("🔄 Ready for Phase 3: Mapping Creation")
             return 0
         else:
-            print("\n❌ Phase 2: Concept Creation failed")
+            print("\n[FAIL] Phase 2: Concept Creation failed")
             print("📋 Check the logs for detailed error information")
             return 1
     
     except KeyboardInterrupt:
-        print("\n⚠️ Process interrupted by user")
+        print("\n[WARNING] Process interrupted by user")
         return 130
     
     except Exception as e:

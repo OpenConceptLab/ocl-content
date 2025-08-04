@@ -133,9 +133,9 @@ class OCLConcept:
         if not self.names:
             self._validation_errors.append("At least one name is required")
             
-        # Validate LOINC ID format
-        if self.id and not self._is_valid_loinc_id(self.id):
-            self._validation_errors.append(f"Invalid LOINC ID format: {self.id}")
+        # Validate LOINC ID format (commented out by Joe to remove ID format restriction, specifically for Container concepts)
+        # if self.id and not self._is_valid_loinc_id(self.id):
+        #     self._validation_errors.append(f"Invalid LOINC ID format: {self.id}")
     
     def _is_valid_loinc_id(self, loinc_id: str) -> bool:
         """Validate LOINC ID format (supports terms, parts, answer lists)"""
@@ -143,7 +143,8 @@ class OCLConcept:
             r'^\d{1,6}-\d$',           # LOINC terms: 12345-6
             r'^LP\d+(-\d+)?$',         # LOINC parts: LP12345-6 or LP12345
             r'^LL\d+-\d+$',            # Answer lists: LL123-4
-            r'^LA\d+-\d+$'             # Answer codes: LA123-4
+            r'^LA\d+-\d+$',            # Answer codes: LA123-4
+            r'^LOINC_.+$'                # Container concepts: LOINC_ followed by any text
         ]
         return any(re.match(pattern, loinc_id) for pattern in patterns)
     
@@ -195,9 +196,9 @@ class OCLConcept:
         if not self.names:
             self._validation_errors.append("At least one name is required")
             
-        # Validate LOINC ID format
-        if self.id and not self._is_valid_loinc_id(self.id):
-            self._validation_errors.append(f"Invalid LOINC ID format: {self.id}")
+        # Validate LOINC ID format (commented out by Joe to remove ID format restriction, specifically for Container concepts)
+        # if self.id and not self._is_valid_loinc_id(self.id):
+        #     self._validation_errors.append(f"Invalid LOINC ID format: {self.id}")
     
     def set_loinc_extras(self, component: str = None, property_: str = None,
                         time_aspect: str = None, system: str = None,

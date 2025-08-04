@@ -1,0 +1,5 @@
+- Allow Container concepts to have their own IDs and not conform to LOINC ID structure
+- Concept Class --> Code Type
+- Data type --> Scale or "N/A"
+- Deduplicate Answer Lists
+- Add Answer concepts
