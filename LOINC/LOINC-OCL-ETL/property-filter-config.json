@@ -1,20 +1,28 @@
 {
   "properties": [
-    {"code": "status", "type": "string", "description": "LOINC status (ACTIVE, TRIAL, DISCOURAGED, DEPRECATED)"},
+    {"code": "STATUS", "type": "string", "description": "LOINC status (ACTIVE, TRIAL, DISCOURAGED, DEPRECATED)"},
     {"code": "type", "type": "string", "description": "LOINC type classification"},
-    {"code": "class", "type": "string", "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"},
-    {"code": "obsolete_observation", "type": "string", "description": "Obsolete/Observation status"},
-    {"code": "property", "type": "string", "description": "Property observed (Mass, Volume, Time, etc.)"},
-    {"code": "timing", "type": "string", "description": "Time aspect (Pt, 24H, etc.)"},
-    {"code": "system", "type": "string", "description": "Specimen/system (Blood, Urine, Serum, etc.)"},
-    {"code": "scale", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
-    {"code": "method", "type": "string", "description": "Method of observation"},
-    {"code": "panel_type", "type": "string", "description": "Panel type classification"},
+    {"code": "CLASS", "type": "string", "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"},
+    {"code": "ORDER_OBS", "type": "string", "description": "Order/Observation indicator"},
+    {"code": "PROPERTY", "type": "string", "description": "Property observed (Mass, Volume, Time, etc.)"},
+    {"code": "TIME_ASPCT", "type": "string", "description": "Time aspect (Pt, 24H, etc.)"},
+    {"code": "SYSTEM", "type": "string", "description": "Specimen/system (Blood, Urine, Serum, etc.)"},
+    {"code": "SCALE_TYP", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
+    {"code": "METHOD_TYP", "type": "string", "description": "Method of observation"},
+    {"code": "PanelType", "type": "string", "description": "Panel type classification"},
     {"code": "tags", "type": "string", "description": "Tags"},
     {"code": "code_systems", "type": "string", "description": "Associated code systems"},
-    {"code": "version_first_released", "type": "string", "description": "Version when first released"},
-    {"code": "version_last_changed", "type": "string", "description": "Version when last changed"},
-    {"code": "hl7_attachment", "type": "string", "description": "HL7 attachment information"},
+    {"code": "VersionFirstReleased", "type": "string", "description": "Version when first released"},
+    {"code": "VersionLastChanged", "type": "string", "description": "Version when last changed"},
+    {"code": "HL7_ATTACHMENT_STRUCTURE", "type": "string", "description": "HL7 attachment information"},
+    {"code": "LONG_COMMON_NAME", "type": "string", "description": "LOINC long common name"},
+    {"code": "SHORTNAME", "type": "string", "description": "LOINC short name"},
+    {"code": "COMMON_TEST_RANK", "type": "string", "description": "Common test ranking"},
+    {"code": "COMMON_ORDER_RANK", "type": "string", "description": "Common order ranking"},
+    {"code": "FORMULA", "type": "string", "description": "LOINC formula"},
+    {"code": "EXAMPLE_UNITS", "type": "string", "description": "Example units"},
+    
+
     {"code": "externally_defined", "type": "string", "description": "Whether answer list is externally defined (Y/N)"},
     {"code": "external_code_system", "type": "string", "description": "External code system for externally defined lists"},
     {"code": "external_link", "type": "string", "description": "External link/URL for externally defined lists"},
@@ -22,17 +30,18 @@
     {"code": "anchored_to", "type": "string", "description": "What the answer list is anchored to"},
     {"code": "answers", "type": "string", "description": "Number of answers in the list (numeric ranges)"},
     {"code": "loincs", "type": "string", "description": "Number of LOINC terms using this list (numeric ranges)"},
-    {"code": "component", "type": "string", "description": "What is measured/observed"},
+    
+    {"code": "COMPONENT", "type": "string", "description": "What is measured/observed"},
     {"code": "answer_list_id", "type": "string", "description": "Associated answer list ID"},
-    {"code": "associated_observations", "type": "string", "description": "Related observations"},
-    {"code": "ask_at_order_entry", "type": "string", "description": "Ask at order entry flag"},
+    {"code": "AskAtOrderEntry", "type": "string", "description": "Ask at order entry flag"},
+    {"code": "AssociatedObservations", "type": "string", "description": "Related observations"},
     {"code": "common_panel_loinc", "type": "string", "description": "Common panel LOINC reference"},
     {"code": "test_loinc_num", "type": "string", "description": "Test LOINC number reference"}
   ],
   
   "filters": [
     {
-      "code": "status", 
+      "code": "STATUS", 
       "operator": ["=", "in"], 
       "description": "Filter by LOINC status",
       "value": "ACTIVE,TRIAL,DISCOURAGED,DEPRECATED"
@@ -43,42 +52,42 @@
       "description": "Filter by LOINC type"
     },
     {
-      "code": "class", 
+      "code": "CLASS", 
       "operator": ["=", "in"], 
       "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
     },
     {
-      "code": "order_observation", 
+      "code": "ORDER_OBS", 
       "operator": ["=", "in"], 
       "description": "Filter by order/observation status"
     },
     {
-      "code": "property", 
+      "code": "PROPERTY", 
       "operator": ["=", "in"], 
       "description": "Filter by property type (Mass, Volume, Time, etc.)"
     },
     {
-      "code": "timing", 
+      "code": "TIME_ASPCT", 
       "operator": ["=", "in"], 
       "description": "Filter by time aspect (Pt, 24H, etc.)"
     },
     {
-      "code": "system", 
+      "code": "SYSTEM", 
       "operator": ["=", "in", "contains"], 
       "description": "Filter by specimen/system (Blood, Urine, etc.)"
     },
     {
-      "code": "scale", 
+      "code": "SCALE_TYP", 
       "operator": ["=", "in"], 
       "description": "Filter by measurement scale (Qn, Ord, Nom)"
     },
     {
-      "code": "method", 
+      "code": "METHOD_TYP", 
       "operator": ["=", "in"], 
       "description": "Filter by observation method"
     },
     {
-      "code": "panel_type", 
+      "code": "PanelType", 
       "operator": ["=", "in"], 
       "description": "Filter by panel type"
     },
@@ -86,13 +95,14 @@
       "code": "tags", 
       "operator": ["=", "in"], 
       "description": "Filter by tags"
-    },{
+    },
+    {
       "code": "code_systems", 
       "operator": ["=", "in"], 
       "description": "Filter by associated code systems"
     },
     {
-      "code": "hl7_attachment", 
+      "code": "HL7_ATTACHMENT_STRUCTURE", 
       "operator": ["=", "in"], 
       "description": "Filter by HL7 attachment"
     },
@@ -113,12 +123,12 @@
       "description": "Filter by number of LOINC terms using this list (numeric ranges)"
     },
     {
-      "code": "version_first_released", 
+      "code": "VersionFirstReleased", 
       "operator": ["=", ">=", "<="], 
       "description": "Filter by release version"
     },
     {
-      "code": "version_last_changed", 
+      "code": "VersionLastChanged", 
       "operator": ["=", ">=", "<="], 
       "description": "Filter by last changed version"
     }
