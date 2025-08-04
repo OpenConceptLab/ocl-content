@@ -279,9 +279,9 @@ class ConfigManager:
             'log_level': 'INFO',
             'directories': {
                 'input_dir': r'C:\Users\jamlung\Documents\LOINC\Loinc_2.80',
-                'output_dir': r'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\output',
-                'temp_dir': r'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\temp',
-                'logs_dir': r'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\logs'
+                'output_dir': r'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\output',
+                'temp_dir': r'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\temp',
+                'logs_dir': r'C:\Users\jamlung\Documents\LOINC\LOINC Content for OCL - put in GitHub\ETL Development - LOINC 2-80\logs'
             },
             'batch_sizes': {
                 'concept_batch': 1000,

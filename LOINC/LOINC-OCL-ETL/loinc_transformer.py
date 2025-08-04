@@ -1,10 +1,11 @@
 """
 LOINC Terms Transformer for LOINC to OCL Transformation - Phase 2
 
-This module transforms LOINC terms (from Loinc.csv) into OCL Concept objects.
-Handles the primary LOINC dataset with 104,672 validated records from Phase 1.
+Enhanced with configuration-driven dataset discovery and caching.
+Transforms LOINC terms (from Loinc.csv) into OCL Concept objects.
 
 Key capabilities:
+- Configuration-driven dataset discovery with caching
 - Transform LOINC terms to OCL concepts with full metadata
 - Multi-language name support (19 languages)
 - LOINC-specific extras (component, property, system, etc.)
@@ -24,7 +25,10 @@ import logging
 
 class LoincTermsTransformer(BaseTransformer):
     """
-    Transformer for LOINC terms (main LOINC codes).
+    Enhanced transformer for LOINC terms (main LOINC codes).
+    
+    Now uses configuration-driven dataset discovery and intelligent caching
+    to efficiently locate and process LOINC terms data.
     
     Transforms records from Loinc.csv into OCL Concept objects with:
     - Primary English names from LONG_COMMON_NAME field
@@ -34,63 +38,37 @@ class LoincTermsTransformer(BaseTransformer):
     """
     
     def __init__(self, context: TransformationContext):
-        """Initialize LOINC Terms transformer"""
+        """Initialize enhanced LOINC Terms transformer"""
+        # Call parent constructor which handles discovery and caching
         super().__init__(context)
         
         # LOINC Terms specific configuration
         self.transformer_name = "LOINC_Terms"
-        
-        # Dynamically find the LOINC terms dataset
-        self.source_dataset = self._find_loinc_terms_dataset()
-        if not self.source_dataset:
-            self.logger.warning("Could not find LOINC terms dataset")
-            self.source_dataset = "loinc_terms"  # fallback
-        
+        self.logical_dataset_name = "loinc_terms"
         self.primary_key = "LOINC_NUM"
         
         # Field mappings from transformation rules
         self._load_field_mappings()
         
-        self.logger.info(f"LOINC Terms Transformer initialized")
-        self.logger.info(f"Using dataset: {self.source_dataset}")
-        self.logger.info(f"Expected to process LOINC terms")
-    
-    def _find_loinc_terms_dataset(self) -> Optional[str]:
-        """Dynamically find the LOINC terms dataset from available datasets"""
-        # Try exact matches first
-        candidates = ['loinc_terms', 'loinc', 'Loinc', 'loinc_table', 'loinc_data']
+        self.logger.info(f"Enhanced LOINC Terms Transformer initialized")
+        self.logger.info(f"Logical dataset: {self.logical_dataset_name}")
+        self.logger.info(f"Discovery caching: {'enabled' if context.discovery_cache else 'disabled'}")
         
-        for candidate in candidates:
-            if candidate in self.context.source_datasets:
-                dataset = self.context.source_datasets[candidate]
-                if hasattr(dataset, 'row_count') and dataset.row_count > 50000:
-                    return candidate
-                elif hasattr(dataset, 'data'):
-                    if len(dataset.data) > 50000:
-                        return candidate
-        
-        # Look for datasets with 'loinc' in the name and reasonable size
-        for dataset_name, dataset in self.context.source_datasets.items():
-            if ('loinc' in dataset_name.lower() and 
-                'part' not in dataset_name.lower() and
-                'answer' not in dataset_name.lower() and
-                'link' not in dataset_name.lower()):
-                # Check size indicators
-                if hasattr(dataset, 'row_count') and dataset.row_count > 50000:
-                    return dataset_name
-                elif hasattr(dataset, 'data'):
-                    if len(dataset.data) > 50000:
-                        return dataset_name
-        
-        return None
+        # Log discovery configuration being used
+        thresholds = context.discovery_config.get('size_thresholds', {}).get('loinc_terms', {})
+        if thresholds:
+            expected = thresholds.get('expected_records', 'unknown')
+            min_records = thresholds.get('min_records', 'unknown')
+            max_records = thresholds.get('max_records', 'unknown')
+            self.logger.info(f"Expected records: {expected} (range: {min_records}-{max_records})")
     
     def get_transformer_name(self) -> str:
         """Get transformer name"""
         return self.transformer_name
     
-    def get_source_dataset_name(self) -> str:
-        """Get source dataset name"""
-        return self.source_dataset
+    def get_logical_dataset_name(self) -> str:
+        """Get logical dataset name for discovery system"""
+        return self.logical_dataset_name
     
     def get_primary_key_field(self) -> str:
         """Get primary key field"""
@@ -293,31 +271,23 @@ class LoincTermsTransformer(BaseTransformer):
     
     def validate_prerequisites(self) -> bool:
         """
-        Validate that all prerequisites for transformation are met.
+        Enhanced prerequisite validation using configuration-driven discovery.
         
         Returns:
             bool: True if ready to transform, False otherwise
         """
-        # List available datasets for debugging
-        available_datasets = list(self.context.source_datasets.keys())
-        self.logger.info(f"Available datasets: {len(available_datasets)}")
-        self.logger.debug(f"Dataset names: {available_datasets[:10]}...")  # Show first 10
+        self.logger.info("Validating prerequisites with enhanced discovery system...")
         
-        # Check that source dataset is available
-        if self.source_dataset not in self.context.source_datasets:
-            self.logger.error(f"Source dataset '{self.source_dataset}' not found")
-            self.logger.error(f"Available datasets: {available_datasets[:5]}...")
-            
-            # Try to find alternative
-            alternative = self._find_loinc_terms_dataset()
-            if alternative:
-                self.logger.info(f"Found alternative dataset: {alternative}")
-                self.source_dataset = alternative
-            else:
-                return False
+        # Use parent class validation which includes enhanced discovery
+        base_validation = super().validate_prerequisites()
         
-        # Get dataset for validation
-        source_data = self.context.source_datasets[self.source_dataset]
+        if not base_validation:
+            self.logger.error("Base prerequisite validation failed")
+            return False
+        
+        # LOINC Terms specific validation
+        dataset_name = self.get_source_dataset_name()
+        source_data = self.context.source_datasets[dataset_name]
         
         # Handle different dataset structures
         if hasattr(source_data, 'data'):
@@ -325,43 +295,53 @@ class LoincTermsTransformer(BaseTransformer):
         else:
             source_df = source_data
         
-        # Check required columns
-        required_columns = ['LOINC_NUM', 'LONG_COMMON_NAME']
-        available_columns = list(source_df.columns) if hasattr(source_df, 'columns') else []
-        missing_columns = [col for col in required_columns if col not in available_columns]
+        # Validate specific LOINC Terms requirements
+        total_records = len(source_df)
         
-        if missing_columns:
-            self.logger.error(f"Missing required columns: {missing_columns}")
-            self.logger.info(f"Available columns: {available_columns[:10]}...")  # Show first 10
-            return False
+        # Check against configured thresholds
+        thresholds = self.discovery_config.get('size_thresholds', {}).get('loinc_terms', {})
+        min_records = thresholds.get('min_records', 50000)
+        max_records = thresholds.get('max_records', 200000)
+        
+        if not (min_records <= total_records <= max_records):
+            self.logger.warning(f"Dataset size {total_records:,} outside expected range [{min_records:,}-{max_records:,}]")
+            # Don't fail on this - just warn
         
         # Check data quality
-        total_records = len(source_df)
-        if total_records == 0:
-            self.logger.error("Dataset is empty")
-            return False
+        if hasattr(source_df, 'columns'):
+            null_loinc_nums = source_df['LOINC_NUM'].isna().sum() if 'LOINC_NUM' in source_df.columns else 0
+            null_names = source_df['LONG_COMMON_NAME'].isna().sum() if 'LONG_COMMON_NAME' in source_df.columns else 0
+            
+            if null_loinc_nums > 0:
+                self.logger.warning(f"{null_loinc_nums} records have null LOINC_NUM")
+            if null_names > 0:
+                self.logger.warning(f"{null_names} records have null LONG_COMMON_NAME")
         
-        null_loinc_nums = source_df['LOINC_NUM'].isna().sum() if 'LOINC_NUM' in source_df.columns else 0
-        null_names = source_df['LONG_COMMON_NAME'].isna().sum() if 'LONG_COMMON_NAME' in source_df.columns else 0
+        # Log discovery statistics
+        discovery_stats = self.get_discovery_stats()
+        self.logger.info("Discovery Statistics:")
+        self.logger.info(f"  Logical name: {discovery_stats['logical_dataset_name']}")
+        self.logger.info(f"  Actual name: {discovery_stats['actual_dataset_name']}")
+        self.logger.info(f"  Cache hits: {discovery_stats['cache_stats']['valid_entries']}")
+        self.logger.info(f"  Cache total: {discovery_stats['cache_stats']['total_entries']}")
         
-        if null_loinc_nums > 0:
-            self.logger.warning(f"{null_loinc_nums} records have null LOINC_NUM")
-        if null_names > 0:
-            self.logger.warning(f"{null_names} records have null LONG_COMMON_NAME")
-        
-        self.logger.info(f"Prerequisites validation passed")
-        self.logger.info(f"Dataset: {self.source_dataset}")
+        self.logger.info(f"Enhanced prerequisites validation passed")
+        self.logger.info(f"Dataset: {dataset_name}")
         self.logger.info(f"Records: {total_records:,}")
-        self.logger.info(f"Columns: {len(available_columns)}")
+        
+        if hasattr(source_df, 'columns'):
+            self.logger.info(f"Columns: {len(source_df.columns)}")
+        
         self.logger.info(f"Multi-language support: {len(self.supported_locales)} locales")
         
         return True
     
     def get_transformation_summary(self) -> Dict[str, Any]:
-        """Get summary of transformation configuration"""
-        return {
+        """Get enhanced summary of transformation configuration"""
+        base_summary = {
             "transformer_name": self.transformer_name,
-            "source_dataset": self.source_dataset,
+            "logical_dataset_name": self.logical_dataset_name,
+            "actual_dataset_name": self.get_source_dataset_name(),
             "primary_key": self.primary_key,
             "owner_organization": self.owner_org,
             "supported_locales": self.supported_locales,
@@ -369,12 +349,33 @@ class LoincTermsTransformer(BaseTransformer):
             "field_mappings_count": len(self.field_mappings),
             "transformation_rules_version": getattr(self.context.transformation_rules, 'version', 'Unknown')
         }
+        
+        # Add discovery statistics
+        base_summary.update(self.get_discovery_stats())
+        
+        # Add configuration details
+        thresholds = self.discovery_config.get('size_thresholds', {}).get('loinc_terms', {})
+        patterns = self.discovery_config.get('identification_patterns', {}).get('loinc_terms', {})
+        
+        base_summary['discovery_configuration'] = {
+            'size_thresholds': thresholds,
+            'identification_patterns': patterns,
+            'caching_enabled': self.discovery_config.get('behavior', {}).get('enable_caching', True),
+            'cache_ttl_seconds': self.discovery_config.get('behavior', {}).get('cache_ttl_seconds', 3600)
+        }
+        
+        return base_summary
 
 
 # Example usage and testing
 if __name__ == "__main__":
-    print("LOINC Terms Transformer")
-    print("Transforms LOINC terms into OCL Concept objects")
+    print("Enhanced LOINC Terms Transformer")
+    print("Now with configuration-driven dataset discovery and intelligent caching!")
+    print("\nNew features:")
+    print("- Configurable dataset size thresholds")
+    print("- Intelligent caching to avoid repeated searches") 
+    print("- Enhanced validation with detailed discovery statistics")
+    print("- Configuration-driven discovery patterns")
     print("\nKey features:")
     print("- Primary dataset: Loinc.csv (104K+ records)")
     print("- Multi-language support: 19 locales")

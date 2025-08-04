@@ -1,79 +1,143 @@
-# LOINC to OCL Transformation - Runtime Settings Configuration
-# This file contains all runtime configuration settings for the transformation process
+# LOINC to OCL Transformation Settings
+# Updated with Phase 2 dataset discovery configuration
 
-# Project Information
-project_name: LOINC_OCL_Transform
-loinc_version: '2.80'
-transformation_rules_version: v1
-log_level: INFO
-
-# Directory Configuration
-directories:
-  # Input directory containing LOINC 2.80 files
-  input_dir: 'C:\Users\jamlung\Documents\LOINC\Loinc_2.80'
+# Processing configuration
+processing:
+  batch_sizes:
+    data_loading: 1000
+    concept_creation: 1000
+    mapping_creation: 500
+    validation: 1000
   
-  # Output directory for generated OCL files
-  output_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\output'
+  # Performance settings
+  performance:
+    max_memory_gb: 4
+    max_processing_time_seconds: 30
+    enable_progress_tracking: true
+    progress_update_interval: 1000
+
+# Dataset discovery configuration (NEW)
+dataset_discovery:
+  # Size thresholds for automatic dataset identification
+  size_thresholds:
+    loinc_terms:
+      min_records: 50000
+      max_records: 200000
+      expected_records: 104672
+    loinc_parts:
+      min_records: 10000
+      max_records: 100000
+      expected_records: 72740
+    answer_lists:
+      min_records: 1000
+      max_records: 50000
+      expected_records: 30315
+    language_variants:
+      min_records: 100
+      max_records: 200000
+      expected_records: 10000  # varies by language
   
-  # Temporary directory for intermediate files
-  temp_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\temp'
+  # Dataset identification patterns
+  identification_patterns:
+    loinc_terms:
+      preferred_names: ["Loinc.csv", "loinc_terms", "loinc", "loinc_table"]
+      required_columns: ["LOINC_NUM", "LONG_COMMON_NAME"]
+      exclude_patterns: ["part", "answer", "link", "linguistic"]
+    loinc_parts:
+      preferred_names: ["Part.csv", "loinc_parts", "parts"]
+      required_columns: ["PartNumber", "PartDisplayName"]
+      exclude_patterns: ["link", "supplementary", "primary"]
+    answer_lists:
+      preferred_names: ["AnswerList.csv", "answer_lists", "answerlist"]
+      required_columns: ["AnswerListId", "AnswerListName"]
+      exclude_patterns: ["link", "string"]
   
-  # Log directory for all logging output
-  logs_dir: 'C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\logs'
+  # Discovery behavior
+  behavior:
+    enable_caching: true
+    cache_ttl_seconds: 3600  # 1 hour
+    fallback_to_size_matching: true
+    strict_column_validation: false
+    log_discovery_details: true
 
-# Processing Configuration
-batch_sizes:
-  # Batch size for concept creation (Phase 2)
-  concept_batch: 1000
+# File paths and directories
+paths:
+  # Input directories
+  loinc_data_dir: "data/loinc"
+  language_variants_dir: "data/loinc/LinguisticVariants"
+  config_dir: "config"
   
-  # Batch size for mapping creation (Phase 3)
-  mapping_batch: 500
+  # Output directories  
+  output_dir: "output"
+  logs_dir: "logs"
+  temp_dir: "temp"
+  reports_dir: "output/reports"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_logging: true
+  console_logging: true
+  max_log_size_mb: 100
+  backup_count: 5
+
+# OCL-specific settings
+ocl:
+  # OCL concept defaults
+  defaults:
+    owner_type: "Organization"
+    source: "LOINC"
+    datatype: "None"
+    concept_class_fallback: "Laboratory"
   
-  # Batch size for UMLS API calls (Phase 5)
-  umls_batch: 100
+  # Validation settings
+  validation:
+    strict_mode: true
+    enable_schema_validation: true
+    max_name_length: 1000
+    required_locales: ["en"]
+    warn_on_missing_translations: true
 
-# UMLS API Configuration (for Phase 5)
-umls_api:
-  enabled: true
-  rate_limit: 20        # requests per second
-  timeout: 30           # seconds
-  retry_attempts: 3
-  base_url: 'https://uts-ws.nlm.nih.gov/rest'
-
-# Performance Settings
-parallel_processing: false    # Enable parallel processing (experimental)
-max_workers: 4               # Maximum worker threads for parallel processing
-memory_optimization: true    # Enable memory optimization techniques
-
-# Validation Settings
-validation:
-  enabled: true
-  strict_mode: false          # Strict validation mode (fail on warnings)
-  max_error_samples: 10       # Maximum error samples to collect per type
+# Quality assurance
+quality:
+  validation:
+    enable_cross_validation: true
+    require_english_names: true
+    allow_duplicate_ids: false
+    max_validation_errors: 0
   
-# Output Format Settings
-output_format:
-  json_indent: 2              # JSON indentation for readability
-  chunk_size: 10000          # Records per output file chunk
-  include_metadata: true      # Include metadata in output files
-  validate_output: true       # Validate generated JSON before writing
+  performance:
+    benchmark_against_phase1: true
+    require_sub_30_second_processing: true
+    max_memory_usage_gb: 4
+    min_concepts_per_second: 1000
 
-#Output Generation Settings
-output_generation:
-  test_mode:
-    enabled: true
-    max_concepts: 300
-    max_mappings: 200
-    sample_strategy: "representative"  # or "random", "stratified"
-    include_hierarchies: true
-    coverage_requirements:
-      loinc_types: ["laboratory", "survey", "panel"]
-      part_types: ["component", "property", "system", "method"]
-      mapping_types: ["panel_qa", "answer_links", "code_evolution", "associated_obs", "order_entry"]
-
-# Development/Debug Settings
-debug:
-  save_intermediate_files: false    # Save intermediate processing files
-  detailed_progress: true           # Show detailed progress information
-  memory_profiling: false          # Enable memory usage profiling
-  performance_timing: true         # Track detailed performance timing
+# Multi-language support
+languages:
+  supported_locales:
+    - "en"  # English (primary)
+    - "fr"  # French
+    - "es"  # Spanish
+    - "de"  # German
+    - "it"  # Italian
+    - "pt"  # Portuguese
+    - "nl"  # Dutch
+    - "ru"  # Russian
+    - "zh"  # Chinese
+    - "ja"  # Japanese
+    - "ko"  # Korean
+    - "ar"  # Arabic
+    - "hi"  # Hindi
+    - "sv"  # Swedish
+    - "da"  # Danish
+    - "no"  # Norwegian
+    - "fi"  # Finnish
+    - "pl"  # Polish
+    - "cs"  # Czech
+  
+  processing:
+    auto_detect_language_files: true
+    preserve_unicode: true
+    normalize_locale_codes: true
+    fallback_to_english: true

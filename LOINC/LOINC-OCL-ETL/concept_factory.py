@@ -106,25 +106,26 @@ class ConceptFactory:
     Maintains Phase 1's performance standards: <30 seconds, <4GB memory.
     """
     
-    def __init__(self, config_manager: Optional[ConfigManager] = None):
+    def __init__(self, config_manager: Optional[ConfigManager] = None, loading_summary: Optional[Any] = None):
         """
         Initialize Concept Factory.
         
         Args:
             config_manager: Optional pre-initialized config manager
+            loading_summary: Optional pre-loaded LoadingSummary (for in-memory demo)
         """
         self.config_manager = config_manager or ConfigManager()
         self.logger = logging.getLogger(__name__)
-        
+
         # Processing state
         self.data_loader: Optional[DataLoader] = None
-        self.loading_summary: Optional[LoadingSummary] = None
+        self.loading_summary: Optional[LoadingSummary] = loading_summary
         self.transformation_context: Optional[TransformationContext] = None
-        
+
         # Output configuration
         self.output_dir = Path("output")
         self.concepts_per_file = 10000  # Chunk size for JSON-lines files
-        
+
         # Performance tracking
         self.start_time: Optional[float] = None
         self.processing_stats = {
@@ -133,7 +134,7 @@ class ConceptFactory:
             'memory_peak_mb': 0,
             'processing_time_seconds': 0
         }
-        
+
         self.logger.info("Concept Factory initialized")
     
     def create_all_concepts(self, 
@@ -189,33 +190,38 @@ class ConceptFactory:
     def _initialize_prerequisites(self) -> bool:
         """Initialize and validate all prerequisites"""
         self.logger.info("📋 Step 1: Initializing prerequisites...")
-        
-        # Load configuration
+        # If loading_summary is already set (e.g., from demo), skip reload
+        if self.loading_summary is not None:
+            self.logger.info("   Using in-memory LoadingSummary (demo mode)")
+            # Set up output directory
+            self.output_dir = self.config_manager.paths.output_dir / "phase2_concepts"
+            self.output_dir.mkdir(parents=True, exist_ok=True)
+            self.logger.info(f"✅ Prerequisites initialized successfully (in-memory)")
+            self.logger.info(f"   Loaded {self.loading_summary.total_rows_loaded:,} records from Phase 1 (in-memory)")
+            self.logger.info(f"   Output directory: {self.output_dir}")
+            return True
+
+        # Otherwise, load from disk as before
         if not self.config_manager.load_all_configs():
             self.logger.error("Failed to load configuration")
             return False
-        
-        # Initialize data loader and load Phase 1 data
+
         self.data_loader = DataLoader(self.config_manager.config_dir)
-        
         self.logger.info("Loading Phase 1 validated data...")
         self.loading_summary = self.data_loader.load_all_data(
             validate_data=False,  # Already validated in Phase 1
             create_cross_refs=True
         )
-        
+
         if not self.loading_summary.is_successful:
             self.logger.error("Failed to load Phase 1 data")
             return False
-        
-        # Set up output directory
+
         self.output_dir = self.config_manager.paths.output_dir / "phase2_concepts"
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
         self.logger.info(f"✅ Prerequisites initialized successfully")
         self.logger.info(f"   Loaded {self.loading_summary.total_rows_loaded:,} records from Phase 1")
         self.logger.info(f"   Output directory: {self.output_dir}")
-        
         return True
     
     def _setup_transformation_context(self) -> None:
@@ -244,7 +250,7 @@ class ConceptFactory:
     def _extract_language_datasets(self) -> Dict[str, Any]:
         """Extract language datasets from Phase 1 loading results"""
         language_datasets = {}
-        
+
         # Extract language variant datasets from Phase 1 results
         for dataset_name, dataset in self.loading_summary.datasets.items():
             if 'linguistic' in dataset_name.lower() or 'language' in dataset_name.lower():
@@ -252,8 +258,12 @@ class ConceptFactory:
                 parts = dataset_name.lower().split('_')
                 if len(parts) >= 3:
                     lang_code = parts[-1]
-                    language_datasets[lang_code] = dataset.data
-        
+                    # Use .data if present, else use the dataset directly (DataFrame)
+                    if hasattr(dataset, 'data'):
+                        language_datasets[lang_code] = dataset.data
+                    else:
+                        language_datasets[lang_code] = dataset
+
         return language_datasets
     
     def _run_all_transformers(self, progress_callback: Optional[Callable] = None) -> ConceptCreationSummary:

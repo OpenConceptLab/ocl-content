@@ -378,7 +378,7 @@ if __name__ == "__main__":
     concept = OCLConcept(
         id="1234-5",
         concept_class="Laboratory",
-        owner="LOINC_ORG"
+        owner="Regenstrief"
     )
     
     # Add primary English name
