@@ -1,0 +1,100 @@
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:301 - ============================================================
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:302 - LOINC TO OCL TRANSFORMATION SESSION STARTED
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:303 - ============================================================
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:304 - Session ID: 20250804_084017
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:305 - Start Time: 2025-08-04T08:40:17.659832
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:306 - Log Level: INFO
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:307 - Log Directory: logs
+2025-08-04 08:40:17 - loinc_transformation - INFO - _setup_session_logging:308 - ============================================================
+2025-08-04 08:40:17 - loinc_transformation.main - INFO - run_phase1_foundation:151 - Starting Phase 1: Foundation & Data Loading
+2025-08-04 08:40:17 - loinc_transformation - INFO - start_phase:327 - STARTING PHASE: Configuration Loading
+2025-08-04 08:40:17 - loinc_transformation - INFO - start_phase:328 - ----------------------------------------
+2025-08-04 08:40:17 - loinc_transformation.main - INFO - run_phase1_foundation:155 - Loading configuration files...
+2025-08-04 08:40:18 - loinc_transformation - INFO - log_statistics:396 - STATISTICS - Configuration:
+2025-08-04 08:40:18 - loinc_transformation - INFO - log_statistics:405 -   Input Directory: C:\Users\jamlung\Documents\LOINC\Loinc_2.80
+2025-08-04 08:40:18 - loinc_transformation - INFO - log_statistics:405 -   Output Directory: C:\Users\jamlung\Documents\GitHub\ocl-content\LOINC\LOINC-OCL-ETL\output
+2025-08-04 08:40:18 - loinc_transformation - INFO - log_statistics:405 -   LOINC Version: 2.80
+2025-08-04 08:40:18 - loinc_transformation - INFO - log_statistics:405 -   Transformation Rules Version: v1
+2025-08-04 08:40:18 - loinc_transformation - INFO - end_phase:335 - ----------------------------------------
+2025-08-04 08:40:18 - loinc_transformation - INFO - end_phase:336 - COMPLETED PHASE: Configuration Loading (0.43s)
+2025-08-04 08:40:18 - loinc_transformation - INFO - end_phase:337 - 
+2025-08-04 08:40:18 - loinc_transformation - INFO - start_phase:327 - STARTING PHASE: Data Loading & Validation
+2025-08-04 08:40:18 - loinc_transformation - INFO - start_phase:328 - ----------------------------------------
+2025-08-04 08:40:18 - loinc_transformation.main - INFO - run_phase1_foundation:178 - Loading LOINC data files...
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:198 - [OK] Data loading completed successfully
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:396 - STATISTICS - Data Loading Results:
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Files Processed: 30
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Total Rows Loaded: 3,191,245
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Processing Time (seconds): 88.12
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Cross-reference Tables Created: 4
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Validation Errors: 0
+2025-08-04 08:41:46 - loinc_transformation - INFO - log_statistics:405 -   Validation Warnings: 3
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:211 - Loaded datasets:
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   Loinc.csv: 104,672 rows, 40 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   Part.csv: 72,740 rows, 5 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   AnswerList.csv: 30,315 rows, 19 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   LoincAnswerListLink.csv: 29,018 rows, 6 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   PanelsAndForms.csv: 91,993 rows, 29 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   MapTo.csv: 4,643 rows, 3 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   SourceOrganization.csv: 145 rows, 6 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   LoincPartLink_Primary.csv: 642,050 rows, 8 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   LoincPartLink_Supplementary.csv: 1,267,804 rows, 8 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   PartRelatedCodeMapping.csv: 15,382 rows, 10 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   deAT24LinguisticVariant.csv: 7,167 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   deDE15LinguisticVariant.csv: 18,257 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   elGR17LinguisticVariant.csv: 89,685 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   esAR7LinguisticVariant.csv: 38,293 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   esES12LinguisticVariant.csv: 62,652 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   esMX28LinguisticVariant.csv: 83,231 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   etEE10LinguisticVariant.csv: 29,049 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   frBE23LinguisticVariant.csv: 42,681 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   frCA8LinguisticVariant.csv: 49,310 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   frFR18LinguisticVariant.csv: 58,356 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   itIT16LinguisticVariant.csv: 91,373 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   koKR13LinguisticVariant.csv: 26,893 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   LinguisticVariants.csv: 19 rows, 5 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   nlNL22LinguisticVariant.csv: 62,117 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   plPL29LinguisticVariant.csv: 14,457 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   ptBR11LinguisticVariant.csv: 58,468 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   ruRU20LinguisticVariant.csv: 56,428 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   trTR19LinguisticVariant.csv: 49,501 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   ukUA30LinguisticVariant.csv: 3,159 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:213 -   zhCN5LinguisticVariant.csv: 91,387 rows, 12 columns
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:217 - Cross-reference tables created:
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:220 -   loinc_lookup: 104,672 entries
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:220 -   part_lookup: 72,740 entries
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:220 -   answer_list_lookup: 4,621 entries
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:220 -   status_lookup: 4 entries
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:335 - ----------------------------------------
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:336 - COMPLETED PHASE: Data Loading & Validation (88.17s)
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:337 - 
+2025-08-04 08:41:46 - loinc_transformation - INFO - start_phase:327 - STARTING PHASE: Foundation Readiness Check
+2025-08-04 08:41:46 - loinc_transformation - INFO - start_phase:328 - ----------------------------------------
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:224 - Verifying Phase 1 foundation readiness...
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:244 - Foundation readiness check:
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] Configuration Loaded
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] Transformation Rules Loaded
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] Output Directory Created
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] Data Successfully Loaded
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] No Critical Validation Errors
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:247 -   [OK] Cross-references Created
+2025-08-04 08:41:46 - loinc_transformation.main - INFO - run_phase1_foundation:250 - [OK] Phase 1 foundation is ready for Phase 2 development
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:335 - ----------------------------------------
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:336 - COMPLETED PHASE: Foundation Readiness Check (0.01s)
+2025-08-04 08:41:46 - loinc_transformation - INFO - end_phase:337 - 
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:482 - ============================================================
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:483 - TRANSFORMATION SESSION SUMMARY
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:484 - ============================================================
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:487 - Session Duration: 0:01:28
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:490 - 
+Phase Performance:
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:492 -   Configuration Loading: 0:00:00
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:492 -   Data Loading & Validation: 0:01:28
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:492 -   Foundation Readiness Check: 0:00:00
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:503 - 
+Errors: 0
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:504 - Warnings: 0
+2025-08-04 08:41:46 - loinc_transformation - INFO - save_session_report:468 - Session report saved to: logs\session_report_20250804_084017.json
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:509 - ============================================================
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:510 - SESSION COMPLETED
+2025-08-04 08:41:46 - loinc_transformation - INFO - finalize_session:511 - ============================================================

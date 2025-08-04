@@ -1,0 +1,32 @@
+{
+  "session_info": {
+    "session_id": "20250804_084017",
+    "start_time": "2025-08-04T08:40:17.658832",
+    "end_time": "2025-08-04T08:41:46.300814",
+    "duration_seconds": 88.64198231697083,
+    "duration_formatted": "0:01:28"
+  },
+  "phase_performance": {
+    "Configuration Loading": {
+      "duration_seconds": 0.4283320903778076,
+      "duration_formatted": "0:00:00"
+    },
+    "Data Loading & Validation": {
+      "duration_seconds": 88.16528534889221,
+      "duration_formatted": "0:01:28"
+    },
+    "Foundation Readiness Check": {
+      "duration_seconds": 0.007002830505371094,
+      "duration_formatted": "0:00:00"
+    }
+  },
+  "progress_summary": {},
+  "error_summary": {
+    "total_errors": 0,
+    "total_warnings": 0,
+    "error_types": {},
+    "warning_types": {},
+    "error_samples": {},
+    "warning_samples": {}
+  }
+}

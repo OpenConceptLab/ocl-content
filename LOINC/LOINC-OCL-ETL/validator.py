@@ -22,7 +22,7 @@ import logging
 import pandas as pd
 from typing import Dict, List, Set, Optional, Any
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 
@@ -48,7 +48,6 @@ class ValidationRule:
     rule_type: str  # CRITICAL, QUALITY, CROSS_REF, STATS
     validator_func: str  # Method name to call
 
-
 @dataclass
 class ValidationReport:
     """Comprehensive validation report"""
@@ -59,6 +58,7 @@ class ValidationReport:
     warning_count: int
     info_count: int
     issues: List[ValidationIssue]
+    file_summaries: Dict[str, Dict[str, Any]] = field(default_factory=dict) 
     
     def __post_init__(self):
         if not hasattr(self, 'issues'):
@@ -237,7 +237,9 @@ class DataValidator:
             total_issues=0,
             error_count=0,
             warning_count=0,
-            info_count=0
+            info_count=0,
+            issues=[],
+            file_summaries={}
         )
         
         self.logger.info(f"Starting LOINC model validation on {len(data_dict)} files...")
@@ -558,31 +560,59 @@ class DataValidator:
                     count=special_char_count
                 ))
 
+    
     def _generate_validation_summary(self, report: ValidationReport) -> None:
-        """Generate validation summary and log results"""
-        self.logger.info("=" * 60)
-        self.logger.info("LOINC VALIDATION SUMMARY")
-        self.logger.info("=" * 60)
-        self.logger.info(f"Files validated: {report.total_files_validated}")
-        self.logger.info(f"Total records: {report.total_rows_validated:,}")
-        self.logger.info(f"Total issues: {report.total_issues:,}")
-        self.logger.info(f"  - Errors (critical): {report.error_count:,}")
-        self.logger.info(f"  - Warnings (quality): {report.warning_count:,}")
-        self.logger.info(f"  - Info (statistics): {report.info_count:,}")
+        """Generate file-level summaries for the validation report"""
         
-        if report.error_count == 0:
-            self.logger.info("✅ VALIDATION PASSED - Ready for OCL transformation")
-        else:
-            self.logger.error("❌ VALIDATION FAILED - Critical errors must be resolved")
-            
-        # Log top issues by severity
-        errors = [issue for issue in report.issues if issue.severity == "ERROR"]
-        if errors:
-            self.logger.error("Critical errors that must be resolved:")
-            for error in errors[:5]:  # Show top 5
-                self.logger.error(f"  - {error.file_name}: {error.message}")
+        # Initialize file summaries
+        for filename in self.loaded_data.keys():
+            report.file_summaries[filename] = {
+                'error_count': 0,
+                'warning_count': 0,
+                'info_count': 0,
+                'total_issues': 0
+            }
+        
+        # Count issues by file
+        for issue in report.issues:
+            if issue.file_name in report.file_summaries:
+                file_summary = report.file_summaries[issue.file_name]
+                file_summary['total_issues'] += 1
                 
-        self.logger.info("=" * 60)
+                if issue.severity == "ERROR":
+                    file_summary['error_count'] += 1
+                elif issue.severity == "WARNING":
+                    file_summary['warning_count'] += 1
+                elif issue.severity == "INFO":
+                    file_summary['info_count'] += 1
+        
+        self.logger.info(f"Generated validation summary for {len(report.file_summaries)} files")
+
+    # def _generate_validation_summary(self, report: ValidationReport) -> None:
+    #     """Generate validation summary and log results"""
+    #     self.logger.info("=" * 60)
+    #     self.logger.info("LOINC VALIDATION SUMMARY")
+    #     self.logger.info("=" * 60)
+    #     self.logger.info(f"Files validated: {report.total_files_validated}")
+    #     self.logger.info(f"Total records: {report.total_rows_validated:,}")
+    #     self.logger.info(f"Total issues: {report.total_issues:,}")
+    #     self.logger.info(f"  - Errors (critical): {report.error_count:,}")
+    #     self.logger.info(f"  - Warnings (quality): {report.warning_count:,}")
+    #     self.logger.info(f"  - Info (statistics): {report.info_count:,}")
+        
+    #     if report.error_count == 0:
+    #         self.logger.info("✅ VALIDATION PASSED - Ready for OCL transformation")
+    #     else:
+    #         self.logger.error("❌ VALIDATION FAILED - Critical errors must be resolved")
+            
+    #     # Log top issues by severity
+    #     errors = [issue for issue in report.issues if issue.severity == "ERROR"]
+    #     if errors:
+    #         self.logger.error("Critical errors that must be resolved:")
+    #         for error in errors[:5]:  # Show top 5
+    #             self.logger.error(f"  - {error.file_name}: {error.message}")
+                
+    #     self.logger.info("=" * 60)
 
     def save_detailed_report(self, report: ValidationReport, output_path: Path) -> None:
         """Save detailed validation report to file"""

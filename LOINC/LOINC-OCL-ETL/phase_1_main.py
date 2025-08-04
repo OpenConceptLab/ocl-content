@@ -195,7 +195,7 @@ def run_phase1_foundation(args: argparse.Namespace) -> bool:
                         logger.error(f"  - {error}")
                     return False
                 
-                logger.info("✓ Data loading completed successfully")
+                logger.info("[OK] Data loading completed successfully")
                 
                 # Log loading statistics
                 logger_system.log_statistics("Data Loading Results", {
@@ -243,7 +243,7 @@ def run_phase1_foundation(args: argparse.Namespace) -> bool:
             
             logger.info("Foundation readiness check:")
             for check, status in readiness_checks.items():
-                status_symbol = "✓" if status else "✗"
+                status_symbol = "[OK]" if status else "[FAIL]"
                 logger.info(f"  {status_symbol} {check}")
             
             if all_ready:
@@ -288,11 +288,11 @@ def run_test_mode(args: argparse.Namespace) -> bool:
         config_mgr = ConfigManager(args.config)
         
         if config_mgr.load_all_configs():
-            print("✓ Configuration loading: PASSED")
+            print("[OK] Configuration loading: PASSED")
             print(f"  Input directory: {config_mgr.paths.input_dir}")
             print(f"  Output directory: {config_mgr.paths.output_dir}")
         else:
-            print("✗ Configuration loading: FAILED")
+            print("[FAIL] Configuration loading: FAILED")
             return False
         
         # Test file discovery
@@ -318,16 +318,16 @@ def run_test_mode(args: argparse.Namespace) -> bool:
                 found_files.append((file_name, relative_path))
         
         if found_files:
-            print(f"✓ File discovery: Found {len(found_files)} LOINC files")
+            print(f"[OK] File discovery: Found {len(found_files)} LOINC files")
             for file_name, relative_path in found_files:
                 print(f"  - {file_name}")
                 print(f"    Location: {relative_path}")
         else:
-            print("✗ File discovery: No LOINC files found in expected locations")
+            print("[FAIL] File discovery: No LOINC files found in expected locations")
             print("\nChecking expected locations:")
             for file_name, relative_path in loinc_file_locations:
                 full_path = input_dir / relative_path
-                exists = "✓" if full_path.exists() else "✗"
+                exists = "[OK]" if full_path.exists() else "[FAIL]"
                 print(f"  {exists} {file_name}")
                 print(f"    Expected: {relative_path}")
                 print(f"    Full path: {full_path}")
@@ -352,20 +352,20 @@ def run_test_mode(args: argparse.Namespace) -> bool:
             print(f"\nTesting file analysis on {first_file_name}...")
             try:
                 file_info = file_handler.analyze_file(first_file_path)
-                print("✓ File analysis: PASSED")
+                print("[OK] File analysis: PASSED")
                 print(f"  Encoding: {file_info.encoding}")
                 print(f"  Delimiter: '{file_info.delimiter}'")
                 print(f"  Columns: {file_info.column_count}")
                 print(f"  Estimated rows: {file_info.row_count:,}")
                 print(f"  Sample columns: {file_info.columns[:5]}")
             except Exception as e:
-                print(f"✗ File analysis: FAILED - {str(e)}")
+                print(f"[FAIL] File analysis: FAILED - {str(e)}")
                 return False
         
         # Test validation setup
         print("\nTesting validation setup...")
         validator = DataValidator(config_mgr)
-        print(f"✓ Validation setup: {len(validator.validation_rules)} rules loaded")
+        print(f"[OK] Validation setup: {len(validator.validation_rules)} rules loaded")
         
         print("\n" + "=" * 60)
         print("TEST MODE COMPLETED SUCCESSFULLY")
@@ -375,7 +375,7 @@ def run_test_mode(args: argparse.Namespace) -> bool:
         return True
         
     except Exception as e:
-        print(f"\n✗ Test mode failed: {str(e)}")
+        print(f"\n[FAIL] Test mode failed: {str(e)}")
         traceback.print_exc()
         return False
 
