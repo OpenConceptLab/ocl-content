@@ -1,5 +1,4 @@
-- Allow Container concepts to have their own IDs and not conform to LOINC ID structure
 - Concept Class --> Code Type
 - Data type --> Scale or "N/A"
-- Deduplicate Answer Lists
-- Add Answer concepts
+- Add Answer concepts as bulk import files
+- Reduce number of container concepts (should only have about 20)

@@ -394,8 +394,9 @@ class ConceptFactory:
         
         return summary
     
+
     def _validate_all_concepts(self, summary: ConceptCreationSummary) -> None:
-        """Validate all generated concepts using OCL validator"""
+        """Validate all generated concepts using OCL validator, with deduplication."""
         self.logger.info("🔍 Step 4: Validating generated concepts...")
         
         # Initialize OCL validator
@@ -406,9 +407,17 @@ class ConceptFactory:
         
         for transformer_name, result in summary.transformer_results.items():
             self.logger.info(f"Validating concepts from {transformer_name}...")
-            
+            # Deduplicate concepts before validation
+            deduped_concepts = self.deduplicate_concepts(result.concepts.concepts)
+            # Create a temporary ConceptCollection for validation
+            from ocl_models import ConceptCollection
+            deduped_collection = ConceptCollection(
+                collection_name=result.concepts.collection_name,
+                concepts=deduped_concepts,
+                batch_size=result.concepts.batch_size
+            )
             # Run comprehensive validation
-            validation_report = validator.validate_collection(result.concepts)
+            validation_report = validator.validate_collection(deduped_collection)
             validation_reports[transformer_name] = validation_report
             
             # Log results
@@ -439,6 +448,16 @@ class ConceptFactory:
             # In strict mode, this could be treated as an error
             if total_validation_errors > 0:
                 summary.validation_errors.append(f"OCL validation failed for {total_validation_errors} concepts")
+
+    def deduplicate_concepts(self, concepts: List[OCLConcept]) -> List[OCLConcept]:
+        """Deduplicate concepts by their ID, preserving order."""
+        seen_ids = set()
+        deduped = []
+        for concept in concepts:
+            if concept.id not in seen_ids:
+                deduped.append(concept)
+                seen_ids.add(concept.id)
+        return deduped
     
     def _generate_validation_report(self, validation_reports: Dict[str, ValidationReport]) -> None:
         """Generate comprehensive validation report file"""

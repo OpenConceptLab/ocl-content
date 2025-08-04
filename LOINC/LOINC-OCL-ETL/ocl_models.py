@@ -144,7 +144,7 @@ class OCLConcept:
             r'^LP\d+(-\d+)?$',         # LOINC parts: LP12345-6 or LP12345
             r'^LL\d+-\d+$',            # Answer lists: LL123-4
             r'^LA\d+-\d+$',            # Answer codes: LA123-4
-            r'^LOINC_.+$'                # Container concepts: LOINC_ followed by any text
+            r'^LOINC-.+$'              # Container concepts: LOINC- followed by any text
         ]
         return any(re.match(pattern, loinc_id) for pattern in patterns)
     
@@ -323,8 +323,14 @@ class ConceptCollection:
         self.concepts.append(concept)
     
     def get_valid_concepts(self) -> List[OCLConcept]:
-        """Get all valid concepts"""
-        return [concept for concept in self.concepts if concept.is_valid()]
+        """Get all valid concepts, deduplicated by concept ID"""
+        seen_ids = set()
+        deduped = []
+        for concept in self.concepts:
+            if concept.is_valid() and concept.id not in seen_ids:
+                deduped.append(concept)
+                seen_ids.add(concept.id)
+        return deduped
     
     def get_invalid_concepts(self) -> List[OCLConcept]:
         """Get all invalid concepts"""

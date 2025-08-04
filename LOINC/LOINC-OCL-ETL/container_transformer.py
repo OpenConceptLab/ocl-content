@@ -155,7 +155,7 @@ class ContainerConceptsTransformer(BaseTransformer):
         Returns:
             List of container OCL concepts
         """
-        self.debug_context_structure()
+        # self.debug_context_structure()
         self.logger.info("Creating container concepts based on LOINC data analysis...")
         
         containers = []
