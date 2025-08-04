@@ -14,8 +14,9 @@ import os
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass, field
+import time
 
 
 @dataclass
@@ -411,6 +412,174 @@ class ConfigManager:
                 self.logger.warning(f"Required file not found: {file_path}")
         
         return results
+
+@dataclass
+class DatasetDiscoveryCache:
+    """
+    Cache for dataset discovery results to avoid repeated searches.
+    """
+    logical_to_actual_names: Dict[str, str] = field(default_factory=dict)
+    discovery_timestamps: Dict[str, float] = field(default_factory=dict)
+    cache_ttl_seconds: float = 3600  # 1 hour default
+    
+    def get_cached_name(self, logical_name: str) -> Optional[str]:
+        """Get cached actual dataset name if still valid"""
+        if logical_name not in self.logical_to_actual_names:
+            return None
+        
+        # Check if cache entry is still valid
+        timestamp = self.discovery_timestamps.get(logical_name, 0)
+        if time.time() - timestamp > self.cache_ttl_seconds:
+            # Cache expired, remove entries
+            self.logical_to_actual_names.pop(logical_name, None)
+            self.discovery_timestamps.pop(logical_name, None)
+            return None
+        
+        return self.logical_to_actual_names[logical_name]
+    
+    def cache_discovery(self, logical_name: str, actual_name: str) -> None:
+        """Cache a discovery result"""
+        self.logical_to_actual_names[logical_name] = actual_name
+        self.discovery_timestamps[logical_name] = time.time()
+    
+    def clear_cache(self) -> None:
+        """Clear all cached discoveries"""
+        self.logical_to_actual_names.clear()
+        self.discovery_timestamps.clear()
+    
+    def get_cache_stats(self) -> Dict[str, Any]:
+        """Get cache statistics"""
+        current_time = time.time()
+        valid_entries = sum(
+            1 for timestamp in self.discovery_timestamps.values()
+            if current_time - timestamp <= self.cache_ttl_seconds
+        )
+        
+        return {
+            "total_entries": len(self.logical_to_actual_names),
+            "valid_entries": valid_entries,
+            "expired_entries": len(self.logical_to_actual_names) - valid_entries,
+            "cache_ttl_seconds": self.cache_ttl_seconds
+        }
+    
+class DiscoveryConfigManager:
+    """
+    Manages dataset discovery configuration independent of main config manager.
+    
+    Provides discovery settings and caching functionality for Phase 2 enhancements.
+    """
+    
+    def __init__(self):
+        """Initialize discovery config manager with defaults"""
+        self.discovery_config = self._get_default_discovery_config()
+    
+    def _get_default_discovery_config(self) -> Dict[str, Any]:
+        """Get default dataset discovery configuration"""
+        return {
+            'size_thresholds': {
+                'loinc_terms': {
+                    'min_records': 50000,
+                    'max_records': 200000,
+                    'expected_records': 104672
+                },
+                'loinc_parts': {
+                    'min_records': 10000,
+                    'max_records': 100000,
+                    'expected_records': 72740
+                },
+                'answer_lists': {
+                    'min_records': 1000,
+                    'max_records': 50000,
+                    'expected_records': 30315
+                }
+            },
+            'identification_patterns': {
+                'loinc_terms': {
+                    'preferred_names': ["Loinc.csv", "loinc_terms", "loinc", "loinc_table"],
+                    'required_columns': ["LOINC_NUM", "LONG_COMMON_NAME"],
+                    'exclude_patterns': ["part", "answer", "link", "linguistic"]
+                },
+                'loinc_parts': {
+                    'preferred_names': ["Part.csv", "loinc_parts", "parts"],
+                    'required_columns': ["PartNumber", "PartDisplayName"],
+                    'exclude_patterns': ["link", "supplementary", "primary"]
+                },
+                'answer_lists': {
+                    'preferred_names': ["AnswerList.csv", "answer_lists", "answerlist"],
+                    'required_columns': ["AnswerListId", "AnswerListName"],
+                    'exclude_patterns': ["link", "string"]
+                }
+            },
+            'behavior': {
+                'enable_caching': True,
+                'cache_ttl_seconds': 3600,
+                'fallback_to_size_matching': True,
+                'strict_column_validation': False,
+                'log_discovery_details': True
+            }
+        }
+    def get_dataset_discovery_config(self) -> Dict[str, Any]:
+        """Get complete dataset discovery configuration"""
+        return self.discovery_config
+    
+    def get_cache_settings(self) -> Dict[str, Any]:
+        """Get caching settings for dataset discovery"""
+        behavior = self.discovery_config.get('behavior', {})
+        
+        return {
+            'enable_caching': behavior.get('enable_caching', True),
+            'cache_ttl_seconds': behavior.get('cache_ttl_seconds', 3600),
+            'log_cache_hits': behavior.get('log_discovery_details', True)
+        }
+    
+    def get_discovery_thresholds(self, dataset_type: str) -> Dict[str, int]:
+        """Get size thresholds for a specific dataset type"""
+        thresholds = self.discovery_config.get('size_thresholds', {})
+        return thresholds.get(dataset_type, {})
+    
+    def get_discovery_patterns(self, dataset_type: str) -> Dict[str, Any]:
+        """Get identification patterns for a specific dataset type"""
+        patterns = self.discovery_config.get('identification_patterns', {})
+        return patterns.get(dataset_type, {})
+    
+    def create_discovery_cache(self) -> DatasetDiscoveryCache:
+        """Create a new discovery cache with configured settings"""
+        cache_settings = self.get_cache_settings()
+        cache = DatasetDiscoveryCache()
+        cache.cache_ttl_seconds = cache_settings['cache_ttl_seconds']
+        return cache
+    
+# Global discovery config instance
+_discovery_config_manager = None
+
+def get_discovery_config_manager() -> DiscoveryConfigManager:
+    """Get the global discovery config manager instance"""
+    global _discovery_config_manager
+    if _discovery_config_manager is None:
+        _discovery_config_manager = DiscoveryConfigManager()
+    return _discovery_config_manager
+
+
+# Convenience functions for easy access
+def get_discovery_config() -> Dict[str, Any]:
+    """Get discovery configuration"""
+    return get_discovery_config_manager().get_dataset_discovery_config()
+
+def get_cache_settings() -> Dict[str, Any]:
+    """Get cache settings"""
+    return get_discovery_config_manager().get_cache_settings()
+
+def get_discovery_thresholds(dataset_type: str) -> Dict[str, int]:
+    """Get discovery thresholds for dataset type"""
+    return get_discovery_config_manager().get_discovery_thresholds(dataset_type)
+
+def get_discovery_patterns(dataset_type: str) -> Dict[str, Any]:
+    """Get discovery patterns for dataset type"""
+    return get_discovery_config_manager().get_discovery_patterns(dataset_type)
+
+def create_discovery_cache() -> DatasetDiscoveryCache:
+    """Create a new discovery cache"""
+    return get_discovery_config_manager().create_discovery_cache()
 
 
 # Example usage and testing

@@ -17,14 +17,64 @@ Date: August 2025
 
 from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional, Tuple, Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import pandas as pd
 import logging
 from pathlib import Path
+import time
 
 # Import Phase 1 infrastructure
 from config_manager import ConfigManager, TransformationRules
 from ocl_models import OCLConcept, OCLName, ConceptCollection
+
+@dataclass
+class DatasetDiscoveryCache:
+    """
+    Cache for dataset discovery results to avoid repeated searches.
+    """
+    logical_to_actual_names: Dict[str, str] = field(default_factory=dict)
+    discovery_timestamps: Dict[str, float] = field(default_factory=dict)
+    cache_ttl_seconds: float = 3600  # 1 hour default
+    
+    def get_cached_name(self, logical_name: str) -> Optional[str]:
+        """Get cached actual dataset name if still valid"""
+        if logical_name not in self.logical_to_actual_names:
+            return None
+        
+        # Check if cache entry is still valid
+        timestamp = self.discovery_timestamps.get(logical_name, 0)
+        if time.time() - timestamp > self.cache_ttl_seconds:
+            # Cache expired, remove entries
+            self.logical_to_actual_names.pop(logical_name, None)
+            self.discovery_timestamps.pop(logical_name, None)
+            return None
+        
+        return self.logical_to_actual_names[logical_name]
+    
+    def cache_discovery(self, logical_name: str, actual_name: str) -> None:
+        """Cache a discovery result"""
+        self.logical_to_actual_names[logical_name] = actual_name
+        self.discovery_timestamps[logical_name] = time.time()
+    
+    def clear_cache(self) -> None:
+        """Clear all cached discoveries"""
+        self.logical_to_actual_names.clear()
+        self.discovery_timestamps.clear()
+    
+    def get_cache_stats(self) -> Dict[str, Any]:
+        """Get cache statistics"""
+        current_time = time.time()
+        valid_entries = sum(
+            1 for timestamp in self.discovery_timestamps.values()
+            if current_time - timestamp <= self.cache_ttl_seconds
+        )
+        
+        return {
+            "total_entries": len(self.logical_to_actual_names),
+            "valid_entries": valid_entries,
+            "expired_entries": len(self.logical_to_actual_names) - valid_entries,
+            "cache_ttl_seconds": self.cache_ttl_seconds
+        }
 
 
 @dataclass
@@ -43,6 +93,8 @@ class TransformationContext:
     batch_size: int = 1000
     current_batch: int = 0
     total_batches: int = 0
+    discovery_cache: DatasetDiscoveryCache = field(default_factory=DatasetDiscoveryCache)
+    discovery_config: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

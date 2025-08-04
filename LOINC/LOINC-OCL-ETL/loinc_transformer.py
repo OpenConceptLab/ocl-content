@@ -74,6 +74,10 @@ class LoincTermsTransformer(BaseTransformer):
         """Get primary key field"""
         return self.primary_key
     
+    def get_source_dataset_name(self) -> str:
+        """Get source dataset name"""
+        return self.logical_dataset_name
+    
     def transform_record(self, record: pd.Series) -> OCLConcept:
         """
         Transform a single LOINC term record into an OCL concept.
@@ -278,15 +282,16 @@ class LoincTermsTransformer(BaseTransformer):
         """
         self.logger.info("Validating prerequisites with enhanced discovery system...")
         
-        # Use parent class validation which includes enhanced discovery
-        base_validation = super().validate_prerequisites()
-        
-        if not base_validation:
-            self.logger.error("Base prerequisite validation failed")
-            return False
-        
         # LOINC Terms specific validation
         dataset_name = self.get_source_dataset_name()
+        
+        # Check if dataset exists
+        if dataset_name not in self.context.source_datasets:
+            self.logger.error(f"Required dataset '{dataset_name}' not found")
+            available = list(self.context.source_datasets.keys())
+            self.logger.error(f"Available datasets: {available}")
+            return False
+        
         source_data = self.context.source_datasets[dataset_name]
         
         # Handle different dataset structures
@@ -298,17 +303,25 @@ class LoincTermsTransformer(BaseTransformer):
         # Validate specific LOINC Terms requirements
         total_records = len(source_df)
         
-        # Check against configured thresholds
-        thresholds = self.discovery_config.get('size_thresholds', {}).get('loinc_terms', {})
-        min_records = thresholds.get('min_records', 50000)
-        max_records = thresholds.get('max_records', 200000)
-        
-        if not (min_records <= total_records <= max_records):
-            self.logger.warning(f"Dataset size {total_records:,} outside expected range [{min_records:,}-{max_records:,}]")
-            # Don't fail on this - just warn
+        # Check against configured thresholds (if discovery_config is available)
+        if hasattr(self.context, 'discovery_config'):
+            thresholds = self.context.discovery_config.get('size_thresholds', {}).get('loinc_terms', {})
+            min_records = thresholds.get('min_records', 50000)
+            max_records = thresholds.get('max_records', 200000)
+            
+            if not (min_records <= total_records <= max_records):
+                self.logger.warning(f"Dataset size {total_records:,} outside expected range [{min_records:,}-{max_records:,}]")
+                # Don't fail on this - just warn
         
         # Check data quality
         if hasattr(source_df, 'columns'):
+            required_cols = ['LOINC_NUM', 'LONG_COMMON_NAME']
+            missing_cols = [col for col in required_cols if col not in source_df.columns]
+            
+            if missing_cols:
+                self.logger.error(f"Missing required columns: {missing_cols}")
+                return False
+                
             null_loinc_nums = source_df['LOINC_NUM'].isna().sum() if 'LOINC_NUM' in source_df.columns else 0
             null_names = source_df['LONG_COMMON_NAME'].isna().sum() if 'LONG_COMMON_NAME' in source_df.columns else 0
             
@@ -317,15 +330,7 @@ class LoincTermsTransformer(BaseTransformer):
             if null_names > 0:
                 self.logger.warning(f"{null_names} records have null LONG_COMMON_NAME")
         
-        # Log discovery statistics
-        discovery_stats = self.get_discovery_stats()
-        self.logger.info("Discovery Statistics:")
-        self.logger.info(f"  Logical name: {discovery_stats['logical_dataset_name']}")
-        self.logger.info(f"  Actual name: {discovery_stats['actual_dataset_name']}")
-        self.logger.info(f"  Cache hits: {discovery_stats['cache_stats']['valid_entries']}")
-        self.logger.info(f"  Cache total: {discovery_stats['cache_stats']['total_entries']}")
-        
-        self.logger.info(f"Enhanced prerequisites validation passed")
+        self.logger.info(f"Prerequisites validation passed")
         self.logger.info(f"Dataset: {dataset_name}")
         self.logger.info(f"Records: {total_records:,}")
         

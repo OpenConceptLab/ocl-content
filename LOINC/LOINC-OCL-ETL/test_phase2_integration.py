@@ -327,17 +327,16 @@ class Phase2IntegrationTest:
         print("-" * 40)
         
         try:
-            # Create transformation context
-            print("   Setting up transformation context...")
-            context = TransformationContext(
-                config_manager=self.config_manager,
-                transformation_rules=self.config_manager.transformation_rules,
-                source_datasets=self.loading_summary.datasets,
-                language_datasets={},  # Simplified for testing
-                cross_references=self.loading_summary.cross_references,
-                batch_size=100 if self.sample_size else 1000
-            )
+            # STEP 1: Do all dataset aliasing BEFORE creating the transformation context
             
+            # Alias discovered LOINC terms dataset as 'loinc_terms' for consistent access
+            terms_dataset_name = self._find_loinc_terms_dataset()
+            if terms_dataset_name and terms_dataset_name != 'loinc_terms':
+                terms_dataset = self.loading_summary.datasets[terms_dataset_name]
+                if hasattr(terms_dataset, 'data'):
+                    self.loading_summary.datasets['loinc_terms'] = terms_dataset.data
+                else:
+                    self.loading_summary.datasets['loinc_terms'] = terms_dataset
 
             # Alias discovered parts dataset as 'loinc_parts' for consistent access
             parts_dataset_name = self._find_loinc_parts_dataset()
@@ -357,11 +356,22 @@ class Phase2IntegrationTest:
                 else:
                     self.loading_summary.datasets['answer_lists'] = answer_lists_dataset
 
-            # Test each transformer
+            # STEP 2: Create transformation context with aliased datasets
+            print("   Setting up transformation context...")
+            context = TransformationContext(
+                config_manager=self.config_manager,
+                transformation_rules=self.config_manager.transformation_rules,
+                source_datasets=self.loading_summary.datasets,
+                language_datasets={},  # Simplified for testing
+                cross_references=self.loading_summary.cross_references,
+                batch_size=100 if self.sample_size else 1000
+            )
+
+            # STEP 3: Test each transformer with the aliased dataset names
             transformers_to_test = [
-                ("LOINC Terms", LoincTermsTransformer, self._find_loinc_terms_dataset()),
+                ("LOINC Terms", LoincTermsTransformer, 'loinc_terms'),
                 ("LOINC Parts", LoincPartsTransformer, 'loinc_parts'),
-                ("Answer Lists", AnswerListsTransformer, self._find_answer_lists_dataset())
+                ("Answer Lists", AnswerListsTransformer, 'answer_lists')
             ]
 
             for transformer_name, transformer_class, dataset_name in transformers_to_test:
