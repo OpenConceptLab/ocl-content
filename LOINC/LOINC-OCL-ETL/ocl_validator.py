@@ -76,6 +76,7 @@ class ValidationReport:
 
 
 class OCLConceptValidator:
+
     """
     Enhanced OCL concept validator that combines official OCL schema validation
     with comprehensive quality assurance for LOINC concepts.
@@ -84,7 +85,20 @@ class OCLConceptValidator:
     1. Official OCL schema validation (required for bulk import)
     2. Enhanced validation (names, multi-language, LOINC-specific, quality)
     """
-    
+     # OCL minimum required fields for bulk import compliance
+    ocl_required_fields = [
+        'type', 'id', 'owner', 'source', 'concept_class', 'datatype'
+    ]
+
+    # Enhanced required fields for usable concepts
+    enhanced_required_fields = [
+        'names'
+    ]   
+    valid_locales = {
+            'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ru', 'zh', 'ja',
+            'ko', 'ar', 'hi', 'sv', 'da', 'no', 'fi', 'pl', 'cs', 'el',
+            'tr', 'he', 'th', 'vi', 'uk', 'bg', 'hr', 'et', 'lv', 'lt'
+        }
     def __init__(self, strict_mode: bool = True, use_official_schema: bool = True):
         """
         Initialize OCL concept validator.

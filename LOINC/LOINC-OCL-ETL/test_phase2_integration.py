@@ -338,13 +338,32 @@ class Phase2IntegrationTest:
                 batch_size=100 if self.sample_size else 1000
             )
             
+
+            # Alias discovered parts dataset as 'loinc_parts' for consistent access
+            parts_dataset_name = self._find_loinc_parts_dataset()
+            if parts_dataset_name and parts_dataset_name != 'loinc_parts':
+                parts_dataset = self.loading_summary.datasets[parts_dataset_name]
+                if hasattr(parts_dataset, 'data'):
+                    self.loading_summary.datasets['loinc_parts'] = parts_dataset.data
+                else:
+                    self.loading_summary.datasets['loinc_parts'] = parts_dataset
+
+            # Alias discovered answer lists dataset as 'answer_lists' for consistent access
+            answer_lists_dataset_name = self._find_answer_lists_dataset()
+            if answer_lists_dataset_name and answer_lists_dataset_name != 'answer_lists':
+                answer_lists_dataset = self.loading_summary.datasets[answer_lists_dataset_name]
+                if hasattr(answer_lists_dataset, 'data'):
+                    self.loading_summary.datasets['answer_lists'] = answer_lists_dataset.data
+                else:
+                    self.loading_summary.datasets['answer_lists'] = answer_lists_dataset
+
             # Test each transformer
             transformers_to_test = [
                 ("LOINC Terms", LoincTermsTransformer, self._find_loinc_terms_dataset()),
-                ("LOINC Parts", LoincPartsTransformer, self._find_loinc_parts_dataset()),
+                ("LOINC Parts", LoincPartsTransformer, 'loinc_parts'),
                 ("Answer Lists", AnswerListsTransformer, self._find_answer_lists_dataset())
             ]
-            
+
             for transformer_name, transformer_class, dataset_name in transformers_to_test:
                 print(f"   Testing {transformer_name} transformer...")
                 
@@ -364,10 +383,15 @@ class Phase2IntegrationTest:
                     return False
                 
                 # Test with small sample
-                source_df = context.source_datasets[dataset_name]
+                dataset = context.source_datasets[dataset_name]
+                # Always use .data if present for DataFrame operations
+                if hasattr(dataset, 'data'):
+                    source_df = dataset.data
+                else:
+                    source_df = dataset
                 sample_size = min(self.sample_size or 10, len(source_df))
                 sample_df = source_df.head(sample_size)
-                
+
                 # Transform sample records
                 concepts_created = 0
                 for _, record in sample_df.iterrows():
@@ -383,24 +407,25 @@ class Phase2IntegrationTest:
                                 concepts_created += 1
                     except Exception as e:
                         print(f"      ⚠️ Sample transformation error: {str(e)}")
-                
+
                 if concepts_created > 0:
                     print(f"      ✅ Created {concepts_created}/{sample_size} valid concepts")
                 else:
                     print(f"      ⚠️ No valid concepts created from {sample_size} samples")
-                
+
                 print(f"      ✅ {transformer_name} transformer tested")
                 try:
-                    concept = transformer.transform_record(record)
+                    # Use the same DataFrame logic for the extra test
+                    concept = transformer.transform_record(sample_df.iloc[0])
                     if concept.is_valid():
                         concepts_created += 1
                 except Exception as e:
                     print(f"   ⚠️ Record transformation failed: {str(e)}")
-                
+
                 if concepts_created == 0:
                     print(f"   ❌ {transformer_name} created no valid concepts")
                     return False
-                
+
                 print(f"   ✅ {transformer_name}: {concepts_created}/{sample_size} concepts created")
             
             print("   ✅ Transformer test passed")
@@ -425,7 +450,7 @@ class Phase2IntegrationTest:
         for candidate in candidates:
             if candidate in self.loading_summary.datasets:
                 dataset = self.loading_summary.datasets[candidate]
-                row_count = getattr(dataset, 'row_count', len(getattr(dataset, 'data', [])))
+                row_count = self._get_dataset_row_count(dataset)
                 if 50000 <= row_count <= 200000:  # ~104K expected
                     return candidate
         
@@ -433,26 +458,30 @@ class Phase2IntegrationTest:
     
     def _find_loinc_parts_dataset(self) -> Optional[str]:
         """Find the actual LOINC parts dataset name"""
-        # Primary candidate from debug discovery
-        primary_candidate = 'Part.csv'
-        if primary_candidate in self.loading_summary.datasets:
-            return primary_candidate
-        
+        # Prefer the most comprehensive mapping file
+        primary_candidates = [
+            'Part.csv',
+            'LoincPartLink_Supplementary.csv',
+            'LoincPartLink_Primary.csv'
+        ]
+        for candidate in primary_candidates:
+            if candidate in self.loading_summary.datasets:
+                return candidate
+
         # Try common variations
         candidates = ['loinc_parts', 'parts', 'loinc_part']
-        
         for candidate in candidates:
             if candidate in self.loading_summary.datasets:
                 return candidate
-        
+
         # Look for datasets with 'part' in the name but avoid huge LoincPartLink files
         for dataset_name, dataset in self.loading_summary.datasets.items():
             name_lower = dataset_name.lower()
             if 'part' in name_lower and 'link' not in name_lower:
-                row_count = getattr(dataset, 'row_count', len(getattr(dataset, 'data', [])))
+                row_count = self._get_dataset_row_count(dataset)
                 if 10000 <= row_count <= 100000:  # ~72K expected
                     return dataset_name
-        
+
         return None
     
     def _find_answer_lists_dataset(self) -> Optional[str]:
@@ -473,11 +502,24 @@ class Phase2IntegrationTest:
         for dataset_name, dataset in self.loading_summary.datasets.items():
             name_lower = dataset_name.lower()
             if 'answer' in name_lower and 'link' not in name_lower:
-                row_count = getattr(dataset, 'row_count', len(getattr(dataset, 'data', [])))
+                row_count = self._get_dataset_row_count(dataset)
                 if 1000 <= row_count <= 50000:  # ~30K expected
                     return dataset_name
         
         return None
+    
+    def _get_dataset_row_count(self, dataset) -> int:
+        """Get row count from dataset, handling both LoadedDataset and DataFrame objects"""
+        # Handle LoadedDataset objects (from Phase 1)
+        if hasattr(dataset, 'row_count'):
+            return dataset.row_count
+        elif hasattr(dataset, 'data'):
+            return len(dataset.data) if hasattr(dataset.data, '__len__') else 0
+        # Handle direct DataFrame objects
+        elif hasattr(dataset, '__len__'):
+            return len(dataset)
+        else:
+            return 0
     
     def _test_ocl_validation(self) -> bool:
         """Test OCL validation system"""
