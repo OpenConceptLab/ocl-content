@@ -39,14 +39,48 @@ class LoincTermsTransformer(BaseTransformer):
         
         # LOINC Terms specific configuration
         self.transformer_name = "LOINC_Terms"
-        self.source_dataset = "loinc_terms"  # From Phase 1 DataLoader
+        
+        # Dynamically find the LOINC terms dataset
+        self.source_dataset = self._find_loinc_terms_dataset()
+        if not self.source_dataset:
+            self.logger.warning("Could not find LOINC terms dataset")
+            self.source_dataset = "loinc_terms"  # fallback
+        
         self.primary_key = "LOINC_NUM"
         
         # Field mappings from transformation rules
         self._load_field_mappings()
         
         self.logger.info(f"LOINC Terms Transformer initialized")
-        self.logger.info(f"Expected to process ~104K LOINC terms")
+        self.logger.info(f"Using dataset: {self.source_dataset}")
+        self.logger.info(f"Expected to process LOINC terms")
+    
+    def _find_loinc_terms_dataset(self) -> Optional[str]:
+        """Dynamically find the LOINC terms dataset from available datasets"""
+        # Try exact matches first
+        candidates = ['loinc_terms', 'loinc', 'Loinc', 'loinc_table', 'loinc_data']
+        
+        for candidate in candidates:
+            if candidate in self.context.source_datasets:
+                dataset = self.context.source_datasets[candidate]
+                if hasattr(dataset, 'row_count') and dataset.row_count > 50000:
+                    return candidate
+                elif hasattr(dataset, 'data') and len(dataset.data) > 50000:
+                    return candidate
+        
+        # Look for datasets with 'loinc' in the name and reasonable size
+        for dataset_name, dataset in self.context.source_datasets.items():
+            if ('loinc' in dataset_name.lower() and 
+                'part' not in dataset_name.lower() and
+                'answer' not in dataset_name.lower() and
+                'link' not in dataset_name.lower()):
+                
+                # Check size indicators
+                row_count = getattr(dataset, 'row_count', len(getattr(dataset, 'data', [])))
+                if row_count > 50000:  # LOINC terms should have 100K+ records
+                    return dataset_name
+        
+        return None
     
     def get_transformer_name(self) -> str:
         """Get transformer name"""
@@ -262,25 +296,51 @@ class LoincTermsTransformer(BaseTransformer):
         Returns:
             bool: True if ready to transform, False otherwise
         """
+        # List available datasets for debugging
+        available_datasets = list(self.context.source_datasets.keys())
+        self.logger.info(f"Available datasets: {len(available_datasets)}")
+        self.logger.debug(f"Dataset names: {available_datasets[:10]}...")  # Show first 10
+        
         # Check that source dataset is available
         if self.source_dataset not in self.context.source_datasets:
             self.logger.error(f"Source dataset '{self.source_dataset}' not found")
-            return False
+            self.logger.error(f"Available datasets: {available_datasets[:5]}...")
+            
+            # Try to find alternative
+            alternative = self._find_loinc_terms_dataset()
+            if alternative:
+                self.logger.info(f"Found alternative dataset: {alternative}")
+                self.source_dataset = alternative
+            else:
+                return False
         
-        source_df = self.context.source_datasets[self.source_dataset]
+        # Get dataset for validation
+        source_data = self.context.source_datasets[self.source_dataset]
+        
+        # Handle different dataset structures
+        if hasattr(source_data, 'data'):
+            source_df = source_data.data
+        else:
+            source_df = source_data
         
         # Check required columns
         required_columns = ['LOINC_NUM', 'LONG_COMMON_NAME']
-        missing_columns = [col for col in required_columns if col not in source_df.columns]
+        available_columns = list(source_df.columns) if hasattr(source_df, 'columns') else []
+        missing_columns = [col for col in required_columns if col not in available_columns]
         
         if missing_columns:
             self.logger.error(f"Missing required columns: {missing_columns}")
+            self.logger.info(f"Available columns: {available_columns[:10]}...")  # Show first 10
             return False
         
         # Check data quality
         total_records = len(source_df)
-        null_loinc_nums = source_df['LOINC_NUM'].isna().sum()
-        null_names = source_df['LONG_COMMON_NAME'].isna().sum()
+        if total_records == 0:
+            self.logger.error("Dataset is empty")
+            return False
+        
+        null_loinc_nums = source_df['LOINC_NUM'].isna().sum() if 'LOINC_NUM' in source_df.columns else 0
+        null_names = source_df['LONG_COMMON_NAME'].isna().sum() if 'LONG_COMMON_NAME' in source_df.columns else 0
         
         if null_loinc_nums > 0:
             self.logger.warning(f"{null_loinc_nums} records have null LOINC_NUM")
@@ -288,7 +348,9 @@ class LoincTermsTransformer(BaseTransformer):
             self.logger.warning(f"{null_names} records have null LONG_COMMON_NAME")
         
         self.logger.info(f"Prerequisites validation passed")
-        self.logger.info(f"Ready to transform {total_records} LOINC terms")
+        self.logger.info(f"Dataset: {self.source_dataset}")
+        self.logger.info(f"Records: {total_records:,}")
+        self.logger.info(f"Columns: {len(available_columns)}")
         self.logger.info(f"Multi-language support: {len(self.supported_locales)} locales")
         
         return True

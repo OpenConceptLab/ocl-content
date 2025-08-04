@@ -105,6 +105,22 @@ class OCLConcept:
     
     def __post_init__(self):
         """Validate concept object after creation"""
+        # Ensure _validation_errors is always a list
+        if not hasattr(self, '_validation_errors') or not isinstance(self._validation_errors, list):
+            self._validation_errors = []
+        
+        # Ensure names and descriptions are lists
+        if not isinstance(self.names, list):
+            self.names = []
+        if not isinstance(self.descriptions, list):
+            self.descriptions = []
+        
+        # Now run validation
+        self._validate_initial_state()
+    
+    def _validate_initial_state(self):
+        """Initial validation of concept state"""
+        # Clear any existing validation errors
         self._validation_errors = []
         
         # Validate required fields
@@ -143,6 +159,8 @@ class OCLConcept:
                 name_type=name_type
             )
             self.names.append(ocl_name)
+            # Re-validate concept after adding name
+            self._revalidate()
         except ValueError as e:
             self._validation_errors.append(f"Invalid name: {str(e)}")
     
@@ -158,8 +176,28 @@ class OCLConcept:
                 type=desc_type
             )
             self.descriptions.append(ocl_desc)
+            # Re-validate concept after adding description
+            self._revalidate()
         except ValueError as e:
             self._validation_errors.append(f"Invalid description: {str(e)}")
+    
+    def _revalidate(self) -> None:
+        """Re-run validation after changes to the concept"""
+        self._validation_errors = []
+        
+        # Validate required fields
+        if not self.id:
+            self._validation_errors.append("Concept ID cannot be empty")
+        if not self.concept_class:
+            self._validation_errors.append("Concept class cannot be empty")
+        if not self.owner:
+            self._validation_errors.append("Owner cannot be empty")
+        if not self.names:
+            self._validation_errors.append("At least one name is required")
+            
+        # Validate LOINC ID format
+        if self.id and not self._is_valid_loinc_id(self.id):
+            self._validation_errors.append(f"Invalid LOINC ID format: {self.id}")
     
     def set_loinc_extras(self, component: str = None, property_: str = None,
                         time_aspect: str = None, system: str = None,
@@ -184,7 +222,26 @@ class OCLConcept:
     
     def get_validation_errors(self) -> List[str]:
         """Get list of validation errors"""
-        return self._validation_errors.copy()
+        # Ensure we always return a list, even if _validation_errors is somehow not a list
+        if isinstance(self._validation_errors, list):
+            return self._validation_errors.copy()
+        elif isinstance(self._validation_errors, str):
+            return [self._validation_errors]
+        else:
+            return []
+    
+    def debug_validation_state(self) -> Dict[str, Any]:
+        """Debug method to check validation state"""
+        return {
+            "has_validation_errors_attr": hasattr(self, '_validation_errors'),
+            "validation_errors_type": type(self._validation_errors).__name__ if hasattr(self, '_validation_errors') else 'None',
+            "validation_errors_value": self._validation_errors if hasattr(self, '_validation_errors') else 'None',
+            "names_type": type(self.names).__name__,
+            "names_count": len(self.names) if isinstance(self.names, list) else 'Not a list',
+            "concept_id": self.id,
+            "concept_class": self.concept_class,
+            "owner": self.owner
+        }
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON export (excludes internal fields)"""
@@ -243,12 +300,25 @@ class ConceptCollection:
     Manages groups of concepts for efficient processing and validation.
     Supports the batch processing patterns proven in Phase 1.
     """
+    collection_name: str = "LOINC_Concepts"  # Most commonly specified field first
     concepts: List[OCLConcept] = field(default_factory=list)
-    collection_name: str = "LOINC_Concepts"
     batch_size: int = 1000
+    
+    def __post_init__(self):
+        """Ensure proper initialization of collection"""
+        # Ensure concepts is always a list (defensive programming)
+        if not isinstance(self.concepts, list):
+            # If concepts got assigned a string by mistake, reset it
+            if isinstance(self.concepts, str):
+                print(f"Warning: ConceptCollection.concepts was assigned string '{self.concepts}', resetting to empty list")
+            self.concepts = []
     
     def add_concept(self, concept: OCLConcept) -> None:
         """Add a concept to the collection"""
+        # Ensure concepts list exists and is a list
+        if not hasattr(self, 'concepts') or not isinstance(self.concepts, list):
+            self.concepts = []
+        
         self.concepts.append(concept)
     
     def get_valid_concepts(self) -> List[OCLConcept]:
@@ -264,19 +334,23 @@ class ConceptCollection:
         valid_concepts = self.get_valid_concepts()
         invalid_concepts = self.get_invalid_concepts()
         
+        # Build error details for invalid concepts
+        error_details = []
+        for concept in invalid_concepts:
+            validation_errors = concept.get_validation_errors()
+            if validation_errors:  # Only add if there are actual errors
+                error_details.append({
+                    "concept_id": concept.id or "UNKNOWN",
+                    "errors": validation_errors  # This should be a list
+                })
+        
         return {
             "collection_name": self.collection_name,
             "total_concepts": len(self.concepts),
             "valid_concepts": len(valid_concepts),
             "invalid_concepts": len(invalid_concepts),
             "validation_rate": len(valid_concepts) / len(self.concepts) if self.concepts else 0,
-            "errors": [
-                {
-                    "concept_id": concept.id,
-                    "errors": concept.get_validation_errors()
-                }
-                for concept in invalid_concepts
-            ]
+            "errors": error_details
         }
     
     def get_batches(self) -> List[List[OCLConcept]]:
