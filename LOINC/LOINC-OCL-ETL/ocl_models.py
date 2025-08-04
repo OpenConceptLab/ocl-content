@@ -144,7 +144,7 @@ class OCLConcept:
             r'^LP\d+(-\d+)?$',         # LOINC parts: LP12345-6 or LP12345
             r'^LL\d+-\d+$',            # Answer lists: LL123-4
             r'^LA\d+-\d+$',            # Answer codes: LA123-4
-            r'^LOINC-.+$'              # Container concepts: LOINC- followed by any text
+            r'^LOINC[-_].+$'              # Container concepts: LOINC- followed by any text
         ]
         return any(re.match(pattern, loinc_id) for pattern in patterns)
     
