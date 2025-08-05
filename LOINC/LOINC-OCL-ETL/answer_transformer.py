@@ -66,31 +66,31 @@ class AnswerListsTransformer(BaseTransformer):
     
     def get_concept_class(self, record: pd.Series) -> str:
         """Determine concept class based on record type"""
-        if self._is_loinc_answer_record(record):
+        if pd.notna(record.get('AnswerStringId')):
             return 'LOINC Answer'
         else:
             return self._determine_answer_list_class(record)
     
     def transform_record(self, record: pd.Series) -> OCLConcept:
         """
-        Transform a single record - detects whether it's an Answer List or LOINC Answer.
+        Transform a single record - detects whether it's a LOINC Answer.
         
-        This method handles both types of records from AnswerList.csv:
-        - Records with AnswerStringId → LOINC Answer concepts
-        - Records with AnswerListId (but no AnswerStringId) → Answer List concepts
+        NOTE: This method is primarily for LOINC Answer records. 
+        Answer List concepts are created via the unique extraction method.
         """
-        if self._is_loinc_answer_record(record):
+        if pd.notna(record.get('AnswerStringId')):
             return self._transform_loinc_answer_record(record)
-        elif self._is_answer_list_record(record):
-            return self._transform_answer_list_record(record)
         else:
-            raise ValueError(f"Record cannot be classified as Answer List or LOINC Answer: {record.get('AnswerListId', 'UNKNOWN')}")
+            # This shouldn't happen in the new approach, but fallback for safety
+            raise ValueError(f"Record type not supported in transform_record: {record.get('AnswerListId', 'UNKNOWN')}")
     
     def transform_dataset(self, progress_callback: Optional[callable] = None) -> TransformationResult:
         """
         Enhanced dataset transformation that processes both LL and LA records.
         
-        Overrides the base method to handle mixed record types in the same file.
+        CORRECTED APPROACH:
+        1. Extract unique AnswerListId values → Create Answer List concepts  
+        2. Process rows with AnswerStringId → Create LOINC Answer concepts
         """
         start_time = time.time()
         
@@ -116,51 +116,43 @@ class AnswerListsTransformer(BaseTransformer):
             batch_size=self.context.batch_size
         )
         
-        # Separate records by type for better processing
-        answer_list_records = source_df[self._get_answer_list_mask(source_df)]
-        loinc_answer_records = source_df[self._get_loinc_answer_mask(source_df)]
-        
-        self.logger.info(f"Found {len(answer_list_records)} Answer List records (LL codes)")
-        self.logger.info(f"Found {len(loinc_answer_records)} LOINC Answer records (LA codes)")
-        
         success_count = 0
         error_count = 0
-        processed_count = 0
         
-        # Calculate pseudo-batches for progress tracking
+        # STEP 1: Create Answer List concepts from unique AnswerListId values
+        self.logger.info("Step 1: Creating Answer List concepts from unique LL codes...")
+        unique_answer_lists = self._extract_unique_answer_lists(source_df)
+        
+        self.logger.info(f"Found {len(unique_answer_lists)} unique Answer Lists")
+        
         batch_size = self.context.batch_size
-        total_ll_batches = (len(answer_list_records) + batch_size - 1) // batch_size if len(answer_list_records) > 0 else 1
-        total_la_batches = (len(loinc_answer_records) + batch_size - 1) // batch_size if len(loinc_answer_records) > 0 else 1
-        total_batches = total_ll_batches + total_la_batches
+        total_batches = len(unique_answer_lists) + ((len(source_df[source_df['AnswerStringId'].notna()]) + batch_size - 1) // batch_size)
         current_batch = 0
         
-        # Process Answer Lists first
-        for idx, (_, record) in enumerate(answer_list_records.iterrows()):
+        # Process Answer Lists
+        for idx, answer_list_info in enumerate(unique_answer_lists):
             try:
-                concept = self._transform_answer_list_record(record)
+                concept = self._create_answer_list_concept_from_info(answer_list_info)
                 result_collection.add_concept(concept)
                 success_count += 1
                 self.answer_list_count += 1
             except Exception as e:
-                self.logger.error(f"Failed to transform Answer List {record.get('AnswerListId', 'UNKNOWN')}: {e}")
+                self.logger.error(f"Failed to create Answer List {answer_list_info.get('AnswerListId', 'UNKNOWN')}: {e}")
                 error_count += 1
             
-            processed_count += 1
-            
-            # Progress callback with correct signature
-            if progress_callback and processed_count % batch_size == 0:
-                current_batch += 1
+            # Progress callback
+            if progress_callback and (idx + 1) % 100 == 0:
+                current_batch = (idx + 1) // 100
                 progress = (current_batch / total_batches) * 100
                 progress_callback(progress, current_batch, total_batches)
         
-        # Update batch count if we processed Answer Lists
-        if len(answer_list_records) > 0 and (len(answer_list_records) % batch_size != 0):
-            current_batch += 1
-            progress = (current_batch / total_batches) * 100
-            if progress_callback:
-                progress_callback(progress, current_batch, total_batches)
+        # STEP 2: Create LOINC Answer concepts from rows with AnswerStringId
+        self.logger.info("Step 2: Creating LOINC Answer concepts from LA codes...")
+        loinc_answer_records = source_df[source_df['AnswerStringId'].notna()]
         
-        # Process LOINC Answers second
+        self.logger.info(f"Found {len(loinc_answer_records)} LOINC Answer records")
+        
+        processed_count = 0
         for idx, (_, record) in enumerate(loinc_answer_records.iterrows()):
             try:
                 concept = self._transform_loinc_answer_record(record)
@@ -173,16 +165,15 @@ class AnswerListsTransformer(BaseTransformer):
             
             processed_count += 1
             
-            # Progress callback with correct signature
-            if progress_callback and ((processed_count - len(answer_list_records)) % batch_size == 0):
-                current_batch += 1
+            # Progress callback
+            if progress_callback and processed_count % batch_size == 0:
+                current_batch = len(unique_answer_lists) // 100 + (processed_count // batch_size)
                 progress = (current_batch / total_batches) * 100
                 progress_callback(progress, current_batch, total_batches)
         
         # Final progress update
-        if progress_callback and len(loinc_answer_records) > 0:
-            progress = 100.0
-            progress_callback(progress, total_batches, total_batches)
+        if progress_callback:
+            progress_callback(100.0, total_batches, total_batches)
         
         processing_time = time.time() - start_time
         
@@ -197,6 +188,84 @@ class AnswerListsTransformer(BaseTransformer):
         
         self.logger.info(f"Answer transformation completed: {success_count} concepts ({self.answer_list_count} LL + {self.loinc_answer_count} LA), {error_count} errors in {processing_time:.2f}s")
         return result
+    
+    def _extract_unique_answer_lists(self, source_df: pd.DataFrame) -> List[Dict[str, Any]]:
+        """
+        Extract unique Answer List information from the dataframe.
+        
+        Since every row has AnswerListId/AnswerListName, we need to get unique 
+        combinations and use the first occurrence for each AnswerListId.
+        """
+        # Get unique AnswerListId values and their associated metadata
+        unique_lists = []
+        seen_list_ids = set()
+        
+        for _, row in source_df.iterrows():
+            answer_list_id = row.get('AnswerListId')
+            
+            if pd.notna(answer_list_id) and answer_list_id not in seen_list_ids:
+                seen_list_ids.add(answer_list_id)
+                
+                # Extract Answer List information from this row
+                unique_lists.append({
+                    'AnswerListId': answer_list_id,
+                    'AnswerListName': row.get('AnswerListName'),
+                    'AnswerListOID': row.get('AnswerListOID'),
+                    'ExtDefinedYN': row.get('ExtDefinedYN'),
+                    'ExtDefinedAnswerListCodeSystem': row.get('ExtDefinedAnswerListCodeSystem'),
+                    'ExtDefinedAnswerListLink': row.get('ExtDefinedAnswerListLink'),
+                    'AnchoredTo': row.get('AnchoredTo')
+                })
+        
+        return unique_lists
+    
+    def _create_answer_list_concept_from_info(self, answer_list_info: Dict[str, Any]) -> OCLConcept:
+        """Create Answer List concept from extracted unique information"""
+        answer_list_id = answer_list_info['AnswerListId']
+        answer_list_name = answer_list_info['AnswerListName']
+        
+        # Create concept using Answer List mappings
+        concept = OCLConcept(
+            id=answer_list_id,
+            concept_class=self._determine_answer_list_class_from_info(answer_list_info),
+            datatype='N/A',
+            owner=self.owner_org,
+            owner_type="Organization",
+            source=self.source_name,
+            retired=False,  # Answer lists are typically not retired
+            external_id=answer_list_id
+        )
+        
+        # Add name
+        concept.add_name(
+            name=self._clean_text(answer_list_name),
+            locale="en",
+            locale_preferred=True,
+            name_type="Fully Specified"
+        )
+        
+        # Add Answer List specific metadata
+        concept.extras.update({
+            'answer_list_id': answer_list_id,
+            'answer_list_oid': answer_list_info.get('AnswerListOID'),
+            'externally_defined': answer_list_info.get('ExtDefinedYN'),
+            'external_code_system': answer_list_info.get('ExtDefinedAnswerListCodeSystem'),
+            'external_link': answer_list_info.get('ExtDefinedAnswerListLink'),
+            'anchored_to': answer_list_info.get('AnchoredTo'),
+            'answer_count': self._count_answers_for_list(answer_list_id)
+        })
+        
+        # Clean up None values
+        concept.extras = {k: v for k, v in concept.extras.items() if v is not None}
+        concept._source_file = "AnswerList.csv"
+        
+        return concept
+    
+    def _determine_answer_list_class_from_info(self, answer_list_info: Dict[str, Any]) -> str:
+        """Determine concept class for Answer List from extracted info"""
+        if answer_list_info.get('ExtDefinedYN') == 'Y':
+            return 'External Answer List'
+        return 'Answer List'
     
     def _is_loinc_answer_record(self, record: pd.Series) -> bool:
         """Check if record represents a LOINC Answer (LA code)"""
@@ -268,9 +337,9 @@ class AnswerListsTransformer(BaseTransformer):
     
     def _transform_loinc_answer_record(self, record: pd.Series) -> OCLConcept:
         """Transform LOINC Answer record (LA code) to OCL concept"""
-        # Extract required fields
+        # Extract required fields with appropriate validation
         answer_string_id = self._get_required_field(record, 'AnswerStringId')
-        display_text = self._get_required_field(record, 'DisplayText')
+        display_text = self._get_display_text(record)  # Use special handling for DisplayText
         parent_answer_list_id = record.get('AnswerListId', '')
         
         # Create concept using LOINC Answer mappings
@@ -315,10 +384,41 @@ class AnswerListsTransformer(BaseTransformer):
         
         return concept
     
+    def _get_display_text(self, record: pd.Series) -> str:
+        """
+        Get DisplayText with appropriate validation for LOINC Answer concepts.
+        
+        Unlike other required fields, DisplayText can have values like "None", "N/A", 
+        "Unknown", etc. which are valid display text for answer options.
+        """
+        field_name = 'DisplayText'
+        
+        if field_name not in record:
+            raise ValueError(f"Required field '{field_name}' not found in record")
+        
+        value = record[field_name]
+        
+        # Handle actual NaN/None values
+        if pd.isna(value):
+            # For missing DisplayText, use a default based on the AnswerStringId
+            answer_id = record.get('AnswerStringId', 'Unknown')
+            return f"Answer {answer_id}"
+        
+        # Convert to string and clean
+        str_value = str(value).strip()
+        
+        # Accept any non-empty string, including "None", "N/A", etc.
+        if str_value == '':
+            # For empty strings, use a default
+            answer_id = record.get('AnswerStringId', 'Unknown')
+            return f"Answer {answer_id}"
+        
+        return str_value
+    
     def _determine_answer_list_class(self, record: pd.Series) -> str:
         """Determine concept class for Answer List"""
         if 'ExtDefinedYN' in record and record['ExtDefinedYN'] == 'Y':
-            return 'Answer List'
+            return 'External Answer List'
         return 'Answer List'
     
     def _count_answers_for_list(self, answer_list_id: str) -> int:
