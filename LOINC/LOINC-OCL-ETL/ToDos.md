@@ -1,4 +1,0 @@
-- Concept Class --> Code Type
-- Data type --> Scale or "N/A"
-- Add Answer concepts as bulk import files
-- Reduce number of container concepts (should only have about 20)

@@ -175,6 +175,38 @@ class OCLConceptValidator:
             'answer_string_id': re.compile(r'^LA\d+-\d+$'),   # e.g., "LA123-4"
         }
     
+    def _is_container_concept(self, concept: OCLConcept) -> bool:
+        """
+        Check if this concept is a container concept that should be exempt from LOINC format validation.
+        
+        Container concepts are organizational concepts with descriptive IDs like 'LOINC_COMPONENT'
+        rather than LOINC-format IDs like '12345-6'.
+        """
+        # Method 1: Check extras for container flag
+        if hasattr(concept, 'extras') and concept.extras:
+            if concept.extras.get('is_container_concept') is True:
+                return True
+            if concept.extras.get('container_type') == 'static':
+                return True
+        
+        # Method 2: Check concept class for container types
+        if concept.concept_class == 'Misc' and hasattr(concept, 'extras') and concept.extras:
+            if concept.extras.get('container_purpose'):
+                return True
+        
+        # Method 3: Check for known container ID patterns
+        container_id_patterns = [
+            r'^LOINC_[A-Z_]+$',  # LOINC_COMPONENT, LOINC_PROPERTY, etc.
+            r'^OTHER$',          # OTHER container
+        ]
+        
+        if concept.id:
+            for pattern in container_id_patterns:
+                if re.match(pattern, concept.id):
+                    return True
+        
+        return False
+
     def validate_concept(self, concept: OCLConcept) -> List[ValidationIssue]:
         """
         Two-tier validation of OCL concept:
@@ -422,17 +454,21 @@ class OCLConceptValidator:
         
         # Validate concept ID (OCL allows any string, but we can check LOINC format as enhancement)
         if concept.id:
-            # OCL doesn't enforce ID format, but LOINC-specific validation is valuable
-            if not self._is_valid_loinc_id(concept.id):
-                severity = 'WARNING' if not self.strict_mode else 'ERROR'
-                issues.append(ValidationIssue(
-                    concept_id=concept.id,
-                    severity=severity,
-                    category='LOINC_FORMAT',
-                    message=f"ID doesn't match LOINC format patterns: {concept.id}",
-                    field_name='id',
-                    suggested_fix="Use valid LOINC format (e.g., 12345-6, LP12345-6, LL123-4) or use custom format consistently"
-                ))
+            # Skip LOINC format validation for container concepts
+            is_container = self._is_container_concept(concept)
+            
+            if not is_container:
+                # OCL doesn't enforce ID format, but LOINC-specific validation is valuable
+                if not self._is_valid_loinc_id(concept.id):
+                    severity = 'WARNING' if not self.strict_mode else 'ERROR'
+                    issues.append(ValidationIssue(
+                        concept_id=concept.id,
+                        severity=severity,
+                        category='LOINC_FORMAT',
+                        message=f"ID doesn't match LOINC format patterns: {concept.id}",
+                        field_name='id',
+                        suggested_fix="Use valid LOINC format (e.g., 12345-6, LP12345-6, LL123-4) or use custom format consistently"
+                    ))
         
         # Validate type field (OCL requires "Concept")
         if concept.type and concept.type != 'Concept':

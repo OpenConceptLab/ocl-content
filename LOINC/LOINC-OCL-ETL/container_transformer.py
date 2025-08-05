@@ -1,42 +1,29 @@
 """
-Container Concepts Transformer for LOINC to OCL Transformation - Phase 2
+Fixed Container Concepts Transformer for LOINC to OCL Transformation - Phase 2
 
-This module creates container concepts for organizing LOINC concepts that don't
-have clear hierarchical parents. Container concepts provide organizational
-structure and navigation paths for the OCL concept hierarchy.
-
-Container concept types:
-- Component containers (e.g., "Chemistry Components", "Hematology Components")
-- Property containers (e.g., "Mass Concentration Properties", "Presence Properties")
-- System containers (e.g., "Serum System", "Urine System")
-- Classification containers (e.g., "Laboratory Concepts", "Survey Concepts")
-
-Key capabilities:
-- Generate organizational container concepts
-- Create navigation hierarchies
-- Handle orphaned concept assignment
-- Multi-language container names
+This module creates the 7 organizational container concepts as defined in 
+transformation_rules_v1.yaml. These are simple organizational containers,
+not dynamic containers based on data analysis.
 
 Author: LOINC OCL Transform Project - Phase 2
 Date: August 2025
 """
 
 import pandas as pd
-from typing import Dict, List, Any, Optional, Set, Tuple
-from collections import defaultdict, Counter
-from base_transformer import BaseTransformer, TransformationContext
-from ocl_models import OCLConcept, OCLName
+from typing import Dict, List, Any, Optional
+from base_transformer import BaseTransformer, TransformationContext, TransformationResult
+from ocl_models import OCLConcept, OCLName, ConceptCollection
 import logging
-import re
+import time
 
 
 class ContainerConceptsTransformer(BaseTransformer):
     """
-    Transformer for creating container concepts for organizational hierarchy.
+    Transformer for creating the 7 static container concepts for organizational hierarchy.
     
-    Creates container concepts that provide structure and navigation for
-    LOINC concepts in OCL, especially for concepts that would otherwise
-    be orphaned without clear parents.
+    Creates exactly 7 container concepts as defined in transformation_rules_v1.yaml:
+    - LOINC_COMPONENT, LOINC_PROPERTY, LOINC_TIME, LOINC_SYSTEM, 
+    - LOINC_SCALE, LOINC_METHOD, OTHER
     """
     
     def __init__(self, context: TransformationContext):
@@ -48,664 +35,339 @@ class ContainerConceptsTransformer(BaseTransformer):
         self.source_dataset = "container_definitions"  # Virtual dataset
         self.primary_key = "ContainerID"
         
-        # Container generation rules
-        self._load_container_rules()
+        # Load static container definitions
+        self._load_container_definitions()
+        
+        # Set up base transformer attributes
+        self.owner_org = "LOINC"
+        self.source_name = "LOINC"
         
         # Statistics for container generation
         self.container_stats = {
-            'component_containers': 0,
-            'property_containers': 0,
-            'system_containers': 0,
-            'class_containers': 0,
             'total_containers': 0
         }
         
         self.logger.info(f"Container Concepts Transformer initialized")
-        self.logger.info(f"Will generate organizational container concepts")
+        self.logger.info(f"Will generate {len(self.container_definitions)} static container concepts")
     
-    def _get_dataset_safely(self, dataset_name: str):
-        """
-        Safely get dataset from context, handling LoadedDataset objects.
-        
-        Args:
-            dataset_name: Name of the dataset to retrieve
-            
-        Returns:
-            DataFrame or None if not available
-        """
-        if dataset_name not in self.context.source_datasets:
-            return None
-            
-        dataset = self.context.source_datasets[dataset_name]
-        
-        # Handle LoadedDataset objects by extracting the .data attribute
-        if hasattr(dataset, 'data'):
-            return dataset.data
-        
-        # Return the dataset directly if it's already a DataFrame
-        return dataset
-
-    def get_transformer_name(self) -> str:
-        """Get transformer name"""
-        return self.transformer_name
+    def _get_owner_organization(self) -> str:
+        """Get owner organization name"""
+        return "LOINC"
     
-    def get_source_dataset_name(self) -> str:
-        """Get source dataset name (virtual for containers)"""
-        return self.source_dataset
+    def _get_supported_locales(self) -> List[str]:
+        """Get list of supported locales"""
+        return ["en"]  # Containers only support English initially
     
-    def get_primary_key_field(self) -> str:
-        """Get primary key field"""
-        return self.primary_key
-    
-    def transform_record(self, record: pd.Series) -> OCLConcept:
-        """
-        Transform a container definition into an OCL concept.
-        
-        Note: This method is abstract compliance, but containers are generated
-        differently using create_all_container_concepts().
-        """
-        # This is primarily for abstract method compliance
-        # Actual container creation happens in create_all_container_concepts()
-        container_id = record.get('ContainerID', 'UNKNOWN')
-        container_name = record.get('ContainerName', 'Unknown Container')
-        container_type = record.get('ContainerType', 'Generic')
-        
-        concept = OCLConcept(
-            id=container_id,
-            concept_class=self._get_container_concept_class(container_type),
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id=container_id
-        )
-        
-        # Add name
-        concept.add_name(
-            name=container_name,
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        # Add container-specific metadata
-        concept.extras.update({
-            'container_type': container_type,
-            'is_container_concept': True,
-            'loinc_version': self.context.transformation_rules.target_loinc_version,
-            'transformation_date': concept._creation_timestamp.isoformat()
-        })
-        
-        concept._source_file = "Generated Container"
-        
-        return concept
-    
-    def get_concept_class(self, record: pd.Series) -> str:
-        """Determine concept class for container"""
-        container_type = record.get('ContainerType', 'Generic')
-        return self._get_container_concept_class(container_type)
-    
-    def create_all_container_concepts(self) -> List[OCLConcept]:
-        """
-        Create all container concepts based on existing LOINC data analysis.
-        
-        Analyzes the loaded LOINC data to determine what containers are needed
-        and generates appropriate container concepts.
-        
-        Returns:
-            List of container OCL concepts
-        """
-        # self.debug_context_structure()
-        self.logger.info("Creating container concepts based on LOINC data analysis...")
-        
-        containers = []
-        
-        # Generate different types of containers
-        containers.extend(self._create_component_containers())
-        containers.extend(self._create_property_containers())
-        containers.extend(self._create_system_containers())
-        containers.extend(self._create_class_containers())
-        containers.extend(self._create_root_containers())
-        
-        # Update statistics
-        self.container_stats['total_containers'] = len(containers)
-        
-        self.logger.info(f"Generated {len(containers)} container concepts")
-        self.logger.info(f"Container breakdown: {self.container_stats}")
-        
-        return containers
-    
-    def _load_container_rules(self) -> None:
-        """Load container generation rules from transformation rules with error handling"""
-        self.container_rules = {}
+    def _load_container_definitions(self) -> None:
+        """Load static container definitions from transformation rules"""
+        self.container_definitions = []
         
         try:
-            if hasattr(self.context, 'transformation_rules') and self.context.transformation_rules:
-                if hasattr(self.context.transformation_rules, 'container_concepts'):
-                    rules = self.context.transformation_rules.container_concepts
-                    # Defensive check - ensure it's a dict, not a list
-                    if isinstance(rules, dict):
-                        self.container_rules = rules.copy()
-                    elif isinstance(rules, list):
-                        self.logger.warning("Container concepts rules is a list, expected dict. Using defaults.")
-                        self.container_rules = {}
-                    else:
-                        self.logger.warning(f"Container concepts rules is {type(rules)}, expected dict. Using defaults.")
-                        self.container_rules = {}
+            if (hasattr(self.context, 'transformation_rules') and 
+                self.context.transformation_rules and
+                hasattr(self.context.transformation_rules, 'container_concepts')):
+                
+                containers = self.context.transformation_rules.container_concepts
+                
+                if isinstance(containers, list):
+                    self.container_definitions = containers
+                    self.logger.info(f"Loaded {len(containers)} container definitions from transformation rules")
+                else:
+                    self.logger.warning(f"Container concepts is {type(containers)}, expected list. Using defaults.")
+                    self.container_definitions = self._get_default_containers()
+            else:
+                self.logger.warning("No container_concepts found in transformation rules. Using defaults.")
+                self.container_definitions = self._get_default_containers()
+                
         except Exception as e:
-            self.logger.warning(f"Error loading container rules: {e}. Using defaults.")
-            self.container_rules = {}
-        
-        # Default container rules if not configured or if loading failed
-        if not self.container_rules:
-            self.container_rules = self._get_default_container_rules()
-            self.logger.info("Using default container generation rules")
+            self.logger.warning(f"Error loading container definitions: {e}. Using defaults.")
+            self.container_definitions = self._get_default_containers()
     
-    
-    def _get_default_container_rules(self) -> Dict[str, Any]:
-        """Get default container generation rules with defensive programming"""
-        return {
-            'generate_component_containers': True,
-            'generate_property_containers': True,
-            'generate_system_containers': True,
-            'generate_class_containers': True,
-            'min_concepts_for_container': 5,
-            'max_containers_per_type': 50,
-            'container_name_patterns': {
-                'component': '{component} Components',
-                'property': '{property} Properties', 
-                'system': '{system} System',
-                'class': '{class} Concepts'
+    def _get_default_containers(self) -> List[Dict[str, str]]:
+        """Get default container definitions if not found in transformation rules"""
+        return [
+            {
+                "id": "LOINC_COMPONENT",
+                "name": "LOINC Component", 
+                "description": "Component parts without clear hierarchy",
+                "concept_class": "Misc"
+            },
+            {
+                "id": "LOINC_PROPERTY",
+                "name": "LOINC Property",
+                "description": "Property parts without clear hierarchy", 
+                "concept_class": "Misc"
+            },
+            {
+                "id": "LOINC_TIME",
+                "name": "LOINC Time",
+                "description": "Time aspects without clear hierarchy",
+                "concept_class": "Misc"
+            },
+            {
+                "id": "LOINC_SYSTEM", 
+                "name": "LOINC System",
+                "description": "System parts without clear hierarchy",
+                "concept_class": "Misc"
+            },
+            {
+                "id": "LOINC_SCALE",
+                "name": "LOINC Scale", 
+                "description": "Scale types without clear hierarchy",
+                "concept_class": "Misc"
+            },
+            {
+                "id": "LOINC_METHOD",
+                "name": "LOINC Method",
+                "description": "Method parts without clear hierarchy", 
+                "concept_class": "Misc"
+            },
+            {
+                "id": "OTHER",
+                "name": "Other",
+                "description": "Uncategorized parts and concepts",
+                "concept_class": "Misc" 
             }
-        }
+        ]
     
-    def _create_component_containers(self) -> List[OCLConcept]:
-        """Create containers for LOINC components"""
-        if not self.container_rules.get('generate_component_containers', True):
-            return []
+    def get_virtual_dataset(self) -> pd.DataFrame:
+        """
+        Create a virtual DataFrame from container definitions for standard transformer interface.
         
-        self.logger.info("Creating component containers...")
+        This allows the container transformer to work with the standard batch processing
+        pipeline even though it doesn't read from a real CSV file.
+        """
+        if not self.container_definitions:
+            return pd.DataFrame()
         
-        containers = []
-        
-        # FIXED: Use safe dataset access
-        loinc_df = self._get_dataset_safely('loinc_terms')
-        if loinc_df is not None and 'COMPONENT' in loinc_df.columns:
-            # Count component usage
-            component_counts = loinc_df['COMPONENT'].value_counts()
-            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-            
-            # Create containers for frequent components
-            top_components = component_counts[component_counts >= min_concepts].head(
-                self.container_rules.get('max_containers_per_type', 50)
-            )
-            
-            for component, count in top_components.items():
-                if pd.notna(component) and component.strip():
-                    container = self._create_component_container(component, count)
-                    containers.append(container)
-                    self.container_stats['component_containers'] += 1
-        
-        self.logger.info(f"Created {len(containers)} component containers")
-        return containers
+        # Convert container definitions to DataFrame
+        return pd.DataFrame(self.container_definitions)
     
-    def _create_component_container(self, component: str, concept_count: int) -> OCLConcept:
-        """Create a container concept for a specific component"""
-        # Generate container ID
-        container_id = f"LOINC-COMP-{self._generate_safe_id(component)}"
+    def process_batch(self, batch_df: pd.DataFrame) -> List[OCLConcept]:
+        """
+        Process a batch of container definitions (overrides base method).
         
-        # Generate container name
-        name_pattern = self.container_rules.get('container_name_patterns', {}).get('component', '{component} Components')
-        container_name = name_pattern.format(component=component)
-        
-        # Create concept
-        concept = OCLConcept(
-            id=container_id,
-            concept_class='Component Container',
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id=container_id
-        )
-        
-        # Add name
-        concept.add_name(
-            name=container_name,
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        # Add description
-        concept.add_description(
-            description=f"Container for LOINC concepts with component '{component}'. Contains approximately {concept_count} concepts.",
-            locale="en",
-            locale_preferred=True,
-            desc_type="Definition"
-        )
-        
-        # Add container metadata
-        concept.extras.update({
-            'container_type': 'component',
-            'component_name': component,
-            'estimated_concept_count': concept_count,
-            'is_container_concept': True,
-            'container_purpose': 'Organizational hierarchy for LOINC components'
-        })
-        
-        concept._source_file = "Generated Component Container"
-        
-        return concept
-    
-    def _create_property_containers(self) -> List[OCLConcept]:
-        """Create containers for LOINC properties"""
-        if not self.container_rules.get('generate_property_containers', True):
-            return []
-        
-        self.logger.info("Creating property containers...")
-        
-        containers = []
-        
-        # FIXED: Use safe dataset access
-        loinc_df = self._get_dataset_safely('loinc_terms')
-        if loinc_df is not None and 'PROPERTY' in loinc_df.columns:
-            # Count property usage
-            property_counts = loinc_df['PROPERTY'].value_counts()
-            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-            
-            # Create containers for frequent properties
-            top_properties = property_counts[property_counts >= min_concepts].head(
-                self.container_rules.get('max_containers_per_type', 50)
-            )
-            
-            for property_name, count in top_properties.items():
-                if pd.notna(property_name) and property_name.strip():
-                    container = self._create_property_container(property_name, count)
-                    containers.append(container)
-                    self.container_stats['property_containers'] += 1
-        
-        self.logger.info(f"Created {len(containers)} property containers")
-        return containers
-    
-    def _create_property_container(self, property_name: str, concept_count: int) -> OCLConcept:
-        """Create a container concept for a specific property"""
-        # Generate container ID
-        container_id = f"LOINC-PROP-{self._generate_safe_id(property_name)}"
-        
-        # Generate container name
-        name_pattern = self.container_rules.get('container_name_patterns', {}).get('property', '{property} Properties')
-        container_name = name_pattern.format(property=property_name)
-        
-        # Create concept
-        concept = OCLConcept(
-            id=container_id,
-            concept_class='Property Container',
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id=container_id
-        )
-        
-        # Add name
-        concept.add_name(
-            name=container_name,
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        # Add description
-        concept.add_description(
-            description=f"Container for LOINC concepts with property '{property_name}'. Contains approximately {concept_count} concepts.",
-            locale="en",
-            locale_preferred=True,
-            desc_type="Definition"
-        )
-        
-        # Add container metadata
-        concept.extras.update({
-            'container_type': 'property',
-            'property_name': property_name,
-            'estimated_concept_count': concept_count,
-            'is_container_concept': True,
-            'container_purpose': 'Organizational hierarchy for LOINC properties'
-        })
-        
-        concept._source_file = "Generated Property Container"
-        
-        return concept
-    
-    def _create_system_containers(self) -> List[OCLConcept]:
-        """Create containers for LOINC systems"""
-        if not self.container_rules.get('generate_system_containers', True):
-            return []
-        
-        self.logger.info("Creating system containers...")
-        
-        containers = []
-        
-        # FIXED: Use safe dataset access
-        loinc_df = self._get_dataset_safely('loinc_terms')
-        if loinc_df is not None and 'SYSTEM' in loinc_df.columns:
-            # Count system usage
-            system_counts = loinc_df['SYSTEM'].value_counts()
-            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-            
-            # Create containers for frequent systems
-            top_systems = system_counts[system_counts >= min_concepts].head(
-                self.container_rules.get('max_containers_per_type', 50)
-            )
-            
-            for system_name, count in top_systems.items():
-                if pd.notna(system_name) and system_name.strip():
-                    container = self._create_system_container(system_name, count)
-                    containers.append(container)
-                    self.container_stats['system_containers'] += 1
-        
-        self.logger.info(f"Created {len(containers)} system containers")
-        return containers
-   
-    def _create_system_container(self, system_name: str, concept_count: int) -> OCLConcept:
-        """Create a container concept for a specific system"""
-        # Generate container ID
-        container_id = f"LOINC-SYS-{self._generate_safe_id(system_name)}"
-        
-        # Generate container name
-        name_pattern = self.container_rules.get('container_name_patterns', {}).get('system', '{system} System')
-        container_name = name_pattern.format(system=system_name)
-        
-        # Create concept
-        concept = OCLConcept(
-            id=container_id,
-            concept_class='System Container',
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id=container_id
-        )
-        
-        # Add name
-        concept.add_name(
-            name=container_name,
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        # Add description
-        concept.add_description(
-            description=f"Container for LOINC concepts from system '{system_name}'. Contains approximately {concept_count} concepts.",
-            locale="en",
-            locale_preferred=True,
-            desc_type="Definition"
-        )
-        
-        # Add container metadata
-        concept.extras.update({
-            'container_type': 'system',
-            'system_name': system_name,
-            'estimated_concept_count': concept_count,
-            'is_container_concept': True,
-            'container_purpose': 'Organizational hierarchy for LOINC systems'
-        })
-        
-        concept._source_file = "Generated System Container"
-        
-        return concept
-    
-
-    def _create_class_containers(self) -> List[OCLConcept]:
-        """Create containers for LOINC classes"""
-        if not self.container_rules.get('generate_class_containers', True):
-            return []
-        
-        self.logger.info("Creating class containers...")
-        
-        containers = []
-        
-        # FIXED: Use safe dataset access
-        loinc_df = self._get_dataset_safely('loinc_terms')
-        if loinc_df is not None and 'CLASS' in loinc_df.columns:
-            # Count class usage
-            class_counts = loinc_df['CLASS'].value_counts()
-            min_concepts = self.container_rules.get('min_concepts_for_container', 5)
-            
-            # Create containers for all significant classes
-            top_classes = class_counts[class_counts >= min_concepts]
-            
-            for class_name, count in top_classes.items():
-                if pd.notna(class_name) and class_name.strip():
-                    container = self._create_class_container(class_name, count)
-                    containers.append(container)
-                    self.container_stats['class_containers'] += 1
-        
-        self.logger.info(f"Created {len(containers)} class containers")
-        return containers
-    
-    def _create_class_container(self, class_name: str, concept_count: int) -> OCLConcept:
-        """Create a container concept for a specific class"""
-        # Generate container ID
-        container_id = f"LOINC-CLASS-{self._generate_safe_id(class_name)}"
-        
-        # Generate container name
-        name_pattern = self.container_rules.get('container_name_patterns', {}).get('class', '{class} Concepts')
-        container_name = name_pattern.format(**{'class': class_name})
-        
-        # Create concept
-        concept = OCLConcept(
-            id=container_id,
-            concept_class='Class Container',
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id=container_id
-        )
-        
-        # Add name
-        concept.add_name(
-            name=container_name,
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        # Add description
-        concept.add_description(
-            description=f"Container for LOINC concepts in class '{class_name}'. Contains approximately {concept_count} concepts.",
-            locale="en",
-            locale_preferred=True,
-            desc_type="Definition"
-        )
-        
-        # Add container metadata
-        concept.extras.update({
-            'container_type': 'class',
-            'class_name': class_name,
-            'estimated_concept_count': concept_count,
-            'is_container_concept': True,
-            'container_purpose': 'Organizational hierarchy for LOINC classes'
-        })
-        
-        concept._source_file = "Generated Class Container"
-        
-        return concept
-    
-    def _create_root_containers(self) -> List[OCLConcept]:
-        """Create root-level organizational containers"""
-        self.logger.info("Creating root containers...")
-        
-        containers = []
-        
-        # Root LOINC container
-        root_container = OCLConcept(
-            id="LOINC-ROOT",
-            concept_class="Root Container",
-            owner=self.owner_org,
-            owner_type="Organization",
-            source=self.source_name,
-            retired=False,
-            external_id="LOINC-ROOT"
-        )
-        
-        root_container.add_name(
-            name="LOINC Terminology",
-            locale="en",
-            locale_preferred=True,
-            name_type="Fully Specified"
-        )
-        
-        root_container.add_description(
-            description="Root container for all LOINC terminology concepts and organizational structures.",
-            locale="en",
-            locale_preferred=True,
-            desc_type="Definition"
-        )
-        
-        root_container.extras.update({
-            'container_type': 'root',
-            'is_container_concept': True,
-            'container_purpose': 'Root organizational container for LOINC hierarchy',
-            'loinc_version': self.context.transformation_rules.target_loinc_version
-        })
-        
-        root_container._source_file = "Generated Root Container"
-        containers.append(root_container)
-        
-        return containers
-    
-    def _generate_safe_id(self, text: str) -> str:
-        """Generate a safe ID from text"""
-        # Clean and normalize text for ID
-        safe_id = re.sub(r'[^a-zA-Z0-9\s]', '', text)
-        safe_id = re.sub(r'\s+', '-', safe_id.strip())
-        safe_id = safe_id.upper()
-        
-        # Limit length
-        if len(safe_id) > 20:
-            safe_id = safe_id[:20]
-        
-        return safe_id or "UNKNOWN"
-    
-    def _get_container_concept_class(self, container_type: str) -> str:
-        """Get concept class for container type"""
-        mapping = {
-            'component': 'Component Container',
-            'property': 'Property Container',
-            'system': 'System Container',
-            'class': 'Class Container',
-            'root': 'Root Container',
-            'generic': 'Container'
-        }
-        return mapping.get(container_type.lower(), 'Container')
+        For containers, we ignore the batch_df and just create all static containers.
+        """
+        return self.create_all_container_concepts()
     
     def validate_prerequisites(self) -> bool:
-        """Validate prerequisites with better error handling"""
+        """
+        Validate that prerequisites for container concept creation are met.
+        
+        Returns:
+            bool: True if prerequisites are met, False otherwise
+        """
         try:
-            # Check that we have LOINC data to analyze
-            required_datasets = ['loinc_terms']
-            
-            # Defensive check for source_datasets
-            if not hasattr(self.context, 'source_datasets'):
-                self.logger.error("Transformation context has no source_datasets")
+            # Check that we have container definitions
+            if not self.container_definitions:
+                self.logger.error("No container definitions available")
                 return False
             
-            source_datasets = self.context.source_datasets
-            if not isinstance(source_datasets, dict):
-                self.logger.error(f"source_datasets is {type(source_datasets)}, expected dict")
-                return False
+            # Validate container definition structure
+            for i, container in enumerate(self.container_definitions):
+                if not isinstance(container, dict):
+                    self.logger.error(f"Container definition {i} is not a dict: {type(container)}")
+                    return False
+                
+                required_fields = ['id', 'name', 'concept_class']
+                for field in required_fields:
+                    if field not in container:
+                        self.logger.error(f"Container definition {i} missing required field: {field}")
+                        return False
             
-            available_datasets = list(source_datasets.keys())
-            
-            missing_datasets = []
-            for dataset in required_datasets:
-                if dataset not in available_datasets:
-                    missing_datasets.append(dataset)
-            
-            if missing_datasets:
-                self.logger.warning(f"Missing datasets for container analysis: {missing_datasets}")
-                # We can still generate some containers, so don't fail completely
-            
-            # Check that we have transformation rules
-            if not hasattr(self.context, 'transformation_rules') or not self.context.transformation_rules:
-                self.logger.warning("No transformation rules available")
-            
-            self.logger.info("Container concepts prerequisites check passed")
-            self.logger.info(f"Available datasets for analysis: {available_datasets}")
-            
+            self.logger.info("Container concepts prerequisites validation passed")
             return True
             
         except Exception as e:
             self.logger.error(f"Prerequisites validation failed: {e}")
-            import traceback
-            self.logger.error(f"Full traceback: {traceback.format_exc()}")
             return False
+    
+    def create_all_container_concepts(self) -> List[OCLConcept]:
+        """
+        Create all static container concepts as defined in transformation rules.
+        
+        Returns:
+            List of container OCL concepts
+        """
+        self.logger.info("Creating static container concepts...")
+        
+        containers = []
+        
+        for container_def in self.container_definitions:
+            try:
+                container = self._create_container_concept(container_def)
+                containers.append(container)
+                self.container_stats['total_containers'] += 1
+                
+            except Exception as e:
+                self.logger.error(f"Failed to create container {container_def.get('id', 'UNKNOWN')}: {e}")
+        
+        self.logger.info(f"Created {len(containers)} container concepts")
+        return containers
+    
+    def _create_container_concept(self, container_def: Dict[str, str]) -> OCLConcept:
+        """Create a single container concept from definition"""
+        
+        # Create concept with proper fields
+        concept = OCLConcept(
+            id=container_def['id'],
+            concept_class=container_def['concept_class'],
+            datatype='N/A',  # NEW: All containers have N/A datatype
+            owner=self.owner_org,
+            owner_type="Organization", 
+            source=self.source_name,
+            retired=False,
+            external_id=container_def['id']
+        )
+        
+        # Add name
+        concept.add_name(
+            name=container_def['name'],
+            locale="en",
+            locale_preferred=True,
+            name_type="Fully Specified"
+        )
+        
+        # Add description if available
+        if 'description' in container_def:
+            concept.add_description(
+                description=container_def['description'],
+                locale="en", 
+                locale_preferred=True,
+                desc_type="Definition"
+            )
+        
+        # Add container metadata
+        concept.extras.update({
+            'is_container_concept': True,
+            'container_purpose': 'Organizational hierarchy for orphaned LOINC items',
+            'container_type': 'static'
+        })
+        
+        concept._source_file = "Static Container Definition"
+        
+        return concept
+    
+    def get_transformer_name(self) -> str:
+        """Get transformer name (required abstract method)"""
+        return self.transformer_name
+    
+    def get_source_dataset_name(self) -> str:
+        """Get source dataset name (required abstract method)"""
+        return self.source_dataset
+    
+    def get_primary_key_field(self) -> str:
+        """Get primary key field (required abstract method)"""
+        return self.primary_key
+    
+    def get_concept_class(self, record: pd.Series) -> str:
+        """Get concept class for record (required abstract method)"""
+        # All containers use 'Misc' concept class
+        if hasattr(record, 'get') and 'concept_class' in record:
+            return record.get('concept_class', 'Misc')
+        return 'Misc'
+    
+    def transform_record(self, record: pd.Series) -> OCLConcept:
+        """Transform a single container definition record into OCL concept (required abstract method)"""
+        # Handle different record structures
+        if hasattr(record, 'get'):
+            # Standard pandas Series with get method
+            container_def = {
+                'id': record.get('id', f'CONTAINER_{self.container_stats["total_containers"]}'),
+                'name': record.get('name', f'Container {self.container_stats["total_containers"]}'),
+                'description': record.get('description', 'Organizational container concept'),
+                'concept_class': record.get('concept_class', 'Misc')
+            }
+        else:
+            # Fallback for other record types
+            container_def = {
+                'id': getattr(record, 'id', f'CONTAINER_{self.container_stats["total_containers"]}'),
+                'name': getattr(record, 'name', f'Container {self.container_stats["total_containers"]}'),
+                'description': getattr(record, 'description', 'Organizational container concept'),
+                'concept_class': getattr(record, 'concept_class', 'Misc')
+            }
+        
+        return self._create_container_concept(container_def)
+    
+    def transform_dataset(self, progress_callback: Optional[callable] = None) -> TransformationResult:
+        """
+        Transform container definitions dataset (overrides base implementation).
+        
+        Since containers are static definitions rather than records from a CSV,
+        we create concepts directly from the transformation rules.
+        """
+        start_time = time.time()
+        
+        self.logger.info(f"Starting {self.get_transformer_name()} transformation")
+        
+        # Initialize result collection
+        result_collection = ConceptCollection(
+            collection_name=f"{self.get_transformer_name()}_Concepts",
+            batch_size=self.context.batch_size if hasattr(self.context, 'batch_size') else 100
+        )
+        
+        # Create all container concepts
+        try:
+            container_concepts = self.create_all_container_concepts()
+            
+            # Add concepts to collection
+            for concept in container_concepts:
+                result_collection.add_concept(concept)
+            
+            # Update progress if callback provided
+            if progress_callback:
+                progress_callback(100.0, f"Generated {len(container_concepts)} container concepts")
+            
+            processing_time = time.time() - start_time
+            
+            # Create transformation result
+            result = TransformationResult(
+                concepts=result_collection,
+                success_count=len(container_concepts),
+                error_count=0,
+                warning_count=0,
+                processing_time_seconds=processing_time
+            )
+            
+            self.logger.info(f"Container transformation completed: {len(container_concepts)} concepts in {processing_time:.2f}s")
+            return result
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            self.logger.error(f"Container transformation failed: {e}")
+            
+            # Return failed result
+            result = TransformationResult(
+                concepts=result_collection,
+                success_count=0,
+                error_count=1,
+                warning_count=0,
+                processing_time_seconds=processing_time,
+                errors=[str(e)]
+            )
+            return result
     
     def get_transformation_summary(self) -> Dict[str, Any]:
         """Get summary of container transformation configuration"""
         return {
             "transformer_name": self.transformer_name,
-            "container_rules": self.container_rules,
+            "container_definitions_count": len(self.container_definitions),
             "owner_organization": self.owner_org,
-            "container_statistics": self.container_stats,
-            "transformation_rules_version": getattr(self.context.transformation_rules, 'version', 'Unknown')
+            "container_statistics": self.container_stats
         }
-    
-    def get_container_generation_report(self) -> Dict[str, Any]:
-        """Get detailed report of container generation"""
-        return {
-            "total_containers_generated": self.container_stats['total_containers'],
-            "containers_by_type": {
-                "component_containers": self.container_stats['component_containers'],
-                "property_containers": self.container_stats['property_containers'],
-                "system_containers": self.container_stats['system_containers'],
-                "class_containers": self.container_stats['class_containers']
-            },
-            "container_rules_applied": self.container_rules,
-            "generation_successful": self.container_stats['total_containers'] > 0
-        }
-    def debug_context_structure(self):
-        """Debug method to inspect the transformation context structure"""
-        print(f"=== CONTAINER TRANSFORMER DEBUG ===")
-        print(f"Context type: {type(self.context)}")
-        
-        if hasattr(self.context, 'source_datasets'):
-            datasets = self.context.source_datasets
-            print(f"source_datasets type: {type(datasets)}")
-            if isinstance(datasets, dict):
-                print(f"Available dataset keys: {list(datasets.keys())[:5]}...")
-                for key in list(datasets.keys())[:3]:
-                    dataset = datasets[key]
-                    print(f"  {key}: {type(dataset)}")
-                    if hasattr(dataset, 'data'):
-                        print(f"    .data: {type(dataset.data)}")
-            else:
-                print(f"❌ source_datasets is not a dict: {datasets}")
-        
-        if hasattr(self.context, 'transformation_rules'):
-            rules = self.context.transformation_rules
-            print(f"transformation_rules type: {type(rules)}")
-            if hasattr(rules, 'container_concepts'):
-                container_rules = rules.container_concepts
-                print(f"container_concepts type: {type(container_rules)}")
-        
-        print(f"=== END DEBUG ===")
+
 
 # Example usage and testing
 if __name__ == "__main__":
-    print("Container Concepts Transformer")
-    print("Creates organizational container concepts for LOINC hierarchy")
-    print("\nContainer types:")
-    print("- Component containers (e.g., 'Glucose Components')")
-    print("- Property containers (e.g., 'Mass Concentration Properties')")  
-    print("- System containers (e.g., 'Serum System')")
-    print("- Class containers (e.g., 'Laboratory Concepts')")
-    print("- Root containers (organizational structure)")
-    print("\nKey features:")
-    print("- Data-driven container generation")
-    print("- Configurable generation rules")
-    print("- Multi-language container names")
-    print("- Comprehensive metadata and descriptions")
+    print("Fixed Container Concepts Transformer")
+    print("Creates exactly 7 static organizational container concepts")
+    print("\nExpected containers:")
+    print("1. LOINC_COMPONENT - LOINC Component")
+    print("2. LOINC_PROPERTY - LOINC Property") 
+    print("3. LOINC_TIME - LOINC Time")
+    print("4. LOINC_SYSTEM - LOINC System")
+    print("5. LOINC_SCALE - LOINC Scale")
+    print("6. LOINC_METHOD - LOINC Method")
+    print("7. OTHER - Other")
+    print("\nAll containers use concept_class='Misc' and are organizational only.")
