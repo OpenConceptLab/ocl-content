@@ -17,8 +17,8 @@ Date: August 2025
 
 import pandas as pd
 from typing import Dict, List, Any, Optional, Tuple
-from base_transformer import BaseTransformer, TransformationContext, TransformationResult
-from ocl_models import OCLConcept, OCLName, ConceptCollection
+from .base_transformer import BaseTransformer, TransformationContext, TransformationResult
+from .ocl_models import OCLConcept, OCLName, ConceptCollection
 import logging
 import time
 
@@ -363,20 +363,31 @@ class AnswerListsTransformer(BaseTransformer):
         )
         
         # Add LOINC Answer specific metadata
-        concept.extras.update({
+        extras = {
             'answer_string_id': answer_string_id,
-            'answer_list_id': parent_answer_list_id,
-            'sequence_number': record.get('SequenceNumber'),
-            'local_answer_code': record.get('LocalAnswerCode'),
-            'local_code_system': record.get('LocalAnswerCodeSystem'),
-            'external_code_id': record.get('ExtCodeId'),
-            'external_code_display': record.get('ExtCodeDisplayName'),
-            'external_code_system': record.get('ExtCodeSystem'),
-            'external_code_version': record.get('ExtCodeSystemVersion'),
-            'score': record.get('Score'),
-            'description': record.get('Description'),
-            'subsequent_text_prompt': record.get('SubsequentTextPrompt')
-        })
+            'answer_list_id': parent_answer_list_id
+        }
+
+        # Optional fields - only add if they have valid values
+        optional_fields = {
+            'sequence_number': 'SequenceNumber',
+            'local_answer_code': 'LocalAnswerCode',
+            'local_code_system': 'LocalAnswerCodeSystem',
+            'external_code_id': 'ExtCodeId',
+            'external_code_display': 'ExtCodeDisplayName',
+            'external_code_system': 'ExtCodeSystem',
+            'external_code_version': 'ExtCodeSystemVersion',
+            'score': 'Score',
+            'description': 'Description',
+            'subsequent_text_prompt': 'SubsequentTextPrompt'
+        }
+
+        for ext_key, field_name in optional_fields.items():
+            value = record.get(field_name)
+            if pd.notna(value) and str(value).strip():  # Only add non-NaN, non-empty values
+                extras[ext_key] = value
+
+        concept.extras.update(extras)
         
         # Clean up None values
         concept.extras = {k: v for k, v in concept.extras.items() if v is not None}

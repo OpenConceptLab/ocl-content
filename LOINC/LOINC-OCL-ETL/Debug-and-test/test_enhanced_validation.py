@@ -24,10 +24,10 @@ import logging
 sys.path.append(str(Path(__file__).parent))
 
 try:
-    from config_manager import ConfigManager
-    from data_loader import DataLoader
-    from logger import TransformationLogger
-    from validator import DataValidator  # This will be our enhanced validator
+    from phase1_2_data_processing.config_manager import ConfigManager
+    from phase1_2_data_processing.data_loader import DataLoader
+    from phase1_2_data_processing.logger import TransformationLogger
+    from phase1_2_data_processing.validator import DataValidator  # This will be our enhanced validator
 except ImportError as e:
     print(f"Error importing modules: {e}")
     print("Make sure you're running this from the correct directory with all Python files present.")

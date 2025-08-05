@@ -27,28 +27,28 @@ def test_current_system():
         print("📦 Step 1: Testing module imports...")
         
         try:
-            from config_manager import ConfigManager
+            from phase1_2_data_processing.config_manager import ConfigManager
             print("   ✅ config_manager imported")
         except ImportError as e:
             print(f"   ❌ config_manager: {e}")
             return False
             
         try:
-            from file_handler import FileHandler
+            from phase1_2_data_processing.file_handler import FileHandler
             print("   ✅ file_handler imported")
         except ImportError as e:
             print(f"   ❌ file_handler: {e}")
             return False
             
         try:
-            from data_loader import DataLoader
+            from phase1_2_data_processing.data_loader import DataLoader
             print("   ✅ data_loader imported")
         except ImportError as e:
             print(f"   ❌ data_loader: {e}")
             return False
             
         try:
-            from logger import TransformationLogger
+            from phase1_2_data_processing.logger import TransformationLogger
             print("   ✅ logger imported")
         except ImportError as e:
             print(f"   ❌ logger: {e}")
@@ -56,7 +56,7 @@ def test_current_system():
             
         try:
             # Try to import current validator (might fail, that's OK)
-            from validator import DataValidator
+            from phase1_2_data_processing.validator import DataValidator
             print("   ✅ validator imported")
             has_validator = True
         except ImportError as e:

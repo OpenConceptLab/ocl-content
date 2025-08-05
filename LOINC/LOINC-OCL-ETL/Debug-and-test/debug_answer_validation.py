@@ -15,12 +15,12 @@ from pathlib import Path
 # Add current directory for imports
 sys.path.append(str(Path(__file__).parent))
 
-from config_manager import ConfigManager
-from data_loader import DataLoader
-from answer_transformer import AnswerListsTransformer
-from base_transformer import TransformationContext
-from ocl_models import OCLConcept
-from ocl_validator import OCLConceptValidator
+from phase1_2_data_processing.config_manager import ConfigManager
+from phase1_2_data_processing.data_loader import DataLoader
+from phase1_2_data_processing.answer_transformer import AnswerListsTransformer
+from phase1_2_data_processing.base_transformer import TransformationContext
+from phase1_2_data_processing.ocl_models import OCLConcept
+from phase1_2_data_processing.ocl_validator import OCLConceptValidator
 
 
 def debug_answer_lists_validation():
@@ -127,7 +127,7 @@ def debug_answer_lists_validation():
                 print("✅ Individual concept validation passed")
             
             # Test validator validation
-            from ocl_models import ConceptCollection
+            from phase1_2_data_processing.ocl_models import ConceptCollection
             collection = ConceptCollection("Test")
             collection.add_concept(concept)
             

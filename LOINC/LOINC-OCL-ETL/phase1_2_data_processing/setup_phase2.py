@@ -132,7 +132,7 @@ Date: August 2025
 """
 
 from base_transformer import BaseTransformer, TransformationContext
-from ocl_models import OCLConcept
+from .ocl_models import OCLConcept
 import pandas as pd
 
 

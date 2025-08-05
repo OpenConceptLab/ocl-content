@@ -16,9 +16,9 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent))
 
 try:
-    from config_manager import ConfigManager
-    from data_loader import DataLoader
-    from logger import TransformationLogger
+    from phase1_2_data_processing.config_manager import ConfigManager
+    from phase1_2_data_processing.data_loader import DataLoader
+    from phase1_2_data_processing.logger import TransformationLogger
 except ImportError as e:
     print(f"❌ Import error: {e}")
     sys.exit(1)

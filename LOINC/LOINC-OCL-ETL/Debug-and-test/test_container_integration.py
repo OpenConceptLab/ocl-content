@@ -14,8 +14,11 @@ from pathlib import Path
 # Add current directory for imports
 sys.path.append(str(Path(__file__).parent))
 
-from config_manager import ConfigManager
-from concept_factory import ConceptFactory
+from phase1_2_data_processing.config_manager import ConfigManager
+from phase1_2_data_processing.concept_factory import ConceptFactory
+from phase1_2_data_processing.container_transformer import ContainerConceptsTransformer
+from phase1_2_data_processing.ocl_models import ConceptCollection
+from phase1_2_data_processing.base_transformer import TransformationResult
 
 
 def test_container_integration():
@@ -40,10 +43,6 @@ def test_container_integration():
         
         # Test just the Container_Concepts transformer integration
         print("\n🏗️ Testing Container_Concepts transformer integration...")
-        
-        from container_transformer import ContainerConceptsTransformer
-        from ocl_models import ConceptCollection
-        from base_transformer import TransformationResult
         
         # Initialize transformer
         transformer = ContainerConceptsTransformer(concept_factory.transformation_context)

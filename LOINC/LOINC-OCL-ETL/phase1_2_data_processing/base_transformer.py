@@ -24,8 +24,8 @@ from pathlib import Path
 import time
 
 # Import Phase 1 infrastructure
-from config_manager import ConfigManager, TransformationRules
-from ocl_models import OCLConcept, OCLName, ConceptCollection
+from .config_manager import ConfigManager, TransformationRules
+from .ocl_models import OCLConcept, OCLName, ConceptCollection
 
 @dataclass
 class DatasetDiscoveryCache:

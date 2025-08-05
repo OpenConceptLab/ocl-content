@@ -25,17 +25,17 @@ from dataclasses import dataclass
 import json
 
 # Import Phase 1 infrastructure
-from config_manager import ConfigManager
-from data_loader import DataLoader, LoadingSummary
+from .config_manager import ConfigManager
+from .data_loader import DataLoader, LoadingSummary
 
 # Import Phase 2 components
-from base_transformer import TransformationContext, TransformationResult
-from loinc_transformer import LoincTermsTransformer
-from part_transformer import LoincPartsTransformer
-from answer_transformer import AnswerListsTransformer
-from container_transformer import ContainerConceptsTransformer
-from ocl_validator import OCLConceptValidator, ValidationReport
-from ocl_models import OCLConcept, ConceptCollection
+from .base_transformer import TransformationContext, TransformationResult
+from .loinc_transformer import LoincTermsTransformer
+from .part_transformer import LoincPartsTransformer
+from .answer_transformer import AnswerListsTransformer
+from .container_transformer import ContainerConceptsTransformer
+from .ocl_validator import OCLConceptValidator, ValidationReport
+from .ocl_models import OCLConcept, ConceptCollection
 
 
 @dataclass
@@ -410,7 +410,7 @@ class ConceptFactory:
             # Deduplicate concepts before validation
             deduped_concepts = self.deduplicate_concepts(result.concepts.concepts)
             # Create a temporary ConceptCollection for validation
-            from ocl_models import ConceptCollection
+            from .ocl_models import ConceptCollection
             deduped_collection = ConceptCollection(
                 collection_name=result.concepts.collection_name,
                 concepts=deduped_concepts,

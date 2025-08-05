@@ -40,7 +40,7 @@ try:
     
     # Import Phase 2 components
     from concept_factory import ConceptFactory, ConceptCreationSummary
-    from ocl_models import OCLConcept, OCLName, ConceptCollection
+    from .ocl_models import OCLConcept, OCLName, ConceptCollection
     from ocl_validator import OCLConceptValidator, ValidationReport
     from loinc_transformer import LoincTermsTransformer
     from part_transformer import LoincPartsTransformer

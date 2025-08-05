@@ -18,8 +18,8 @@ Date: August 2025
 
 import pandas as pd
 from typing import Dict, List, Any, Optional
-from base_transformer import BaseTransformer, TransformationContext
-from ocl_models import OCLConcept, OCLName
+from .base_transformer import BaseTransformer, TransformationContext
+from .ocl_models import OCLConcept, OCLName
 import logging
 
 

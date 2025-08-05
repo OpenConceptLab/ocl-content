@@ -23,9 +23,9 @@ from collections import defaultdict
 import logging
 
 # Import our custom modules
-from config_manager import ConfigManager, ProjectPaths, ProcessingConfig
-from file_handler import FileHandler, ParseResult, FileInfo
-from validator import DataValidator, ValidationReport, ValidationIssue
+from .config_manager import ConfigManager, ProjectPaths, ProcessingConfig
+from .file_handler import FileHandler, ParseResult, FileInfo
+from .validator import DataValidator, ValidationReport, ValidationIssue
 
 
 @dataclass
@@ -390,7 +390,7 @@ class DataLoader:
             validation_data = {name: dataset.data for name, dataset in self.datasets.items()}
             
             # Run validation
-            validation_report = self.validator.validate_all_files(validation_data)
+            validation_report = self.validator.validate_data(validation_data)
             summary.validation_report = validation_report
             
             # Update dataset records with validation results

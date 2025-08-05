@@ -34,18 +34,18 @@ sys.path.append(str(Path(__file__).parent))
 
 try:
     # Import Phase 1 infrastructure
-    from config_manager import ConfigManager
-    from data_loader import DataLoader
-    from logger import TransformationLogger
+    from phase1_2_data_processing.config_manager import ConfigManager
+    from phase1_2_data_processing.data_loader import DataLoader
+    from phase1_2_data_processing.logger import TransformationLogger
     
     # Import Phase 2 components
-    from ocl_models import OCLConcept, OCLName, ConceptCollection
-    from base_transformer import TransformationContext
-    from loinc_transformer import LoincTermsTransformer
-    from part_transformer import LoincPartsTransformer
-    from answer_transformer import AnswerListsTransformer
-    from ocl_validator import OCLConceptValidator, ValidationReport
-    from concept_factory import ConceptFactory
+    from phase1_2_data_processing.ocl_models import OCLConcept, OCLName, ConceptCollection
+    from phase1_2_data_processing.base_transformer import TransformationContext
+    from phase1_2_data_processing.loinc_transformer import LoincTermsTransformer
+    from phase1_2_data_processing.part_transformer import LoincPartsTransformer
+    from phase1_2_data_processing.answer_transformer import AnswerListsTransformer
+    from phase1_2_data_processing.ocl_validator import OCLConceptValidator, ValidationReport
+    from phase1_2_data_processing.concept_factory import ConceptFactory
     
 except ImportError as e:
     print(f"❌ Import error: {e}")

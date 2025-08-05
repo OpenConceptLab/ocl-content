@@ -23,12 +23,19 @@ import traceback
 from pathlib import Path
 from typing import Optional, Dict, Any
 
-# Import Phase 1 modules
-from config_manager import ConfigManager
-from file_handler import FileHandler  
-from validator import DataValidator
-from data_loader import DataLoader
-from logger import TransformationLogger
+# Add source directories to Python path
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent))
+
+# Import Phase 1-2 shared modules
+from phase1_2_data_processing import (
+    ConfigManager,
+    FileHandler,
+    DataValidator,
+    DataLoader,
+    TransformationLogger
+)
 
 
 def setup_command_line_args() -> argparse.ArgumentParser:

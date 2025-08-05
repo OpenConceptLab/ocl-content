@@ -16,10 +16,10 @@ from pathlib import Path
 # Add current directory for imports
 sys.path.append(str(Path(__file__).parent))
 
-from config_manager import ConfigManager
-from data_loader import DataLoader
-from container_transformer import ContainerConceptsTransformer
-from base_transformer import TransformationContext
+from phase1_2_data_processing.config_manager import ConfigManager
+from phase1_2_data_processing.data_loader import DataLoader
+from phase1_2_data_processing.container_transformer import ContainerConceptsTransformer
+from phase1_2_data_processing.base_transformer import TransformationContext
 
 
 def debug_container_transformer():

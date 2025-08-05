@@ -26,12 +26,18 @@ import time
 from pathlib import Path
 from typing import Optional
 
-# Import Phase 1 infrastructure (reused)
-from config_manager import ConfigManager
-from logger import TransformationLogger
+# Add source directories to Python path
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent))
 
-# Import Phase 2 components
-from concept_factory import ConceptFactory, ConceptCreationSummary
+# Import shared modules from Phase 1-2 package
+from phase1_2_data_processing import (
+    ConfigManager,
+    TransformationLogger,
+    ConceptFactory,
+    ConceptCreationSummary
+)
 
 
 def setup_command_line_args() -> argparse.ArgumentParser:
@@ -125,22 +131,25 @@ def validate_environment() -> bool:
         print(f"[FAIL] Missing required module: {e}")
         return False
     
-    # Check that we have Phase 1 infrastructure
-    required_phase1_files = [
+    # Check that we have required shared infrastructure
+    required_files = [
         'config_manager.py',
         'data_loader.py',
         'validator.py',
-        'logger.py'
+        'logger.py',
+        'concept_factory.py',
+        'base_transformer.py'
     ]
     
+    shared_dir = Path(__file__).parent / "phase1_2_data_processing"
     missing_files = []
-    for filename in required_phase1_files:
-        if not Path(filename).exists():
+    for filename in required_files:
+        if not (shared_dir / filename).exists():
             missing_files.append(filename)
     
     if missing_files:
-        print(f"[FAIL] Missing Phase 1 files: {missing_files}")
-        print("   Please ensure Phase 1 infrastructure is available")
+        print(f"[FAIL] Missing required files in {shared_dir}: {missing_files}")
+        print("   Please ensure all required infrastructure is available")
         return False
     
     print("[OK] Environment validation passed")
