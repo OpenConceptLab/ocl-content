@@ -144,6 +144,49 @@ class BaseTransformer(ABC):
     - Error handling and validation
     """
     
+    @staticmethod
+    def is_nan_value(value: Any) -> bool:
+        """
+        Check if a value should be considered as NaN/missing and excluded from concept fields.
+        """
+        if value is None:
+            return True
+        
+        # Check for pandas NaN
+        if pd.isna(value):
+            return True
+        
+        # Convert to string for string-based checks
+        str_value = str(value).strip().lower()
+        
+        # Check for various string representations of missing values
+        nan_strings = {
+            'nan', 'null', '', 'none', 'n/a', 'na', 
+            'nil', 'undefined', '<null>', '<nan>',
+            'nan.0', 'nan.00'
+        }
+        
+        return str_value in nan_strings
+    
+    @staticmethod
+    def is_valid_value(value: Any) -> bool:
+        """Check if a value is valid for inclusion in concept extras."""
+        return not BaseTransformer.is_nan_value(value)
+    
+    @staticmethod
+    def clean_concept_extras(extras_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """Clean concept extras dictionary by removing all NaN/missing values."""
+        return {k: v for k, v in extras_dict.items() if not BaseTransformer.is_nan_value(v)}
+    
+    @staticmethod
+    def get_valid_field_value(record: pd.Series, field_name: str, default: Any = None) -> Any:
+        """Get a field value from a pandas Series, returning default if the value is NaN/missing."""
+        if field_name not in record:
+            return default
+        
+        value = record[field_name]
+        return value if BaseTransformer.is_valid_value(value) else default
+    
     def __init__(self, context: TransformationContext):
         """
         Initialize base transformer.

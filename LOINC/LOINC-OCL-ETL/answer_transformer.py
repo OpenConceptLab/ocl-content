@@ -247,16 +247,16 @@ class AnswerListsTransformer(BaseTransformer):
         # Add Answer List specific metadata
         concept.extras.update({
             'answer_list_id': answer_list_id,
-            'answer_list_oid': answer_list_info.get('AnswerListOID'),
-            'externally_defined': answer_list_info.get('ExtDefinedYN'),
-            'external_code_system': answer_list_info.get('ExtDefinedAnswerListCodeSystem'),
-            'external_link': answer_list_info.get('ExtDefinedAnswerListLink'),
-            'anchored_to': answer_list_info.get('AnchoredTo'),
+            'answer_list_oid': answer_list_info.get('AnswerListOID') if self.is_valid_value(answer_list_info.get('AnswerListOID')) else None,
+            'externally_defined': answer_list_info.get('ExtDefinedYN') if self.is_valid_value(answer_list_info.get('ExtDefinedYN')) else None,
+            'external_code_system': answer_list_info.get('ExtDefinedAnswerListCodeSystem') if self.is_valid_value(answer_list_info.get('ExtDefinedAnswerListCodeSystem')) else None,
+            'external_link': answer_list_info.get('ExtDefinedAnswerListLink') if self.is_valid_value(answer_list_info.get('ExtDefinedAnswerListLink')) else None,
+            'anchored_to': answer_list_info.get('AnchoredTo') if self.is_valid_value(answer_list_info.get('AnchoredTo')) else None,
             'answer_count': self._count_answers_for_list(answer_list_id)
         })
         
-        # Clean up None values
-        concept.extras = {k: v for k, v in concept.extras.items() if v is not None}
+        # Enhanced cleanup - removes None, NaN strings, empty strings, etc.
+        concept.extras = self.clean_concept_extras(concept.extras)
         concept._source_file = "AnswerList.csv"
         
         return concept

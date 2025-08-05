@@ -135,9 +135,10 @@ class LoincTermsTransformer(BaseTransformer):
         
         Per transformation_rules_v1.yaml: Use SCALE_TYP field, fallback to 'N/A'
         """
-        if 'SCALE_TYP' in record and pd.notna(record['SCALE_TYP']):
-            scale_type = str(record['SCALE_TYP']).strip()
-            return scale_type if scale_type else 'N/A'
+        scale_type = self.get_valid_field_value(record, 'SCALE_TYP')
+        if scale_type is not None:
+            cleaned_scale = self._clean_text(str(scale_type))
+            return cleaned_scale if cleaned_scale else 'N/A'
         
         return 'N/A'
 
@@ -189,8 +190,9 @@ class LoincTermsTransformer(BaseTransformer):
     def _add_additional_names(self, concept: OCLConcept, record: pd.Series) -> None:
         """Add additional names from LOINC fields"""
         # Add short name if available and different from long name
-        if 'SHORTNAME' in record and pd.notna(record['SHORTNAME']):
-            short_name = self._clean_text(record['SHORTNAME'])
+        short_name = self.get_valid_field_value(record, 'SHORTNAME')
+        if short_name is not None:
+            short_name = self._clean_text(str(short_name))
             if short_name and short_name != concept.names[0].name:
                 concept.add_name(
                     name=short_name,
@@ -200,8 +202,9 @@ class LoincTermsTransformer(BaseTransformer):
                 )
         
         # Add consumer name if available
-        if 'CONSUMER_NAME' in record and pd.notna(record['CONSUMER_NAME']):
-            consumer_name = self._clean_text(record['CONSUMER_NAME'])
+        consumer_name = self.get_valid_field_value(record, 'CONSUMER_NAME')
+        if consumer_name is not None:
+            consumer_name = self._clean_text(str(consumer_name))
             if consumer_name and consumer_name not in [n.name for n in concept.names]:
                 concept.add_name(
                     name=consumer_name,
@@ -215,11 +218,13 @@ class LoincTermsTransformer(BaseTransformer):
         extras = {}
         
         # Core LOINC fields in extras (CLASS goes here now)
-        if 'CLASS' in record and pd.notna(record['CLASS']):
-            extras['class'] = str(record['CLASS']).strip()
+        class_value = self.get_valid_field_value(record, 'CLASS')
+        if class_value is not None:
+            extras['class'] = self._clean_text(str(class_value))
         
-        if 'COMPONENT' in record and pd.notna(record['COMPONENT']):
-            extras['component'] = str(record['COMPONENT']).strip()
+        component_value = self.get_valid_field_value(record, 'COMPONENT')
+        if component_value is not None:
+            extras['component'] = self._clean_text(str(component_value))
 
         # Core LOINC dimensions
         extras_mapping = {
@@ -232,8 +237,9 @@ class LoincTermsTransformer(BaseTransformer):
         }
         
         for extra_key, field_name in extras_mapping.items():
-            if field_name in record and pd.notna(record[field_name]):
-                concept.extras[extra_key] = self._clean_text(record[field_name])
+            value = self.get_valid_field_value(record, field_name)
+            if value is not None:
+                concept.extras[extra_key] = self._clean_text(str(value))
         
         # Additional metadata
         metadata_fields = {
@@ -246,14 +252,16 @@ class LoincTermsTransformer(BaseTransformer):
         }
         
         for meta_key, field_name in metadata_fields.items():
-            if field_name in record and pd.notna(record[field_name]):
-                value = self._clean_text(record[field_name])
-                if value:  # Only add non-empty values
-                    concept.extras[meta_key] = value
+            value = self.get_valid_field_value(record, field_name)
+            if value is not None:
+                cleaned_value = self._clean_text(str(value))
+                if cleaned_value:  # Only add non-empty values
+                    concept.extras[meta_key] = cleaned_value
         
         # Special handling for boolean fields
-        if 'ORDER_OBS' in record and pd.notna(record['ORDER_OBS']):
-            concept.extras['order_observation'] = record['ORDER_OBS'] == 'Both' or record['ORDER_OBS'] == 'Order'
+        order_obs = self.get_valid_field_value(record, 'ORDER_OBS')
+        if order_obs is not None:
+            concept.extras['order_observation'] = str(order_obs) == 'Both' or str(order_obs) == 'Order'
         
         # Add processing metadata
         concept.extras['loinc_version'] = self.context.transformation_rules.target_loinc_version
@@ -265,8 +273,9 @@ class LoincTermsTransformer(BaseTransformer):
         description_fields = ['DEFINITION', 'FORMULA', 'LONG_COMMON_NAME']
         
         for field in description_fields:
-            if field in record and pd.notna(record[field]):
-                desc_text = self._clean_text(record[field])
+            value = self.get_valid_field_value(record, field)
+            if value is not None:
+                desc_text = self._clean_text(str(value))
                 
                 # Don't duplicate the primary name as description
                 if desc_text and desc_text != concept.names[0].name:
