@@ -52,7 +52,7 @@ class ContainerConceptsTransformer(BaseTransformer):
     
     def _get_owner_organization(self) -> str:
         """Get owner organization name"""
-        return "LOINC"
+        return "Regenstrief"
     
     def _get_supported_locales(self) -> List[str]:
         """Get list of supported locales"""
