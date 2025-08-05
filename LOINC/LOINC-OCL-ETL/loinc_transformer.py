@@ -99,11 +99,12 @@ class LoincTermsTransformer(BaseTransformer):
         concept = OCLConcept(
             id=loinc_num,
             concept_class=self.get_concept_class(record),
+            datatype=self._get_datatype(record),  # ADD THIS LINE
             owner=self.owner_org,
             owner_type="Organization",
             source=self.source_name,
             retired=self._map_status_to_retired(record.get('STATUS', 'ACTIVE')),
-            external_id=loinc_num  # Store original LOINC number
+            external_id=loinc_num
         )
         
         # Add primary English name
@@ -127,31 +128,26 @@ class LoincTermsTransformer(BaseTransformer):
         concept._source_file = "Loinc.csv"
         
         return concept
-    
+
+    def _get_datatype(self, record: pd.Series) -> str:
+        """
+        Get datatype for LOINC term.
+        
+        Per transformation_rules_v1.yaml: Use SCALE_TYP field, fallback to 'N/A'
+        """
+        if 'SCALE_TYP' in record and pd.notna(record['SCALE_TYP']):
+            scale_type = str(record['SCALE_TYP']).strip()
+            return scale_type if scale_type else 'N/A'
+        
+        return 'N/A'
+
     def get_concept_class(self, record: pd.Series) -> str:
         """
         Determine OCL concept class for LOINC term.
         
-        Uses the CLASS field from LOINC data, with fallback logic.
+        Per transformation_rules_v1.yaml: All LOINC Terms use 'LOINC' as concept_class
         """
-        # Primary: Use LOINC CLASS field
-        if 'CLASS' in record and pd.notna(record['CLASS']):
-            loinc_class = str(record['CLASS']).strip()
-            
-            # Map LOINC class to OCL concept class
-            class_mapping = self._get_class_mapping()
-            return class_mapping.get(loinc_class, loinc_class)
-        
-        # Fallback: Determine from other fields
-        if 'PROPERTY' in record:
-            property_val = str(record['PROPERTY']).strip()
-            if property_val in ['MCnc', 'SCnc', 'CCnc']:
-                return 'Laboratory'
-            elif property_val in ['Find', 'Pres']:
-                return 'Clinical'
-        
-        # Default fallback
-        return 'Laboratory'
+        return 'LOINC'  # Fixed value for all LOINC Terms
     
     def _load_field_mappings(self) -> None:
         """Load field mappings from transformation rules"""
@@ -215,7 +211,16 @@ class LoincTermsTransformer(BaseTransformer):
                 )
     
     def _set_loinc_extras(self, concept: OCLConcept, record: pd.Series) -> None:
-        """Set LOINC-specific metadata in extras field"""
+        """Set LOINC-specific extras data"""
+        extras = {}
+        
+        # Core LOINC fields in extras (CLASS goes here now)
+        if 'CLASS' in record and pd.notna(record['CLASS']):
+            extras['class'] = str(record['CLASS']).strip()
+        
+        if 'COMPONENT' in record and pd.notna(record['COMPONENT']):
+            extras['component'] = str(record['COMPONENT']).strip()
+
         # Core LOINC dimensions
         extras_mapping = {
             'component': 'COMPONENT',
