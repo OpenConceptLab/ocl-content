@@ -69,13 +69,18 @@ class AskAtOrderEntryMappingTransformer(BaseMappingTransformer):
             if not self.data_loader:
                 self.data_loader = self._create_data_loader()
             
-            # Load the main LOINC table
-            if 'Loinc.csv' not in self.data_loader.datasets:
-                self.logger.error("Loinc.csv not found in loaded datasets")
-                return False
-
-            loinc_data = self.data_loader.datasets['Loinc.csv'].data
+            # Load Phase 1 data if not already loaded
+            if not hasattr(self.data_loader, 'datasets') or not self.data_loader.datasets:
+                self.logger.info("Loading Phase 1 data...")
+                self.data_loader.load_all_data()
             
+            # Get the main LOINC table
+            if 'Loinc.csv' not in self.data_loader.datasets:
+                self.logger.error("Loinc.csv not found in Phase 1 data")
+                return False
+                
+            loinc_data = self.data_loader.datasets['Loinc.csv'].data
+
             if loinc_data is None or loinc_data.empty:
                 self.logger.error("Failed to load main LOINC table")
                 return False
@@ -100,7 +105,7 @@ class AskAtOrderEntryMappingTransformer(BaseMappingTransformer):
         except Exception as e:
             self.logger.error(f"Failed to load source data: {e}")
             return False
-    
+            
     def validate_source_record(self, record: pd.Series) -> Tuple[bool, List[str]]:
         """
         Validate a source record for mapping creation.
@@ -154,8 +159,8 @@ class AskAtOrderEntryMappingTransformer(BaseMappingTransformer):
             to_loinc = target_loincs[0]
             
             # Get concept URLs
-            from_url = self._get_concept_url(from_loinc)
-            to_url = self._get_concept_url(to_loinc)
+            from_url = self.get_concept_url(from_loinc)
+            to_url = self.get_concept_url(to_loinc)
             
             if not from_url or not to_url:
                 missing_concepts = []
@@ -179,8 +184,11 @@ class AskAtOrderEntryMappingTransformer(BaseMappingTransformer):
                 }
             )
             
-            return mapping
-            
+            if mapping and isinstance(mapping, OCLMapping):
+                return mapping
+            else:
+                self.logger.warning(f"Transform returned invalid object type: {type(mapping)}")
+                return None            
         except Exception as e:
             self.logger.error(f"Failed to transform record {record.get('LOINC_NUM', 'unknown')}: {e}")
             return None
