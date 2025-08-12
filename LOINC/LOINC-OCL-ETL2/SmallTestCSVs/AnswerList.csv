@@ -1,0 +1,246 @@
+AnswerListId,AnswerListName,AnswerListOID,ExtDefinedYN,ExtDefinedAnswerListCodeSystem,ExtDefinedAnswerListLink,AnswerStringId,LocalAnswerCode,LocalAnswerCodeSystem,SequenceNumber,DisplayText,ExtCodeId,ExtCodeDisplayName,ExtCodeSystem,ExtCodeSystemVersion,ExtCodeSystemCopyrightNotice,SubsequentTextPrompt,Description,Score
+LL1000-0,PhenX05_13_30D bread amt,1.3.6.1.4.1.12009.10.1.165,N,,,LA13825-7,1,,1,1 slice or 1 dinner roll,,,,,,,,
+LL1000-0,PhenX05_13_30D bread amt,1.3.6.1.4.1.12009.10.1.165,N,,,LA13838-0,2,,2,2 slices or 2 dinner rolls,,,,,,,,
+LL1000-0,PhenX05_13_30D bread amt,1.3.6.1.4.1.12009.10.1.165,N,,,LA13892-7,3,,3,More than 2 slices or 2 dinner rolls,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA6270-8,0,,1,Never,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13836-4,1,,2,1-3 times per month,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13834-9,2,,3,1-2 times per week,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13853-9,3,,4,3-4 times per week,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13860-4,4,,5,5-6 times per week,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13827-3,5,,6,1 time per day,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13840-6,6,,7,2 times per day,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13851-3,7,,8,3 times per day,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13854-7,8,,9,4 times per day,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA13858-8,9,,10,5 or more times per day,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA4389-8,97,,11,Refused,,,,,,,,
+LL1001-8,PhenX05_14_30D freq amts,1.3.6.1.4.1.12009.10.1.166,N,,,LA12688-0,99,,12,Don't know,4.57E+14,Do not know (qualifier value),http://snomed.info/sct,http://snomed.info/sct/731000124108/version/20240901,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA13872-9,1,,1,"Cooked cereals (such as oatmeal, cream of wheat, grits)",,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA13864-6,2,,2,"All bran cereals (such as All Bran®, Fiber One®, 100% Bran®, or Bran Buds®)",,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA13870-3,3,,3,"Cereals with some bran or fiber (such as Cheerios®, Raisin Bran®, Shredded Wheat®, Total®, Wheaties®, 40% Bran flakes®, Granola, Grape Nuts®, Muselix®, etc.)",,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA13869-5,4,,4,"Cereals with little bran or fiber (such as Corn Flakes®, Honey Nut Cheerios®, Froot Loops®, Rice Krispies®, Kix®, Frosted Flakes®, Special K®, Cap'n Crunch®, Blueberry Morning®, Product 19®, etc.)",,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA46-8,5,,5,Other,,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA4389-8,6,,6,Refused,,,,,,,,
+LL1002-6,PhenX05_15_30D cereal amt,1.3.6.1.4.1.12009.10.1.167,N,,,LA12688-0,7,,7,Don't know,4.57E+14,Do not know (qualifier value),http://snomed.info/sct,http://snomed.info/sct/731000124108/version/20240901,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13894-3,1,,1,Never or less than 1 time per month,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13836-4,2,,2,1-3 times per month,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13829-9,3,,3,1 time per week,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13846-3,4,,4,2-4 times per week,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13860-4,5,,5,5-6 times per week,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13827-3,6,,6,1 time per day,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13844-8,7,,7,2-3 times per day,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13856-2,8,,8,4-5 times per day,,,,,,,,
+LL1003-4,PhenX05_16_beverage amts,1.3.6.1.4.1.12009.10.1.168,N,,,LA13861-2,9,,9,6 or more times per day,,,,,,,,
+LL1004-2,PhenX05_17_serving size,1.3.6.1.4.1.12009.10.1.169,N,,,LA8983-4,1,,1,Small,255507004,Small (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1004-2,PhenX05_17_serving size,1.3.6.1.4.1.12009.10.1.169,N,,,LA8982-6,2,,2,Medium,,,,,,,,
+LL1004-2,PhenX05_17_serving size,1.3.6.1.4.1.12009.10.1.169,N,,,LA8981-8,3,,3,Large,255509001,Large (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1005-9,PhenX05_18_dietary supplements,1.3.6.1.4.1.12009.10.1.170,N,,,LA33-6,1,,1,Yes,373066001,Yes (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1005-9,PhenX05_18_dietary supplements,1.3.6.1.4.1.12009.10.1.170,N,,,LA32-8,2,,2,No,373067005,No (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1006-7,PhenX05_19_vitamin freq,1.3.6.1.4.1.12009.10.1.171,N,,,LA13830-7,1,,1,1 to 3 times a week,,,,,,,,
+LL1006-7,PhenX05_19_vitamin freq,1.3.6.1.4.1.12009.10.1.171,N,,,LA13855-4,2,,2,4 to 6 times a week,,,,,,,,
+LL1006-7,PhenX05_19_vitamin freq,1.3.6.1.4.1.12009.10.1.171,N,,,LA13897-6,3,,3,Once a day,,,,,,,,
+LL1007-5,PhenX05_20_Ys vitamin use,1.3.6.1.4.1.12009.10.1.172,N,,,LA13831-5,1,,1,1 year or less,,,,,,,,
+LL1007-5,PhenX05_20_Ys vitamin use,1.3.6.1.4.1.12009.10.1.172,N,,,LA13841-4,2,,2,2 to 4 years,,,,,,,,
+LL1007-5,PhenX05_20_Ys vitamin use,1.3.6.1.4.1.12009.10.1.172,N,,,LA13859-6,3,,3,5 to 9 years,,,,,,,,
+LL1007-5,PhenX05_20_Ys vitamin use,1.3.6.1.4.1.12009.10.1.172,N,,,LA13833-1,4,,4,10 years or more,,,,,,,,
+LL1008-3,PhenX05_21_vit C amt,1.3.6.1.4.1.12009.10.1.173,N,,,LA13847-1,1,,1,250 mg or less,,,,,,,,
+LL1008-3,PhenX05_21_vit C amt,1.3.6.1.4.1.12009.10.1.173,N,,,LA13852-1,2,,2,300 to 500 mg,,,,,,,,
+LL1008-3,PhenX05_21_vit C amt,1.3.6.1.4.1.12009.10.1.173,N,,,LA13862-0,3,,3,600 to 1000 mg,,,,,,,,
+LL1008-3,PhenX05_21_vit C amt,1.3.6.1.4.1.12009.10.1.173,N,,,LA13891-9,4,,4,More than 1000 mg,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4347-6,0,,1,Radiation Rx Performed,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4348-4,1,,2,Radiation Rx not recommended,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4217-1,2,,3,"Contraindicated, Autopsy Only",,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4644-6,5,,4,Patient Died Prior to Treatment,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4393-0,6,,5,Reason Unknown for Rad Rx,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4389-8,7,,6,Refused,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4353-4,8,,7,Rad Rx Recommend but unknown of Admin,,,,,,,,
+LL100-9,CR_1430_Reason no radiation,1.3.6.1.4.1.12009.10.1.174,N,,,LA4444-1,9,,8,Unknown - Death Cert Only,,,,,,,,
+LL1009-1,PhenX05_22_vit E amt,1.3.6.1.4.1.12009.10.1.175,N,,,LA13843-0,1,,1,200 IU or less,,,,,,,,
+LL1009-1,PhenX05_22_vit E amt,1.3.6.1.4.1.12009.10.1.175,N,,,LA13848-9,2,,2,250 to 400 IU,,,,,,,,
+LL1009-1,PhenX05_22_vit E amt,1.3.6.1.4.1.12009.10.1.175,N,,,LA13857-0,3,,3,450 to 1000 IU,,,,,,,,
+LL1009-1,PhenX05_22_vit E amt,1.3.6.1.4.1.12009.10.1.175,N,,,LA13890-1,4,,4,More than 1000 IU,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA6270-8,1,,1,Never,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA6251-8,2,,2,Less than once a month,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13836-4,3,,3,1-3 times per month,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13834-9,4,,4,1-2 times per week,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13853-9,5,,5,3-4 times per week,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13860-4,6,,6,5-6 times per week,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13827-3,7,,7,1 time per day,,,,,,,,
+LL1010-9,PhenX05_23_food freq,1.3.6.1.4.1.12009.10.1.176,N,,,LA13837-2,8,,8,2 or more times per day,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13933-9,1,,1,Didn't use margarine,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13866-1,2,,2,Almost never,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13934-7,3,,3,About 1/4 of the time,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13935-4,4,,4,About 1/2 of the time,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13936-2,5,,5,About 3/4 of the time,,,,,,,,
+LL1011-7,PhenX05_24_margarine freq,1.3.6.1.4.1.12009.10.1.177,N,,,LA13927-1,6,,6,Almost always or always,,,,,,,,
+LL1012-5,[PROMIS] Excellent|Very good|Good|Fair|Poor,1.3.6.1.4.1.12009.10.1.178,N,,,LA9206-9,,,1,Excellent,,,,,,,,5
+LL1012-5,[PROMIS] Excellent|Very good|Good|Fair|Poor,1.3.6.1.4.1.12009.10.1.178,N,,,LA13913-1,,,2,Very Good,,,,,,,,4
+LL1012-5,[PROMIS] Excellent|Very good|Good|Fair|Poor,1.3.6.1.4.1.12009.10.1.178,N,,,LA8967-7,,,3,Good,,,,,,,,3
+LL1012-5,[PROMIS] Excellent|Very good|Good|Fair|Poor,1.3.6.1.4.1.12009.10.1.178,N,,,LA8968-5,,,4,Fair,,,,,,,,2
+LL1012-5,[PROMIS] Excellent|Very good|Good|Fair|Poor,1.3.6.1.4.1.12009.10.1.178,N,,,LA8969-3,,,5,Poor,,,,,,,,1
+LL1013-3,[PROMIS] Completely|Mostly|Mod|A little|Not at all,1.3.6.1.4.1.12009.10.1.179,N,,,LA13937-0,,,1,Completely,,,,,,,,5
+LL1013-3,[PROMIS] Completely|Mostly|Mod|A little|Not at all,1.3.6.1.4.1.12009.10.1.179,N,,,LA13938-8,,,2,Mostly,,,,,,,,4
+LL1013-3,[PROMIS] Completely|Mostly|Mod|A little|Not at all,1.3.6.1.4.1.12009.10.1.179,N,,,LA13939-6,,,3,Moderately,,,,,,,,3
+LL1013-3,[PROMIS] Completely|Mostly|Mod|A little|Not at all,1.3.6.1.4.1.12009.10.1.179,N,,,LA13940-4,,,4,A little,,,,,,,,2
+LL1013-3,[PROMIS] Completely|Mostly|Mod|A little|Not at all,1.3.6.1.4.1.12009.10.1.179,N,,,LA6568-5,,,5,Not at all,,,,,,,,1
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA19102-5,,,1,0 - No pain,,,,,,,No pain,0
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA6112-2,,,2,1,,,,,,,,1
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA6113-0,,,3,2 or more,,,,,,,,2
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA6114-8,,,4,3,,,,,,,,3
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA6115-5,,,5,4,,,,,,,,4
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA10137-0,,,6,5,,,,,,,,5
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA10138-8,,,7,6,,,,,,,,6
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA10139-6,,,8,7,,,,,,,,7
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA10140-4,,,9,8,,,,,,,,8
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA10141-2,,,10,9,,,,,,,,9
+LL1014-1,[PROMIS] 0-no pain|1|2|3|4|5|6|7|8|9|10-worst imag,1.3.6.1.4.1.12009.10.1.180,N,,,LA21948-7,,,11,10 - worst imaginable pain,,,,,,,,10
+LL1015-8,[PROMIS] None|Mild|Moderate|Severe|Very severe,1.3.6.1.4.1.12009.10.1.181,N,,,LA137-2,,,1,None,260413007,None (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,1
+LL1015-8,[PROMIS] None|Mild|Moderate|Severe|Very severe,1.3.6.1.4.1.12009.10.1.181,N,,,LA6752-5,,,2,Mild,,,,,,,,2
+LL1015-8,[PROMIS] None|Mild|Moderate|Severe|Very severe,1.3.6.1.4.1.12009.10.1.181,N,,,LA6751-7,,,3,Moderate,6736007,Moderate (severity modifier) (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,3
+LL1015-8,[PROMIS] None|Mild|Moderate|Severe|Very severe,1.3.6.1.4.1.12009.10.1.181,N,,,LA6750-9,,,4,Severe,,,,,,,,4
+LL1015-8,[PROMIS] None|Mild|Moderate|Severe|Very severe,1.3.6.1.4.1.12009.10.1.181,N,,,LA13958-6,,,5,Very severe,,,,,,,,5
+LL1016-6,[PROMIS] Never|Rarely|Sometimes|Often|Always,1.3.6.1.4.1.12009.10.1.182,N,,,LA6270-8,,,1,Never,,,,,,,,1
+LL1016-6,[PROMIS] Never|Rarely|Sometimes|Often|Always,1.3.6.1.4.1.12009.10.1.182,N,,,LA10066-1,,,2,Rarely,,,,,,,,2
+LL1016-6,[PROMIS] Never|Rarely|Sometimes|Often|Always,1.3.6.1.4.1.12009.10.1.182,N,,,LA10082-8,,,3,Sometimes,,,,,,,,3
+LL1016-6,[PROMIS] Never|Rarely|Sometimes|Often|Always,1.3.6.1.4.1.12009.10.1.182,N,,,LA10044-8,,,4,Often,,,,,,,,4
+LL1016-6,[PROMIS] Never|Rarely|Sometimes|Often|Always,1.3.6.1.4.1.12009.10.1.182,N,,,LA9933-8,,,5,Always,,,,,,,,5
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4184-3,1,,1,Chemo Not Recommended,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4179-3,2,,2,Chem Contraindicated,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4394-8,6,,3,Reason unknown,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4389-8,7,,4,Refused,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4181-9,8,,5,Chem recommended - Unknown if Admin,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4409-4,9,,6,Unknown if Recommended,,,,,,,,
+LL101-7,CR_1440_Reason no chemo,1.3.6.1.4.1.12009.10.1.183,N,,,LA4185-0,0,,9,Chemotherapy Administered,,,,,,,,
+LL1017-4,[PROMIS] Not at all|Lit bit|Somwh|Qte bit|Ver much,1.3.6.1.4.1.12009.10.1.184,N,,,LA6568-5,,,1,Not at all,,,,,,,,1
+LL1017-4,[PROMIS] Not at all|Lit bit|Somwh|Qte bit|Ver much,1.3.6.1.4.1.12009.10.1.184,N,,,LA13863-8,,,2,A little bit,,,,,,,,2
+LL1017-4,[PROMIS] Not at all|Lit bit|Somwh|Qte bit|Ver much,1.3.6.1.4.1.12009.10.1.184,N,,,LA13909-9,,,3,Somewhat,,,,,,,,3
+LL1017-4,[PROMIS] Not at all|Lit bit|Somwh|Qte bit|Ver much,1.3.6.1.4.1.12009.10.1.184,N,,,LA13902-4,,,4,Quite a bit,,,,,,,,4
+LL1017-4,[PROMIS] Not at all|Lit bit|Somwh|Qte bit|Ver much,1.3.6.1.4.1.12009.10.1.184,N,,,LA13914-9,,,5,Very much,,,,,,,,5
+LL1018-2,[PROMIS] None|1 day|2-3 days|4-5 days|6-7 days,1.3.6.1.4.1.12009.10.1.185,N,,,LA137-2,,,1,None,260413007,None (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,1
+LL1018-2,[PROMIS] None|1 day|2-3 days|4-5 days|6-7 days,1.3.6.1.4.1.12009.10.1.185,N,,,LA13943-8,,,2,1 day,,,,,,,,2
+LL1018-2,[PROMIS] None|1 day|2-3 days|4-5 days|6-7 days,1.3.6.1.4.1.12009.10.1.185,N,,,LA13944-6,,,3,2-3 days,,,,,,,,3
+LL1018-2,[PROMIS] None|1 day|2-3 days|4-5 days|6-7 days,1.3.6.1.4.1.12009.10.1.185,N,,,LA13945-3,,,4,4-5 days,,,,,,,,4
+LL1018-2,[PROMIS] None|1 day|2-3 days|4-5 days|6-7 days,1.3.6.1.4.1.12009.10.1.185,N,,,LA13946-1,,,5,6-7 days,,,,,,,,5
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA13879-4,,,1,Had no pain,,,,,,,,1
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA6270-8,,,2,Never,,,,,,,,2
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA10066-1,,,3,Rarely,,,,,,,,3
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA10082-8,,,4,Sometimes,,,,,,,,4
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA10044-8,,,5,Often,,,,,,,,5
+LL1019-0,[PROMIS] Had no pain|Nev|Rare|Sometim|Oft|Alw,1.3.6.1.4.1.12009.10.1.186,N,,,LA9933-8,,,6,Always,,,,,,,,6
+LL1020-8,[PROMIS] Never|<=1/W|1/few days|1/D|Every few H,1.3.6.1.4.1.12009.10.1.187,N,,,LA6270-8,,,1,Never,,,,,,,,1
+LL1020-8,[PROMIS] Never|<=1/W|1/few days|1/D|Every few H,1.3.6.1.4.1.12009.10.1.187,N,,,LA13898-4,,,2,Once a week or less,,,,,,,,2
+LL1020-8,[PROMIS] Never|<=1/W|1/few days|1/D|Every few H,1.3.6.1.4.1.12009.10.1.187,N,,,LA13899-2,,,3,Once every few days,,,,,,,,3
+LL1020-8,[PROMIS] Never|<=1/W|1/few days|1/D|Every few H,1.3.6.1.4.1.12009.10.1.187,N,,,LA13897-6,,,4,Once a day,,,,,,,,4
+LL1020-8,[PROMIS] Never|<=1/W|1/few days|1/D|Every few H,1.3.6.1.4.1.12009.10.1.187,N,,,LA13875-2,,,5,Every few hours,,,,,,,,5
+LL1021-6,[PROMIS] Not at all|Ver litt|Some|Qte lot|Can't do,1.3.6.1.4.1.12009.10.1.188,N,,,LA6568-5,,,1,Not at all,,,,,,,,5
+LL1021-6,[PROMIS] Not at all|Ver litt|Some|Qte lot|Can't do,1.3.6.1.4.1.12009.10.1.188,N,,,LA13947-9,,,2,Very little,,,,,,,,4
+LL1021-6,[PROMIS] Not at all|Ver litt|Some|Qte lot|Can't do,1.3.6.1.4.1.12009.10.1.188,N,,,LA13909-9,,,3,Somewhat,,,,,,,,3
+LL1021-6,[PROMIS] Not at all|Ver litt|Some|Qte lot|Can't do,1.3.6.1.4.1.12009.10.1.188,N,,,LA11911-7,,,4,Quite a lot,,,,,,,,2
+LL1021-6,[PROMIS] Not at all|Ver litt|Some|Qte lot|Can't do,1.3.6.1.4.1.12009.10.1.188,N,,,LA13868-7,,,5,Cannot do,,,,,,,,1
+LL1022-4,[PROMIS] Diffic: WO|W lit|W some|W much|Unab to do,1.3.6.1.4.1.12009.10.1.189,N,,,LA13921-4,,,1,Without any difficulty,,,,,,,,5
+LL1022-4,[PROMIS] Diffic: WO|W lit|W some|W much|Unab to do,1.3.6.1.4.1.12009.10.1.189,N,,,LA13918-0,,,2,With a little difficulty,,,,,,,,4
+LL1022-4,[PROMIS] Diffic: WO|W lit|W some|W much|Unab to do,1.3.6.1.4.1.12009.10.1.189,N,,,LA13920-6,,,3,With some difficulty,,,,,,,,3
+LL1022-4,[PROMIS] Diffic: WO|W lit|W some|W much|Unab to do,1.3.6.1.4.1.12009.10.1.189,N,,,LA13919-8,,,4,With much difficulty,,,,,,,,2
+LL1022-4,[PROMIS] Diffic: WO|W lit|W some|W much|Unab to do,1.3.6.1.4.1.12009.10.1.189,N,,,LA13912-3,,,5,Unable to do,,,,,,,,1
+LL1023-2,[PROMIS] Very poor|Poor|Fair|Good|Very good,1.3.6.1.4.1.12009.10.1.190,N,,,LA9615-1,,,1,Very poor,,,,,,,,5
+LL1023-2,[PROMIS] Very poor|Poor|Fair|Good|Very good,1.3.6.1.4.1.12009.10.1.190,N,,,LA8969-3,,,2,Poor,,,,,,,,4
+LL1023-2,[PROMIS] Very poor|Poor|Fair|Good|Very good,1.3.6.1.4.1.12009.10.1.190,N,,,LA8968-5,,,3,Fair,,,,,,,,3
+LL1023-2,[PROMIS] Very poor|Poor|Fair|Good|Very good,1.3.6.1.4.1.12009.10.1.190,N,,,LA8967-7,,,4,Good,,,,,,,,2
+LL1023-2,[PROMIS] Very poor|Poor|Fair|Good|Very good,1.3.6.1.4.1.12009.10.1.190,N,,,LA13913-1,,,5,Very Good,,,,,,,,1
+LL1024-0,[PROMIS] Nev|Alm never|Sometimes|Often|Alm always,1.3.6.1.4.1.12009.10.1.191,N,,,LA6270-8,,,1,Never,,,,,,,,1
+LL1024-0,[PROMIS] Nev|Alm never|Sometimes|Often|Alm always,1.3.6.1.4.1.12009.10.1.191,N,,,LA13866-1,,,2,Almost never,,,,,,,,2
+LL1024-0,[PROMIS] Nev|Alm never|Sometimes|Often|Alm always,1.3.6.1.4.1.12009.10.1.191,N,,,LA10082-8,,,3,Sometimes,,,,,,,,3
+LL1024-0,[PROMIS] Nev|Alm never|Sometimes|Often|Alm always,1.3.6.1.4.1.12009.10.1.191,N,,,LA10044-8,,,4,Often,,,,,,,,4
+LL1024-0,[PROMIS] Nev|Alm never|Sometimes|Often|Alm always,1.3.6.1.4.1.12009.10.1.191,N,,,LA13865-3,,,5,Almost always,,,,,,,,5
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4002-7,0,,1,Hormone Therapy Administered,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4000-1,1,,2,Hormone Rx Not Recommended,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA3999-5,2,,3,Hormone RX Contraindicated,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4394-8,6,,4,Reason unknown,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4389-8,7,,5,Refused,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4001-9,8,,6,Hormone Rx Recommended,,,,,,,,
+LL102-5,CR_1450_Reason no hormones,1.3.6.1.4.1.12009.10.1.192,N,,,LA4444-1,9,,7,Unknown - Death Cert Only,,,,,,,,
+LL1025-7,[PROMIS] W no troub|Lit tr|Some tr|Lot tr|Not able,1.3.6.1.4.1.12009.10.1.193,N,,,LA13953-7,,,1,With no trouble,,,,,,,,1
+LL1025-7,[PROMIS] W no troub|Lit tr|Some tr|Lot tr|Not able,1.3.6.1.4.1.12009.10.1.193,N,,,LA13954-5,,,2,With a little trouble,,,,,,,,2
+LL1025-7,[PROMIS] W no troub|Lit tr|Some tr|Lot tr|Not able,1.3.6.1.4.1.12009.10.1.193,N,,,LA13955-2,,,3,With some trouble,,,,,,,,3
+LL1025-7,[PROMIS] W no troub|Lit tr|Some tr|Lot tr|Not able,1.3.6.1.4.1.12009.10.1.193,N,,,LA13956-0,,,4,With a lot of trouble,,,,,,,,4
+LL1025-7,[PROMIS] W no troub|Lit tr|Some tr|Lot tr|Not able,1.3.6.1.4.1.12009.10.1.193,N,,,LA13957-8,,,5,Not able to do,,,,,,,,5
+LL1026-5,[PROMIS] Diffic:No|A lit|Some|Lot|Can't do bc hlth,1.3.6.1.4.1.12009.10.1.194,N,,,LA13948-7,,,1,No difficulty at all,,,,,,,,5
+LL1026-5,[PROMIS] Diffic:No|A lit|Some|Lot|Can't do bc hlth,1.3.6.1.4.1.12009.10.1.194,N,,,LA13949-5,,,2,A little bit of difficulty,,,,,,,,4
+LL1026-5,[PROMIS] Diffic:No|A lit|Some|Lot|Can't do bc hlth,1.3.6.1.4.1.12009.10.1.194,N,,,LA13950-3,,,3,Some difficulty,,,,,,,,3
+LL1026-5,[PROMIS] Diffic:No|A lit|Some|Lot|Can't do bc hlth,1.3.6.1.4.1.12009.10.1.194,N,,,LA13951-1,,,4,A lot of difficulty,,,,,,,,2
+LL1026-5,[PROMIS] Diffic:No|A lit|Some|Lot|Can't do bc hlth,1.3.6.1.4.1.12009.10.1.194,N,,,LA13952-9,,,5,Can't do because of health,,,,,,,,1
+LL1027-3,PhenX05_25_30D cereal freq,1.3.6.1.4.1.12009.10.1.195,N,,,LA13929-7,1,,1,Less than 2 cups,,,,,,,,
+LL1027-3,PhenX05_25_30D cereal freq,1.3.6.1.4.1.12009.10.1.195,N,,,LA13930-5,2,,2,2 cups,,,,,,,,
+LL1027-3,PhenX05_25_30D cereal freq,1.3.6.1.4.1.12009.10.1.195,N,,,LA13931-3,3,,3,More than 2 cups,,,,,,,,
+LL1028-1,PhenX05_26_30D calcium OJ freq,1.3.6.1.4.1.12009.10.1.196,N,,,LA13926-3,1,,1,Almost never or never,,,,,,,,
+LL1028-1,PhenX05_26_30D calcium OJ freq,1.3.6.1.4.1.12009.10.1.196,N,,,LA10082-8,2,,2,Sometimes,,,,,,,,
+LL1028-1,PhenX05_26_30D calcium OJ freq,1.3.6.1.4.1.12009.10.1.196,N,,,LA13927-1,3,,3,Almost always or always,,,,,,,,
+LL1028-1,PhenX05_26_30D calcium OJ freq,1.3.6.1.4.1.12009.10.1.196,N,,,LA12688-0,4,,4,Don't know,4.57E+14,Do not know (qualifier value),http://snomed.info/sct,http://snomed.info/sct/731000124108/version/20240901,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1029-9,PhenX05_27_30D ice cream amt,1.3.6.1.4.1.12009.10.1.197,N,,,LA13923-0,1,,1,Less than 1 cup,,,,,,,,
+LL1029-9,PhenX05_27_30D ice cream amt,1.3.6.1.4.1.12009.10.1.197,N,,,LA13932-1,2,,2,1 cup (2 scoops),,,,,,,,
+LL1029-9,PhenX05_27_30D ice cream amt,1.3.6.1.4.1.12009.10.1.197,N,,,LA13925-5,3,,3,More than 1 cup,,,,,,,,
+LL1030-7,PhenX05_28_12Mo fat amt,1.3.6.1.4.1.12009.10.1.198,N,,,LA9193-9,1,,1,High,,,,,,,,
+LL1030-7,PhenX05_28_12Mo fat amt,1.3.6.1.4.1.12009.10.1.198,N,,,LA8982-6,2,,2,Medium,,,,,,,,
+LL1030-7,PhenX05_28_12Mo fat amt,1.3.6.1.4.1.12009.10.1.198,N,,,LA9194-7,3,,3,Low,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13959-4,,,1,PCR for Chlamydia pneumoniae - Negative,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13960-2,,,2,PCR for Chlamydia pneumoniae - Positive,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13961-0,,,3,PCR for Chlamydia psittaci - Negative,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13962-8,,,4,PCR for Chlamydia psittaci - Positive,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13963-6,,,5,PCR for Coxiella burnetii - Negative,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13964-4,,,6,PCR for Coxiella burnetii - Positive,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13965-1,,,7,PCR for Cytomegalovirus - Negative,,,,,,,,
+LL1031-5,PCR_HK,1.3.6.1.4.1.12009.10.1.199,N,,,LA13966-9,,,8,PCR for Cytomegalovirus - Positive,,,,,,,,
+LL1032-3,Cpenase,1.3.6.1.4.1.12009.10.1.200,N,,,LA6576-8,,,1,Positive,10828004,Positive (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1032-3,Cpenase,1.3.6.1.4.1.12009.10.1.200,N,,,LA6577-6,,,2,Negative,260385009,Negative (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1032-3,Cpenase,1.3.6.1.4.1.12009.10.1.200,N,,,LA13967-7,,,3,Non-reportable Positive,,,,,,,,
+LL1032-3,Cpenase,1.3.6.1.4.1.12009.10.1.200,N,,,LA13968-5,,,4,Non-reportable Negative,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4510-9,0,,1,Treatment Data Not Coded,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4153-8,1,,2,1-Digit Surgery Codes,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4103-3,2,,3,1983-1992 SEER,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4156-1,3,,4,1996 ROADS,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4141-3,4,,5,1998 ROADS Supplement,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4150-4,5,,6,1998 SEER Manual,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA3989-6,6,,7,FORDS Manual,,,,,,,,
+LL103-3,CR_1460_Coding system,1.3.6.1.4.1.12009.10.1.201,N,,,LA4728-7,99,,8,Other Coding,,,,,,,,
+LL1034-9,Normal|Abnormal|Clinical significance unknown,1.3.6.1.4.1.12009.10.1.203,N,,,LA6626-1,,,1,Normal,17621005,Normal (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1034-9,Normal|Abnormal|Clinical significance unknown,1.3.6.1.4.1.12009.10.1.203,N,,,LA12748-2,,,2,Abnormal,263654008,Abnormal (qualifier value),http://snomed.info/sct,http://snomed.info/sct/900000000000207008/version/20240701,"This material includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organisation (IHTSDO) under license. All rights reserved. SNOMED CT® was originally created by The College of American Pathologists. ""SNOMED"" and ""SNOMED CT"" are registered trademarks of the IHTSDO.    This material includes content from the US Edition to SNOMED CT, which is developed and maintained by the U.S. National Library of Medicine and is available to authorized UMLS Metathesaurus Licensees from the UTS Downloads site at https://uts.nlm.nih.gov.    Use of SNOMED CT content is subject to the terms and conditions set forth in the SNOMED CT Affiliate License Agreement. It is the responsibility of those implementing this product to ensure they are appropriately licensed and for more information on the license, including how to register as an Affiliate Licensee, please refer to http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org<mailto:info@snomed.org>.  This may incur a fee in SNOMED International non-Member countries.",,,
+LL1034-9,Normal|Abnormal|Clinical significance unknown,1.3.6.1.4.1.12009.10.1.203,N,,,LA14007-1,,,3,Clinical significance unknown,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14008-9,,,1,400,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14112-9,,,2,425,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14113-7,,,3,450,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14009-7,,,4,500,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14114-5,,,5,550,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14115-2,,,6,575,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14010-5,,,7,600,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14116-0,,,8,650,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14011-3,,,9,800,,,,,,,,
+LL1035-6,ISCN band lvl,1.3.6.1.4.1.12009.10.1.204,N,,,LA14012-1,,,10,850,,,,,,,,
+LL1036-4,Banding,1.3.6.1.4.1.12009.10.1.205,N,,,LA14013-9,G,,1,G-banding,,,,,,,,
+LL1036-4,Banding,1.3.6.1.4.1.12009.10.1.205,N,,,LA14014-7,R,,2,R-banding,,,,,,,,
+LL1036-4,Banding,1.3.6.1.4.1.12009.10.1.205,N,,,LA14015-4,Q,,3,Q-banding,,,,,,,,
+LL1036-4,Banding,1.3.6.1.4.1.12009.10.1.205,N,,,LA14016-2,C,,4,C-banding,,,,,,,,
+LL1036-4,Banding,1.3.6.1.4.1.12009.10.1.205,N,,,LA14017-0,T,,5,T-banding,,,,,,,,
+LL1037-2,Genetic recommendation,1.3.6.1.4.1.12009.10.1.206,N,,,LA14020-4,,,1,Genetic counseling recommended,,,,,,,,
+LL1037-2,Genetic recommendation,1.3.6.1.4.1.12009.10.1.206,N,,,LA14021-2,,,2,Confirmatory testing recommended,,,,,,,,
+LL1037-2,Genetic recommendation,1.3.6.1.4.1.12009.10.1.206,N,,,LA14022-0,,,3,Additional testing recommended,,,,,,,,
+LL1038-0,Phase,1.3.6.1.4.1.12009.10.1.207,N,,,LA14023-8,,,1,Metaphase,,,,,,,,
+LL1038-0,Phase,1.3.6.1.4.1.12009.10.1.207,N,,,LA14024-6,,,2,Interphase,,,,,,,,
+LL1039-8,HumanReferenceSeqAssembly,1.3.6.1.4.1.12009.10.1.208,N,,,LA14025-3,,,1,hg19,,,,,,,,
+LL1039-8,HumanReferenceSeqAssembly,1.3.6.1.4.1.12009.10.1.208,N,,,LA14026-1,,,2,hg18,,,,,,,,
+LL1039-8,HumanReferenceSeqAssembly,1.3.6.1.4.1.12009.10.1.208,N,,,LA14027-9,,,3,hg17,,,,,,,,
+LL1039-8,HumanReferenceSeqAssembly,1.3.6.1.4.1.12009.10.1.208,N,,,LA14028-7,,,4,hg16,,,,,,,,
+LL1040-6,HumanRefSeqNCBIBuildId,1.3.6.1.4.1.12009.10.1.209,N,,,LA14032-9,34,,0,NCBI Build 34,,,,,,,,
+LL1040-6,HumanRefSeqNCBIBuildId,1.3.6.1.4.1.12009.10.1.209,N,,,LA14029-5,GRCh37,,1,GRCh37,,,,,,,,
+LL1040-6,HumanRefSeqNCBIBuildId,1.3.6.1.4.1.12009.10.1.209,N,,,LA14030-3,36.1,,2,NCBI Build 36.1,,,,,,,,
+LL1040-6,HumanRefSeqNCBIBuildId,1.3.6.1.4.1.12009.10.1.209,N,,,LA14031-1,35,,3,NCBI Build 35,,,,,,,,
+LL1040-6,HumanRefSeqNCBIBuildId,1.3.6.1.4.1.12009.10.1.209,N,,,LA26806-2,GRCh38,,4,GRCh38,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4667-7,0,,1,Protocol Not Available,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4743-6,1,,2,On Protocol,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4642-0,2,,3,"Patient Ineligible - age, stage",,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4365-8,3,,4,Pt. Ineligible - Comorbidity,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4006-8,4,,5,Entered but Withdrawn,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4024-1,6,,6,"Eligible but Not Entered, not specified",,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4014-2,7,,7,Eligible but Refused,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4666-9,8,,8,Protocol Not Recommended,,,,,,,,
+LL104-1,CR_1470_Protocol eligibility,1.3.6.1.4.1.12009.10.1.210,N,,,LA4412-8,9,,9,Unknown if on Protocol,,,,,,,,
+LL1041-4,CopyNumberChangeType,1.3.6.1.4.1.12009.10.1.211,N,,,LA14033-7,,,1,Copy number gain,,,,,,,,
+LL1041-4,CopyNumberChangeType,1.3.6.1.4.1.12009.10.1.211,N,,,LA14034-5,,,2,Copy number loss,,,,,,,,

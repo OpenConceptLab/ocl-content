@@ -2,13 +2,13 @@
   "properties": [
     {"code": "STATUS", "type": "string", "description": "LOINC status (ACTIVE, TRIAL, DISCOURAGED, DEPRECATED)"},
     {"code": "type", "type": "string", "description": "LOINC type classification"},
-    {"code": "CLASS", "type": "string", "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"},
-    {"code": "ORDER_OBS", "type": "string", "description": "Order/Observation indicator"},
-    {"code": "PROPERTY", "type": "string", "description": "Property observed (Mass, Volume, Time, etc.)"},
-    {"code": "TIME_ASPCT", "type": "string", "description": "Time aspect (Pt, 24H, etc.)"},
-    {"code": "SYSTEM", "type": "string", "description": "Specimen/system (Blood, Urine, Serum, etc.)"},
-    {"code": "SCALE_TYP", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
-    {"code": "METHOD_TYP", "type": "string", "description": "Method of observation"},
+    {"code": "class", "type": "string", "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"},
+    {"code": "order_observation", "type": "string", "description": "Order/Observation indicator"},
+    {"code": "property", "type": "string", "description": "Property observed (Mass, Volume, Time, etc.)"},
+    {"code": "time_aspect", "type": "string", "description": "Time aspect (Pt, 24H, etc.)"},
+    {"code": "system", "type": "string", "description": "Specimen/system (Blood, Urine, Serum, etc.)"},
+    {"code": "scale_type", "type": "string", "description": "Scale of measurement (Qn, Ord, Nom)"},
+    {"code": "method_type", "type": "string", "description": "Method of observation"},
     {"code": "PanelType", "type": "string", "description": "Panel type classification"},
     {"code": "tags", "type": "string", "description": "Tags"},
     {"code": "code_systems", "type": "string", "description": "Associated code systems"},
@@ -21,6 +21,8 @@
     {"code": "COMMON_ORDER_RANK", "type": "string", "description": "Common order ranking"},
     {"code": "FORMULA", "type": "string", "description": "LOINC formula"},
     {"code": "EXAMPLE_UNITS", "type": "string", "description": "Example units"},
+    {"code": "change_type", "type": "string", "description": "Type of change"},
+    
     
 
     {"code": "externally_defined", "type": "string", "description": "Whether answer list is externally defined (Y/N)"},
@@ -31,7 +33,7 @@
     {"code": "answers", "type": "string", "description": "Number of answers in the list (numeric ranges)"},
     {"code": "loincs", "type": "string", "description": "Number of LOINC terms using this list (numeric ranges)"},
     
-    {"code": "COMPONENT", "type": "string", "description": "What is measured/observed"},
+    {"code": "component", "type": "string", "description": "What is measured/observed"},
     {"code": "answer_list_id", "type": "string", "description": "Associated answer list ID"},
     {"code": "AskAtOrderEntry", "type": "string", "description": "Ask at order entry flag"},
     {"code": "AssociatedObservations", "type": "string", "description": "Related observations"},
@@ -53,43 +55,49 @@
       "value": "Placeholder"
     },
     {
-      "code": "CLASS", 
+      "code": "class", 
       "operator": ["=", "in"], 
       "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)",
       "value": "Placeholder"
     },
     {
-      "code": "ORDER_OBS", 
+      "code": "order_observation", 
       "operator": ["=", "in"], 
       "description": "Filter by order/observation status",
       "value": "Placeholder"
     },
     {
-      "code": "PROPERTY", 
+      "code": "component", 
+      "operator": ["=", "in"], 
+      "description": "Filter by component",
+      "value": "Placeholder"
+    },
+    {
+      "code": "property", 
       "operator": ["=", "in"], 
       "description": "Filter by property type (Mass, Volume, Time, etc.)",
       "value": "Placeholder"
     },
     {
-      "code": "TIME_ASPCT", 
+      "code": "time_aspect", 
       "operator": ["=", "in"], 
       "description": "Filter by time aspect (Pt, 24H, etc.)",
       "value": "Placeholder"
     },
     {
-      "code": "SYSTEM", 
+      "code": "system", 
       "operator": ["=", "in"], 
       "description": "Filter by specimen/system (Blood, Urine, etc.)",
       "value": "Placeholder"
     },
     {
-      "code": "SCALE_TYP", 
+      "code": "scale_type", 
       "operator": ["=", "in"], 
       "description": "Filter by measurement scale (Qn, Ord, Nom)",
       "value": "Placeholder"
     },
     {
-      "code": "METHOD_TYP", 
+      "code": "method_type", 
       "operator": ["=", "in"], 
       "description": "Filter by observation method",
       "value": "Placeholder"
