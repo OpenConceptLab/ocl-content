@@ -49,62 +49,74 @@
     {
       "code": "type", 
       "operator": ["=", "in"], 
-      "description": "Filter by LOINC type"
+      "description": "Filter by LOINC type",
+      "value": "Placeholder"
     },
     {
       "code": "CLASS", 
       "operator": ["=", "in"], 
-      "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
+      "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)",
+      "value": "Placeholder"
     },
     {
       "code": "ORDER_OBS", 
       "operator": ["=", "in"], 
-      "description": "Filter by order/observation status"
+      "description": "Filter by order/observation status",
+      "value": "Placeholder"
     },
     {
       "code": "PROPERTY", 
       "operator": ["=", "in"], 
-      "description": "Filter by property type (Mass, Volume, Time, etc.)"
+      "description": "Filter by property type (Mass, Volume, Time, etc.)",
+      "value": "Placeholder"
     },
     {
       "code": "TIME_ASPCT", 
       "operator": ["=", "in"], 
-      "description": "Filter by time aspect (Pt, 24H, etc.)"
+      "description": "Filter by time aspect (Pt, 24H, etc.)",
+      "value": "Placeholder"
     },
     {
       "code": "SYSTEM", 
-      "operator": ["=", "in", "contains"], 
-      "description": "Filter by specimen/system (Blood, Urine, etc.)"
+      "operator": ["=", "in"], 
+      "description": "Filter by specimen/system (Blood, Urine, etc.)",
+      "value": "Placeholder"
     },
     {
       "code": "SCALE_TYP", 
       "operator": ["=", "in"], 
-      "description": "Filter by measurement scale (Qn, Ord, Nom)"
+      "description": "Filter by measurement scale (Qn, Ord, Nom)",
+      "value": "Placeholder"
     },
     {
       "code": "METHOD_TYP", 
       "operator": ["=", "in"], 
-      "description": "Filter by observation method"
+      "description": "Filter by observation method",
+      "value": "Placeholder"
     },
     {
       "code": "PanelType", 
       "operator": ["=", "in"], 
-      "description": "Filter by panel type"
+      "description": "Filter by panel type",
+      "value": "Placeholder"
     },
     {
       "code": "tags", 
       "operator": ["=", "in"], 
-      "description": "Filter by tags"
+      "description": "Filter by tags",
+      "value": "Placeholder"
     },
     {
       "code": "code_systems", 
       "operator": ["=", "in"], 
-      "description": "Filter by associated code systems"
+      "description": "Filter by associated code systems",
+      "value": "Placeholder"
     },
     {
       "code": "HL7_ATTACHMENT_STRUCTURE", 
       "operator": ["=", "in"], 
-      "description": "Filter by HL7 attachment"
+      "description": "Filter by HL7 attachment",
+      "value": "Placeholder"
     },
     {
       "code": "externally_defined", 
@@ -114,23 +126,27 @@
     },
     {
       "code": "answers", 
-      "operator": ["=", ">=", "<=", "in"], 
-      "description": "Filter by number of answers in list (numeric ranges)"
+      "operator": ["=", "in"], 
+      "description": "Filter by number of answers in list (numeric ranges)",
+      "value": "Placeholder"
     },
     {
       "code": "loincs", 
-      "operator": ["=", ">=", "<=", "in"], 
-      "description": "Filter by number of LOINC terms using this list (numeric ranges)"
+      "operator": ["=","in"], 
+      "description": "Filter by number of LOINC terms using this list (numeric ranges)",
+      "value": "Placeholder"
     },
     {
       "code": "VersionFirstReleased", 
-      "operator": ["=", ">=", "<="], 
-      "description": "Filter by release version"
+      "operator": ["="], 
+      "description": "Filter by release version",
+      "value": "Placeholder"
     },
     {
       "code": "VersionLastChanged", 
-      "operator": ["=", ">=", "<="], 
-      "description": "Filter by last changed version"
+      "operator": ["="], 
+      "description": "Filter by last changed version",
+      "value": "Placeholder"
     }
   ]
 }
