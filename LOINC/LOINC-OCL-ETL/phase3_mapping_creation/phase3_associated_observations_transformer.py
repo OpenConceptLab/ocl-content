@@ -30,7 +30,14 @@ class AssociatedObservationsMappingTransformer(BaseMappingTransformer):
     Creates mappings from test codes to related clinical measures that are
     commonly observed together for comprehensive patient care.
     """
-    
+    def _is_valid_loinc_format(self, loinc_code: str) -> bool:
+        """Basic LOINC code format validation"""
+        if not loinc_code or loinc_code == 'nan':
+            return False
+        
+        # LOINC codes are typically NNNNN-N format
+        return len(loinc_code) >= 3 and '-' in loinc_code
+
     def get_transformer_name(self) -> str:
         """Return the name of this transformer"""
         return "Associated Observations Mapping Transformer"
@@ -74,7 +81,11 @@ class AssociatedObservationsMappingTransformer(BaseMappingTransformer):
                 return False
                 
             dataset = self.data_loader.datasets['Loinc.csv']
-            loinc_data = dataset.data
+            if 'Loinc.csv' not in self.data_loader.datasets:
+                self.logger.error("Loinc.csv not found in loaded datasets")
+                return False
+
+            loinc_data = self.data_loader.datasets['Loinc.csv'].data
             
             if loinc_data is None or loinc_data.empty:
                 self.logger.error("Failed to load main LOINC table")
