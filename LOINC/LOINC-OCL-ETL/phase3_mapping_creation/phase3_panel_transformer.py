@@ -55,19 +55,19 @@ class PanelTestMappingTransformer(BaseMappingTransformer):
         """Validate a PanelsAndForms record before transformation"""
         errors = []
         
-        # Extract key fields
+        # Extract key fields - FIXED: Use 'Loinc' not 'ChildLoinc'
         parent_loinc = str(record.get('ParentLoinc', '')).strip()
-        child_loinc = str(record.get('ChildLoinc', '')).strip()
+        child_loinc = str(record.get('Loinc', '')).strip()  # FIXED: 'Loinc' not 'ChildLoinc'
         
         # Required field validation
         if not parent_loinc or parent_loinc == 'nan':
             errors.append("Missing ParentLoinc")
         if not child_loinc or child_loinc == 'nan':
-            errors.append("Missing ChildLoinc")
+            errors.append("Missing Loinc")  # FIXED: Error message
         
         # Self-reference validation
         if parent_loinc == child_loinc:
-            errors.append("ParentLoinc and ChildLoinc cannot be the same")
+            errors.append("ParentLoinc and Loinc cannot be the same")
         
         # LOINC code format validation (basic)
         if parent_loinc and parent_loinc != 'nan':
@@ -76,7 +76,7 @@ class PanelTestMappingTransformer(BaseMappingTransformer):
         
         if child_loinc and child_loinc != 'nan':
             if not self._is_valid_loinc_format(child_loinc):
-                errors.append(f"Invalid ChildLoinc format: {child_loinc}")
+                errors.append(f"Invalid Loinc format: {child_loinc}")  # FIXED: Error message
         
         return len(errors) == 0, errors
     
@@ -90,19 +90,11 @@ class PanelTestMappingTransformer(BaseMappingTransformer):
         return len(loinc_code) >= 3 and '-' in loinc_code
     
     def transform_record(self, record: pd.Series) -> Optional[OCLMapping]:
-        """
-        Transform a PanelsAndForms record into a "has element" mapping.
-        
-        Args:
-            record: Pandas Series containing PanelsAndForms data
-            
-        Returns:
-            OCLMapping object or None if record should be skipped
-        """
+        """Transform a PanelsAndForms record into a "has element" mapping."""
         try:
-            # Extract key fields
+            # Extract key fields - FIXED: Use 'Loinc' not 'ChildLoinc'
             parent_loinc = str(record.get('ParentLoinc', '')).strip()
-            child_loinc = str(record.get('ChildLoinc', '')).strip()
+            child_loinc = str(record.get('Loinc', '')).strip()  # FIXED: 'Loinc' not 'ChildLoinc'
             
             # Get concept URLs from cache
             from_concept_url = self.get_concept_url(parent_loinc)
@@ -121,38 +113,27 @@ class PanelTestMappingTransformer(BaseMappingTransformer):
             # Build extras with panel metadata
             extras = {}
             
-            # Sequence information for panel ordering
-            if 'Sequence' in record and pd.notna(record['Sequence']):
+            # Sequence information for panel ordering - FIXED: Use correct column name
+            if 'SEQUENCE' in record and pd.notna(record['SEQUENCE']):  # FIXED: 'SEQUENCE' not 'Sequence'
                 try:
-                    sequence = str(record['Sequence']).strip()
+                    sequence = str(record['SEQUENCE']).strip()
                     if sequence and sequence != 'nan':
                         extras['sequence'] = sequence
                 except Exception as e:
                     self.logger.debug(f"Error processing sequence for {parent_loinc}->{child_loinc}: {e}")
             
-            # LOINC number reference (if different from ParentLoinc)
-            if 'LOINC_NUM' in record and pd.notna(record['LOINC_NUM']):
-                loinc_num = str(record['LOINC_NUM']).strip()
-                if loinc_num and loinc_num != 'nan' and loinc_num != parent_loinc:
-                    extras['loinc_num'] = loinc_num
+            # Panel context information
+            if 'ParentName' in record and pd.notna(record['ParentName']):
+                panel_name = str(record['ParentName']).strip()
+                if panel_name and panel_name != 'nan':
+                    extras['panel_name'] = panel_name
             
-            # Part name information
-            if 'PartName' in record and pd.notna(record['PartName']):
-                part_name = str(record['PartName']).strip()
-                if part_name and part_name != 'nan':
-                    extras['part_name'] = part_name
+            if 'LoincName' in record and pd.notna(record['LoincName']):
+                component_name = str(record['LoincName']).strip()
+                if component_name and component_name != 'nan':
+                    extras['component_name'] = component_name
             
-            # Panel type information (if available)
-            if 'PanelType' in record and pd.notna(record['PanelType']):
-                panel_type = str(record['PanelType']).strip()
-                if panel_type and panel_type != 'nan':
-                    extras['panel_type'] = panel_type
-            
-            # Add source codes for reference
-            extras['parent_loinc_code'] = parent_loinc
-            extras['child_loinc_code'] = child_loinc
-            
-            # Create mapping
+            # Create the mapping
             mapping = OCLMapping(
                 map_type=self.get_ocl_map_type(),
                 from_concept_url=from_concept_url,
@@ -164,9 +145,8 @@ class PanelTestMappingTransformer(BaseMappingTransformer):
             return mapping
             
         except Exception as e:
-            self.logger.error(f"Error transforming panel record: {str(e)}")
+            self.logger.error(f"Failed to transform record {record.get('ParentLoinc', 'unknown')}: {e}")
             return None
-
 
 def main():
     """Main function for testing panel-test transformation"""

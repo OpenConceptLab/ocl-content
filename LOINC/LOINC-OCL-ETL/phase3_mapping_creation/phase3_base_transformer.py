@@ -114,6 +114,28 @@ class BaseMappingTransformer(ABC):
     
     # Common infrastructure methods
     
+    def _create_data_loader(self) -> DataLoader:
+        """
+        Create and configure a DataLoader instance.
+        
+        Returns:
+            DataLoader: Configured data loader
+        """
+        try:
+            # Ensure config manager is loaded
+            if not hasattr(self.config_manager, 'config_dir') or not self.config_manager.config_dir:
+                self.config_manager.load_all_configs()
+            
+            # Create data loader with config directory
+            data_loader = DataLoader(self.config_manager.config_dir)
+            
+            self.logger.debug(f"Created data loader with config dir: {self.config_manager.config_dir}")
+            return data_loader
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create data loader: {str(e)}")
+            raise
+    
     def load_concept_url_cache(self) -> bool:
         """Load concept URLs from Phase 2 output for mapping references"""
         try:
@@ -168,33 +190,85 @@ class BaseMappingTransformer(ABC):
         Get OCL concept URL for a LOINC concept ID.
         
         Args:
-            concept_id: LOINC concept identifier
+            concept_id: LOINC code or other concept identifier
             
         Returns:
             OCL concept URL or None if not found
         """
-        return self.concept_url_cache.get(concept_id)
+        if not concept_id or concept_id == 'nan':
+            return None
+        
+        # Clean the concept ID
+        clean_id = str(concept_id).strip()
+        if not clean_id:
+            return None
+        
+        return self.concept_url_cache.get(clean_id)
     
     def load_source_data(self) -> bool:
-        """Load and validate source mapping data from Phase 1"""
+        """
+        Load source data for transformation.
+        
+        FIXED: Complete implementation with proper error handling
+        """
         try:
+            self.logger.info(f"Loading source data from {self.get_source_file()}")
+            
+            # Create data loader if not exists
+            if not self.data_loader:
+                self.data_loader = self._create_data_loader()
+            
+            # Load all Phase 1 data
+            self.logger.info("Loading Phase 1 data...")
+            loading_summary = self.data_loader.load_all_data(validate_data=True)
+            
+            if not loading_summary or not loading_summary.datasets:
+                raise Exception("No datasets loaded from Phase 1")
+            
+            # Apply dataset aliases for compatibility
+            datasets = loading_summary.datasets
+            if 'Loinc.csv' in datasets and 'loinc_terms' not in datasets:
+                datasets['loinc_terms'] = datasets['Loinc.csv']
+            
+            # Find the source file we need
             source_file = self.get_source_file()
-            self.logger.info(f"Loading source data from {source_file}")
             
-            # Use Phase 1 data loader to get validated data
-            self.data_loader = DataLoader()
-            
-            if not hasattr(self.data_loader, 'datasets') or not self.data_loader.datasets:
-                self.logger.info("Loading Phase 1 data...")
-                self.data_loader.load_all_data()
-            
-            if source_file not in self.data_loader.datasets:
-                raise ValueError(f"Source file {source_file} not found in Phase 1 data")
+            if source_file in datasets:
+                dataset = datasets[source_file]
+                # Handle LoadedDataset wrapper
+                if hasattr(dataset, 'data'):
+                    self.source_data = dataset.data
+                else:
+                    self.source_data = dataset
+            else:
+                # Try common variations
+                source_variations = [
+                    source_file,
+                    source_file.replace('.csv', ''),
+                    source_file.lower(),
+                    source_file.lower().replace('.csv', '')
+                ]
                 
-            dataset = self.data_loader.datasets[source_file]
-            self.source_data = dataset.data
+                found = False
+                for variation in source_variations:
+                    if variation in datasets:
+                        dataset = datasets[variation]
+                        if hasattr(dataset, 'data'):
+                            self.source_data = dataset.data
+                        else:
+                            self.source_data = dataset
+                        found = True
+                        self.logger.info(f"Found source data under key: {variation}")
+                        break
+                
+                if not found:
+                    available_keys = list(datasets.keys())[:10]  # First 10 for logging
+                    raise Exception(f"Source file {source_file} not found. Available: {available_keys}")
             
-            self.logger.info(f"Loaded {len(self.source_data)} records from {source_file}")
+            if self.source_data is None or len(self.source_data) == 0:
+                raise Exception(f"No data found in {source_file}")
+            
+            self.logger.info(f"Loaded {len(self.source_data):,} records from {source_file}")
             self.logger.info(f"Source data columns: {list(self.source_data.columns)}")
             
             return True
@@ -205,135 +279,96 @@ class BaseMappingTransformer(ABC):
     
     def validate_record(self, record: pd.Series) -> Tuple[bool, List[str]]:
         """
-        Validate a source record before transformation.
-        Can be overridden by subclasses for specific validation.
+        Validate a single record before transformation.
+        
+        Default implementation - subclasses should override for specific validation.
         
         Args:
-            record: Source record to validate
+            record: Record to validate
             
         Returns:
-            Tuple of (is_valid, error_messages)
+            Tuple of (is_valid, errors_list)
         """
-        errors = []
-        
-        # Basic validation - subclasses should override for specific checks
-        if record.isna().all():
-            errors.append("Record is completely empty")
-            
-        return len(errors) == 0, errors
+        return True, []
     
-    def process_batch(self, batch_data: pd.DataFrame, 
-                     progress_callback: Optional[Callable[[float, str], None]] = None) -> Tuple[List['OCLMapping'], List[str]]:
+    def _transform_records(self, limit: Optional[int] = None, 
+                          progress_callback: Optional[Callable[[float, str], None]] = None) -> TransformationResult:
         """
-        Process a batch of source records into OCL mappings.
+        Transform all records in the source data.
         
         Args:
-            batch_data: Batch of source records
+            limit: Optional limit on number of records to process
             progress_callback: Optional progress reporting function
             
         Returns:
-            Tuple of (mappings_list, errors_list)
+            TransformationResult with mappings and statistics
         """
-        from phase3_mapping_creation.phase3_ocl_models import OCLMapping  # Import here to avoid circular imports
-        
-        mappings = []
-        errors = []
-        
-        for idx, record in batch_data.iterrows():
-            try:
-                # Validate record
-                is_valid, validation_errors = self.validate_record(record)
-                if not is_valid:
-                    for error in validation_errors:
-                        errors.append(f"Record {idx}: {error}")
-                    self.stats['errors'] += 1
-                    continue
-                
-                # Transform record
-                mapping = self.transform_record(record)
-                if mapping:
-                    # Validate mapping
-                    is_mapping_valid, mapping_errors = mapping.validate()
-                    if is_mapping_valid:
-                        mappings.append(mapping)
-                        self.stats['mappings_created'] += 1
-                    else:
-                        for error in mapping_errors:
-                            errors.append(f"Mapping from record {idx}: {error}")
-                        self.stats['errors'] += 1
-                
-                self.stats['records_processed'] += 1
-                
-                # Report progress if callback provided
-                if progress_callback and self.stats['records_processed'] % 100 == 0:
-                    progress = (self.stats['records_processed'] / len(self.source_data)) * 100
-                    progress_callback(progress, f"Processed {self.stats['records_processed']} records")
-                
-            except Exception as e:
-                error_msg = f"Error processing record {idx}: {str(e)}"
-                errors.append(error_msg)
-                self.stats['errors'] += 1
-        
-        return mappings, errors
-    
-    def run_transformation(self, limit: Optional[int] = None, 
-                          progress_callback: Optional[Callable[[float, str], None]] = None) -> 'TransformationResult':
-        """
-        Run the complete mapping transformation process.
-        
-        Args:
-            limit: Optional limit on number of records to process (for testing)
-            progress_callback: Optional progress reporting function
-            
-        Returns:
-            TransformationResult with mappings and metadata
-        """
-        from phase3_mapping_creation.phase3_ocl_models import TransformationResult  # Import here to avoid circular imports
-        
         start_time = time.time()
-        self.logger.info(f"Starting {self.get_transformer_name()} transformation...")
         
         try:
-            # Load concept URL cache
-            if not self.load_concept_url_cache():
-                raise RuntimeError("Failed to load concept URL cache")
+            # Determine record set
+            if limit and limit < len(self.source_data):
+                records_to_process = self.source_data.head(limit)
+                self.logger.info(f"Processing {limit:,} records (limited from {len(self.source_data):,})")
+            else:
+                records_to_process = self.source_data
+                self.logger.info(f"Processing all {len(records_to_process):,} records")
             
-            # Load source data
-            if not self.load_source_data():
-                raise RuntimeError("Failed to load source data")
-            
-            # Prepare data for processing
-            data_to_process = self.source_data
-            if limit:
-                data_to_process = self.source_data.head(limit)
-                self.logger.info(f"Processing limited dataset: {limit} records")
-            
-            total_records = len(data_to_process)
-            self.logger.info(f"Processing {total_records} records in batches of {self.batch_size}")
-            
-            # Process in batches
+            # Process records in batches
             all_mappings = []
             all_errors = []
+            total_records = len(records_to_process)
             
-            for i in range(0, total_records, self.batch_size):
-                batch_end = min(i + self.batch_size, total_records)
-                batch_data = data_to_process.iloc[i:batch_end]
+            for batch_start in range(0, total_records, self.batch_size):
+                batch_end = min(batch_start + self.batch_size, total_records)
+                batch = records_to_process.iloc[batch_start:batch_end]
                 
-                batch_num = (i // self.batch_size) + 1
-                total_batches = (total_records + self.batch_size - 1) // self.batch_size
+                self.logger.info(f"Processing batch {batch_start//self.batch_size + 1}/{(total_records-1)//self.batch_size + 1}: "
+                                f"records {batch_start+1}-{batch_end}")
                 
-                self.logger.info(f"Processing batch {batch_num}/{total_batches}: records {i+1}-{batch_end}")
+                batch_mappings = []
+                batch_errors = []
                 
-                batch_mappings, batch_errors = self.process_batch(batch_data, progress_callback)
+                for idx, record in batch.iterrows():
+                    try:
+                        self.stats['records_processed'] += 1
+                        
+                        # Validate record
+                        is_valid, validation_errors = self.validate_record(record)
+                        if not is_valid:
+                            batch_errors.extend(validation_errors)
+                            self.stats['errors'] += len(validation_errors)
+                            continue
+                        
+                        # Transform record
+                        mapping = self.transform_record(record)
+                        if mapping:
+                            batch_mappings.append(mapping)
+                            self.stats['mappings_created'] += 1
+                        else:
+                            self.stats['warnings'] += 1
+                            
+                    except Exception as e:
+                        error_msg = f"Failed to process record {idx}: {str(e)}"
+                        batch_errors.append(error_msg)
+                        self.stats['errors'] += 1
+                        self.logger.debug(error_msg)
+                
                 all_mappings.extend(batch_mappings)
                 all_errors.extend(batch_errors)
                 
-                # Log progress periodically
-                if batch_num % 5 == 0 or batch_num == total_batches:
+                # Progress reporting
+                progress = (batch_end / total_records) * 100
+                if progress_callback:
+                    status = f"{len(all_mappings)} mappings created, {len(all_errors)} errors"
+                    progress_callback(progress, status)
+                
+                # Log progress
+                if batch_start % (self.batch_size * 10) == 0 or batch_end >= total_records:
                     elapsed = time.time() - start_time
-                    self.logger.info(f"  Progress: {self.stats['mappings_created']} mappings created, "
-                                   f"{self.stats['errors']} errors, {elapsed:.1f}s elapsed")
+                    self.logger.info(f"  Progress: {len(all_mappings)} mappings created, {len(all_errors)} errors, {elapsed:.1f}s elapsed")
             
+            # Calculate final statistics
             processing_time = time.time() - start_time
             self.stats['processing_time'] = processing_time
             
@@ -360,6 +395,49 @@ class BaseMappingTransformer(ABC):
             self.logger.error(f"Transformation failed: {str(e)}")
             
             # Return partial result even on failure
+            return TransformationResult(
+                errors=[f"Transformation failed: {str(e)}"],
+                processing_time=processing_time,
+                source_records_processed=self.stats['records_processed'],
+                statistics=self.stats.copy()
+            )
+    
+    def run_transformation(self, limit: Optional[int] = None, 
+                          progress_callback: Optional[Callable[[float, str], None]] = None) -> TransformationResult:
+        """
+        Run the complete transformation process.
+        
+        FIXED: Complete implementation with proper prerequisite loading
+        """
+        start_time = time.time()
+        
+        try:
+            self.logger.info(f"Starting {self.get_transformer_name()} transformation...")
+            
+            # Step 1: Load concept URL cache
+            if progress_callback:
+                progress_callback(5.0, "Loading concept URL cache")
+            
+            if not self.load_concept_url_cache():
+                raise Exception("Failed to load concept URL cache")
+            
+            # Step 2: Load source data
+            if progress_callback:
+                progress_callback(15.0, "Loading source data")
+            
+            if not self.load_source_data():
+                raise Exception("Failed to load source data")
+            
+            # Step 3: Transform records
+            if progress_callback:
+                progress_callback(25.0, "Starting record transformation")
+            
+            return self._transform_records(limit, progress_callback)
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            self.logger.error(f"Transformation failed: {str(e)}")
+            
             return TransformationResult(
                 errors=[f"Transformation failed: {str(e)}"],
                 processing_time=processing_time,

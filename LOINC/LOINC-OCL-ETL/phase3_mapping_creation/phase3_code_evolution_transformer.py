@@ -64,24 +64,24 @@ class CodeEvolutionMappingTransformer(BaseMappingTransformer):
         """Validate a MapTo record before transformation"""
         errors = []
         
-        # Extract key fields
-        from_loinc = str(record.get('LOINC_NUM', '')).strip()
+        # Extract key fields - FIXED: Use 'LOINC' not 'LOINC_NUM'
+        from_loinc = str(record.get('LOINC', '')).strip()  # FIXED: 'LOINC' not 'LOINC_NUM'
         to_loinc = str(record.get('MAP_TO', '')).strip()
         
         # Required field validation
         if not from_loinc or from_loinc == 'nan':
-            errors.append("Missing LOINC_NUM (from concept)")
+            errors.append("Missing LOINC (from concept)")  # FIXED: Error message
         if not to_loinc or to_loinc == 'nan':
             errors.append("Missing MAP_TO (to concept)")
         
         # Self-reference validation
         if from_loinc == to_loinc:
-            errors.append("LOINC_NUM and MAP_TO cannot be the same (circular mapping)")
+            errors.append("LOINC and MAP_TO cannot be the same (circular reference)")  # FIXED: Error message
         
-        # LOINC code format validation
+        # LOINC code format validation (basic)
         if from_loinc and from_loinc != 'nan':
             if not self._is_valid_loinc_format(from_loinc):
-                errors.append(f"Invalid LOINC_NUM format: {from_loinc}")
+                errors.append(f"Invalid LOINC format: {from_loinc}")  # FIXED: Error message
         
         if to_loinc and to_loinc != 'nan':
             if not self._is_valid_loinc_format(to_loinc):
@@ -158,18 +158,10 @@ class CodeEvolutionMappingTransformer(BaseMappingTransformer):
         return analysis
     
     def transform_record(self, record: pd.Series) -> Optional[OCLMapping]:
-        """
-        Transform a MapTo record into a "Map To" mapping.
-        
-        Args:
-            record: Pandas Series containing MapTo data
-            
-        Returns:
-            OCLMapping object or None if record should be skipped
-        """
+        """Transform a MapTo record into a "Map To" mapping."""
         try:
-            # Extract key fields
-            from_loinc = str(record.get('LOINC_NUM', '')).strip()
+            # Extract key fields - FIXED: Use 'LOINC' not 'LOINC_NUM'
+            from_loinc = str(record.get('LOINC', '')).strip()  # FIXED: 'LOINC' not 'LOINC_NUM'
             to_loinc = str(record.get('MAP_TO', '')).strip()
             
             # Get concept URLs from cache
@@ -206,31 +198,12 @@ class CodeEvolutionMappingTransformer(BaseMappingTransformer):
             else:
                 self.comment_analysis_stats['no_comment'] += 1
             
-            # Display name information (if available)
-            if 'DISPLAY_NAME' in record and pd.notna(record['DISPLAY_NAME']):
-                display_name = str(record['DISPLAY_NAME']).strip()
-                if display_name and display_name != 'nan':
-                    extras['from_display_name'] = display_name
+            # Evolution direction metadata
+            extras['evolution_direction'] = 'deprecated_to_current'
+            extras['deprecated_loinc'] = from_loinc
+            extras['current_loinc'] = to_loinc
             
-            # Version information (if available)
-            if 'VERSION_FIRST_RELEASED' in record and pd.notna(record['VERSION_FIRST_RELEASED']):
-                version = str(record['VERSION_FIRST_RELEASED']).strip()
-                if version and version != 'nan':
-                    extras['version_first_released'] = version
-            
-            if 'VERSION_LAST_CHANGED' in record and pd.notna(record['VERSION_LAST_CHANGED']):
-                version = str(record['VERSION_LAST_CHANGED']).strip()
-                if version and version != 'nan':
-                    extras['version_last_changed'] = version
-            
-            # Add source codes for reference
-            extras['from_loinc_code'] = from_loinc
-            extras['to_loinc_code'] = to_loinc
-            
-            # Add mapping directionality info
-            extras['mapping_direction'] = 'deprecated_to_current'
-            
-            # Create mapping
+            # Create the mapping
             mapping = OCLMapping(
                 map_type=self.get_ocl_map_type(),
                 from_concept_url=from_concept_url,
@@ -242,7 +215,7 @@ class CodeEvolutionMappingTransformer(BaseMappingTransformer):
             return mapping
             
         except Exception as e:
-            self.logger.error(f"Error transforming evolution record: {str(e)}")
+            self.logger.error(f"Failed to transform record {record.get('LOINC', 'unknown')}: {e}")
             return None
     
     def run_transformation(self, limit=None, progress_callback=None):

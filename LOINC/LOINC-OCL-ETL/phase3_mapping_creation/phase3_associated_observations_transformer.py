@@ -61,10 +61,21 @@ class AssociatedObservationsMappingTransformer(BaseMappingTransformer):
         try:
             # Load main LOINC table through data loader
             if not self.data_loader:
-                self.data_loader = self._create_data_loader()
+                from phase1_2_data_processing.data_loader import DataLoader
+                self.data_loader = DataLoader()
             
-            # Load the main LOINC table
-            loinc_data = self.data_loader.get_table_data('Loinc.csv')
+            if not hasattr(self.data_loader, 'datasets') or not self.data_loader.datasets:
+                self.logger.info("Loading Phase 1 data...")
+                self.data_loader.load_all_data()
+            
+            # Get the main LOINC table
+            if 'Loinc.csv' not in self.data_loader.datasets:
+                self.logger.error("Loinc.csv not found in Phase 1 data")
+                return False
+                
+            dataset = self.data_loader.datasets['Loinc.csv']
+            loinc_data = dataset.data
+            
             if loinc_data is None or loinc_data.empty:
                 self.logger.error("Failed to load main LOINC table")
                 return False
