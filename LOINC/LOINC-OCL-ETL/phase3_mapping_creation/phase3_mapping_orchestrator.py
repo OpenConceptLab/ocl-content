@@ -1,13 +1,15 @@
 """
 Complete Mapping Orchestrator for LOINC to OCL Transformation - Phase 3
 
-Orchestrates the complete Phase 3 mapping creation process by running all three
-core transformers in sequence and producing consolidated output.
+Orchestrates the complete Phase 3 mapping creation process by running all FIVE
+Round 1 transformers in sequence and producing consolidated output.
 
 Transformers Managed:
 1. Panel-Test Mapping Transformer (~91,993 "has element" mappings)
 2. Question-Answer Mapping Transformer (~29,018 "has answer" mappings)
 3. Code Evolution Mapping Transformer (~4,643 "Map To" mappings)
+4. Ask at Order Entry Mapping Transformer (TBD "Ask At Order Entry" mappings)
+5. Associated Observations Mapping Transformer (TBD "Associated Observation" mappings)
 
 Target Output: ~125,000+ OCL mapping objects ready for bulk import
 
@@ -37,9 +39,11 @@ sys.path.insert(0, str(project_root))
 
 from phase1_2_data_processing.config_manager import ConfigManager
 from phase3_mapping_creation.phase3_ocl_models import MappingCollection, TransformationResult, MappingTransformationMetadata
-from phase3_panel_transformer import PanelTestMappingTransformer
-from phase3_question_answer_transformer import QuestionAnswerMappingTransformer
-from phase3_code_evolution_transformer import CodeEvolutionMappingTransformer
+from phase3_mapping_creation.phase3_panel_transformer import PanelTestMappingTransformer
+from phase3_mapping_creation.phase3_question_answer_transformer import QuestionAnswerMappingTransformer
+from phase3_mapping_creation.phase3_code_evolution_transformer import CodeEvolutionMappingTransformer
+from phase3_mapping_creation.phase3_ask_order_entry_transformer import AskAtOrderEntryMappingTransformer
+from phase3_mapping_creation.phase3_associated_observations_transformer import AssociatedObservationsMappingTransformer
 
 
 @dataclass
@@ -63,16 +67,16 @@ class OrchestrationResult:
     
     @property
     def is_successful(self) -> bool:
-        """Whether the orchestration was successful"""
-        return len(self.transformers_successful) >= 3  # All three core transformers
+        """Whether the orchestration was successful (all 5 transformers completed)"""
+        return len(self.transformers_successful) >= 5  # All five Round 1 transformers
 
 
 class MappingOrchestrator:
     """
     Orchestrator for the complete Phase 3 mapping creation process.
     
-    Manages all mapping transformers and produces consolidated output
-    files ready for OCL bulk import.
+    Manages all five Round 1 mapping transformers and produces consolidated 
+    output files ready for OCL bulk import.
     """
     
     def __init__(self, config_manager: Optional[ConfigManager] = None):
@@ -83,56 +87,51 @@ class MappingOrchestrator:
             config_manager: Optional configuration manager instance
         """
         self.config_manager = config_manager or ConfigManager()
-        self.logger = logging.getLogger(__name__)
-        
-        # Initialize transformers
-        self.transformers = {
-            'panel_test': PanelTestMappingTransformer(self.config_manager),
-            'question_answer': QuestionAnswerMappingTransformer(self.config_manager),
-            'code_evolution': CodeEvolutionMappingTransformer(self.config_manager)
-        }
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Output configuration
         self.output_dir = Path("output/phase3_mappings")
-        self.logs_dir = Path("logs/phase3")
-        
-        # Create directories
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.logs_dir.mkdir(parents=True, exist_ok=True)
         
-        # Processing settings
-        self.chunk_size = 10000  # Mappings per output file
+        # Create all five Round 1 transformers
+        self.transformers = {
+            "panel_test": PanelTestMappingTransformer(config_manager),
+            "question_answer": QuestionAnswerMappingTransformer(config_manager),
+            "code_evolution": CodeEvolutionMappingTransformer(config_manager),
+            "ask_order_entry": AskAtOrderEntryMappingTransformer(config_manager),
+            "associated_observations": AssociatedObservationsMappingTransformer(config_manager)
+        }
+        
+        self.logger.info(f"🎼 Orchestrator initialized with {len(self.transformers)} transformers")
+        
+        # Processing statistics
+        self.stats = {
+            'orchestration_started': None,
+            'orchestration_completed': None,
+            'transformers_attempted': 0,
+            'transformers_successful': 0,
+            'total_processing_time': 0.0
+        }
     
     def validate_prerequisites(self) -> bool:
-        """Validate all Phase 3 prerequisites"""
+        """
+        Validate that all prerequisites for Phase 3 are available.
+        
+        Returns:
+            bool: True if all prerequisites are met
+        """
         self.logger.info("🔍 Validating Phase 3 prerequisites...")
         
         try:
-            # Check Phase 2 concept files
-            concept_files = []
-            for search_dir in ["output", "output/phase2_concepts"]:
-                if Path(search_dir).exists():
-                    concept_files.extend(list(Path(search_dir).glob("loinc_concepts_*.jsonl")))
-            
-            if not concept_files:
-                self.logger.error("❌ No Phase 2 concept files found")
-                return False
-            
-            self.logger.info(f"✅ Phase 2 concept files: {len(concept_files)} found")
-            
-            # Check Phase 1 data availability
+            # Import DataLoader for validation
             from phase1_2_data_processing.data_loader import DataLoader
+            
+            # Validate Phase 1 data files
             data_loader = DataLoader()
-            if not hasattr(data_loader, 'datasets') or not data_loader.datasets:
-                self.logger.info("Loading Phase 1 data...")
-                data_loader.load_all_data()
+            data_loader.load_all_data()
             
-            required_files = [
-                "PanelsAndForms.csv",
-                "LoincAnswerListLink.csv", 
-                "MapTo.csv"
-            ]
-            
+            # Check for required Phase 1 files
+            required_files = ["Loinc.csv", "PanelsAndForms.csv", "LoincAnswerListLink.csv", "MapTo.csv"]
             missing_files = []
             file_stats = {}
             
@@ -150,6 +149,19 @@ class MappingOrchestrator:
             self.logger.info("✅ Phase 1 data files available:")
             for file_name, record_count in file_stats.items():
                 self.logger.info(f"   {file_name}: {record_count:,} records")
+            
+            # Validate Phase 2 concept files (if required)
+            concept_files_found = 0
+            for search_dir in ["output", "output/phase2_concepts"]:
+                search_path = Path(search_dir)
+                if search_path.exists():
+                    concept_files = list(search_path.glob("*concept*.jsonl"))
+                    concept_files_found += len(concept_files)
+            
+            if concept_files_found > 0:
+                self.logger.info(f"✅ Found {concept_files_found} Phase 2 concept files")
+            else:
+                self.logger.warning("⚠️  No Phase 2 concept files found - URL resolution may fail")
             
             return True
             
@@ -202,7 +214,7 @@ class MappingOrchestrator:
     def run_all_transformers(self, limit: Optional[int] = None,
                            progress_callback: Optional[Callable[[float, str], None]] = None) -> Dict[str, TransformationResult]:
         """
-        Run all mapping transformers in sequence.
+        Run all five mapping transformers in sequence.
         
         Args:
             limit: Optional limit on records to process (for testing)
@@ -213,6 +225,8 @@ class MappingOrchestrator:
         """
         results = {}
         transformer_names = list(self.transformers.keys())
+        
+        self.logger.info(f"🚀 Running {len(transformer_names)} transformers in sequence...")
         
         for i, transformer_name in enumerate(transformer_names):
             try:
@@ -233,6 +247,7 @@ class MappingOrchestrator:
                 
                 if result:
                     results[transformer_name] = result
+                    self.logger.info(f"✅ {transformer_name}: {result.success_count:,} mappings created")
                 else:
                     self.logger.error(f"❌ Failed to run {transformer_name}")
                     
@@ -240,6 +255,7 @@ class MappingOrchestrator:
                 self.logger.error(f"❌ Failed to run {transformer_name}: {str(e)}")
                 continue
         
+        self.logger.info(f"🎯 Completed {len(results)}/{len(transformer_names)} transformers successfully")
         return results
     
     def combine_all_mappings(self, results: Dict[str, TransformationResult]) -> MappingCollection:
@@ -254,18 +270,27 @@ class MappingOrchestrator:
         """
         combined_collection = MappingCollection()
         
+        self.logger.info("🔗 Combining mappings from all transformers...")
+        
         for transformer_name, result in results.items():
-            self.logger.info(f"Adding {result.success_count:,} mappings from {transformer_name}")
+            self.logger.info(f"   Adding {result.success_count:,} mappings from {transformer_name}")
             result.add_to_collection(combined_collection)
         
-        # Add metadata to collection
+        # Add comprehensive metadata to collection
         combined_collection.metadata = {
             'created_at': datetime.now().isoformat(),
+            'phase': 'Phase 3: Mapping Creation - Round 1 Complete',
             'transformers_used': list(results.keys()),
             'total_mappings': len(combined_collection.mappings),
-            'phase': 'Phase 3: Mapping Creation'
+            'mapping_types_created': {
+                transformer_name: self.transformers[transformer_name].get_ocl_map_type()
+                for transformer_name in results.keys()
+            },
+            'round_1_completion_status': len(results) >= 5,
+            'target_count_achieved': len(combined_collection.mappings) >= 125000
         }
         
+        self.logger.info(f"✅ Combined collection: {len(combined_collection.mappings):,} total mappings")
         return combined_collection
     
     def write_mapping_files(self, mapping_collection: MappingCollection) -> List[str]:
@@ -273,208 +298,189 @@ class MappingOrchestrator:
         Write mapping collection to JSON Lines files.
         
         Args:
-            mapping_collection: Collection of mappings to write
+            mapping_collection: Combined collection of all mappings
             
         Returns:
             List of output file paths
         """
-        self.logger.info(f"Writing {len(mapping_collection.mappings):,} mappings to output files...")
+        self.logger.info(f"📄 Writing {len(mapping_collection.mappings):,} mappings to files...")
         
-        output_files = mapping_collection.write_jsonl_files(
-            self.output_dir,
-            chunk_size=self.chunk_size,
-            base_filename="loinc_mappings"
-        )
-        
-        for file_path in output_files:
-            self.logger.info(f"  ✅ {file_path.name}")
-        
-        return [str(f) for f in output_files]
+        try:
+            output_files = mapping_collection.write_jsonl_files(
+                output_dir=self.output_dir,
+                base_filename="loinc_mappings_round1"
+            )
+            
+            self.logger.info(f"✅ Created {len(output_files)} mapping files:")
+            for file_path in output_files:
+                file_name = Path(file_path).name
+                self.logger.info(f"   📄 {file_name}")
+            
+            return output_files
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to write mapping files: {str(e)}")
+            return []
     
     def generate_orchestration_report(self, result: OrchestrationResult) -> str:
         """
         Generate comprehensive orchestration report.
         
         Args:
-            result: Orchestration result
+            result: Orchestration result to report on
             
         Returns:
             Path to generated report file
         """
         try:
             report_data = {
-                "phase": "Phase 3: Complete Mapping Creation Orchestration",
-                "timestamp": datetime.now().isoformat(),
-                "orchestration_summary": {
-                    "transformers_run": len(result.transformers_run),
-                    "transformers_successful": len(result.transformers_successful),
-                    "success_rate": result.success_rate,
-                    "total_processing_time_seconds": round(result.total_processing_time, 2),
-                    "total_mappings_created": result.total_mappings_created,
-                    "total_errors": result.total_errors,
-                    "average_mappings_per_second": round(result.total_mappings_created / result.total_processing_time, 1) if result.total_processing_time > 0 else 0
+                'orchestration_summary': {
+                    'started_at': self.stats['orchestration_started'],
+                    'completed_at': self.stats['orchestration_completed'],
+                    'total_processing_time': result.total_processing_time,
+                    'transformers_run': len(result.transformers_run),
+                    'transformers_successful': len(result.transformers_successful),
+                    'success_rate': result.success_rate,
+                    'round_1_complete': result.is_successful
                 },
-                "transformer_results": {},
-                "mapping_type_breakdown": {},
-                "output_files": result.output_files,
-                "phase3_status": "COMPLETE" if result.is_successful else "PARTIAL"
+                'transformer_results': {},
+                'mapping_statistics': {
+                    'total_mappings_created': result.total_mappings_created,
+                    'total_errors': result.total_errors,
+                    'average_throughput_per_second': (
+                        result.total_mappings_created / result.total_processing_time
+                        if result.total_processing_time > 0 else 0
+                    )
+                },
+                'output_files': result.output_files,
+                'round_1_mapping_types': {}
             }
             
             # Add detailed transformer results
             for transformer_name, transformer_result in result.transformer_results.items():
                 transformer = self.transformers[transformer_name]
-                report_data["transformer_results"][transformer_name] = {
-                    "transformer_class": transformer.__class__.__name__,
-                    "mapping_type": transformer.get_mapping_type(),
-                    "ocl_map_type": transformer.get_ocl_map_type(),
-                    "source_file": transformer.get_source_file(),
-                    "records_processed": transformer_result.source_records_processed,
-                    "mappings_created": transformer_result.success_count,
-                    "errors": transformer_result.error_count,
-                    "success_rate": transformer_result.success_rate,
-                    "processing_time_seconds": round(transformer_result.processing_time, 2),
-                    "statistics": transformer_result.statistics
+                report_data['transformer_results'][transformer_name] = {
+                    'transformer_display_name': transformer.get_transformer_name(),
+                    'source_file': transformer.get_source_file(),
+                    'mapping_type': transformer.get_mapping_type(),
+                    'ocl_map_type': transformer.get_ocl_map_type(),
+                    'records_processed': transformer_result.source_records_processed,
+                    'mappings_created': transformer_result.success_count,
+                    'errors': transformer_result.error_count,
+                    'success_rate': transformer_result.success_rate,
+                    'processing_time': transformer_result.processing_time
                 }
                 
-                # Add to mapping type breakdown
-                ocl_map_type = transformer.get_ocl_map_type()
-                report_data["mapping_type_breakdown"][ocl_map_type] = transformer_result.success_count
+                # Track Round 1 mapping types
+                report_data['round_1_mapping_types'][transformer.get_ocl_map_type()] = transformer_result.success_count
             
-            # Add collection statistics if available
-            if result.combined_mappings:
-                collection_stats = result.combined_mappings.get_statistics()
-                report_data["collection_statistics"] = collection_stats
-            
-            # Write report
-            report_file = self.output_dir / "phase3_orchestration_report.json"
+            # Write report file
+            report_file = self.output_dir / "phase3_round1_orchestration_report.json"
             with open(report_file, 'w', encoding='utf-8') as f:
                 json.dump(report_data, f, indent=2, ensure_ascii=False)
             
-            self.logger.info(f"✅ Orchestration report: {report_file}")
+            self.logger.info(f"📊 Generated orchestration report: {report_file}")
             return str(report_file)
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to generate orchestration report: {str(e)}")
+            self.logger.error(f"❌ Failed to generate report: {str(e)}")
             return ""
     
     def run_complete_orchestration(self, limit: Optional[int] = None, test_mode: bool = False,
                                  progress_callback: Optional[Callable[[float, str], None]] = None) -> OrchestrationResult:
         """
-        Execute complete Phase 3 mapping orchestration.
+        Run the complete Phase 3 Round 1 mapping orchestration.
         
         Args:
             limit: Optional limit on records to process (for testing)
-            test_mode: Whether running in test mode
+            test_mode: Whether to run in test mode
             progress_callback: Optional progress reporting function
             
         Returns:
-            OrchestrationResult with complete results and metadata
+            OrchestrationResult with complete results
         """
         start_time = time.time()
+        self.stats['orchestration_started'] = datetime.now().isoformat()
         
-        self.logger.info("🚀 Phase 3: Complete LOINC to OCL Mapping Creation")
+        self.logger.info("🚀 Starting Phase 3 Round 1 Complete Orchestration")
         self.logger.info("=" * 70)
-        self.logger.info("Orchestrating All Three Core Transformers:")
-        self.logger.info("  • Panel-Test Mapping Transformer")
-        self.logger.info("  • Question-Answer Mapping Transformer")
-        self.logger.info("  • Code Evolution Mapping Transformer")
-        self.logger.info("")
         
         if test_mode:
-            self.logger.info("🧪 Running in TEST MODE with limited data")
+            self.logger.info("🧪 Running in TEST MODE")
         if limit:
-            self.logger.info(f"📊 Processing limited to {limit:,} records per transformer")
-        self.logger.info("")
+            self.logger.info(f"📊 Record limit: {limit:,} per transformer")
+        
+        result = OrchestrationResult()
         
         try:
             # Validate prerequisites
             if progress_callback:
-                progress_callback(5, "Validating prerequisites...")
+                progress_callback(5.0, "Validating prerequisites")
             
             if not self.validate_prerequisites():
-                raise RuntimeError("Prerequisites validation failed")
+                raise Exception("Prerequisites validation failed")
             
             # Run all transformers
             if progress_callback:
-                progress_callback(10, "Starting transformer orchestration...")
+                progress_callback(10.0, "Starting transformer execution")
             
             transformer_results = self.run_all_transformers(
                 limit=limit,
                 progress_callback=lambda p, s: progress_callback(10 + (p * 0.7), s) if progress_callback else None
             )
             
-            if not transformer_results:
-                raise RuntimeError("No transformers completed successfully")
+            # Update result with transformer information
+            result.transformers_run = list(self.transformers.keys())
+            result.transformers_successful = list(transformer_results.keys())
+            result.transformer_results = transformer_results
+            
+            # Calculate totals
+            result.total_mappings_created = sum(r.success_count for r in transformer_results.values())
+            result.total_errors = sum(r.error_count for r in transformer_results.values())
             
             # Combine all mappings
             if progress_callback:
-                progress_callback(85, "Combining mappings from all transformers...")
+                progress_callback(85.0, "Combining mappings")
             
-            combined_mappings = self.combine_all_mappings(transformer_results)
+            if transformer_results:
+                result.combined_mappings = self.combine_all_mappings(transformer_results)
+                
+                # Write output files
+                if progress_callback:
+                    progress_callback(90.0, "Writing output files")
+                
+                result.output_files = self.write_mapping_files(result.combined_mappings)
             
-            # Write output files
+            # Generate report
             if progress_callback:
-                progress_callback(90, "Writing output files...")
+                progress_callback(95.0, "Generating report")
             
-            output_files = self.write_mapping_files(combined_mappings)
-            
-            # Calculate final statistics
-            total_mappings = len(combined_mappings.mappings)
-            total_errors = sum(len(result.errors) for result in transformer_results.values())
-            processing_time = time.time() - start_time
-            
-            # Create orchestration result
-            result = OrchestrationResult(
-                transformers_run=list(transformer_results.keys()),
-                transformers_successful=[name for name, result in transformer_results.items() if result.success_count > 0],
-                transformer_results=transformer_results,
-                combined_mappings=combined_mappings,
-                total_mappings_created=total_mappings,
-                total_errors=total_errors,
-                total_processing_time=processing_time,
-                output_files=output_files
-            )
-            
-            # Generate comprehensive report
-            if progress_callback:
-                progress_callback(95, "Generating orchestration report...")
+            result.total_processing_time = time.time() - start_time
+            self.stats['orchestration_completed'] = datetime.now().isoformat()
             
             report_file = self.generate_orchestration_report(result)
             if report_file:
                 result.output_files.append(report_file)
             
+            # Final status
             if progress_callback:
-                progress_callback(100, "Phase 3 orchestration complete!")
+                progress_callback(100.0, "Orchestration completed")
             
-            # Print comprehensive summary
             self.logger.info("")
-            self.logger.info("🎉 Phase 3 Orchestration Completed!")
+            self.logger.info("🎉 Phase 3 Round 1 Orchestration COMPLETED!")
             self.logger.info("=" * 70)
-            self.logger.info(f"Processing time: {processing_time:.1f} seconds")
+            self.logger.info(f"Total processing time: {result.total_processing_time:.1f} seconds")
             self.logger.info(f"Transformers successful: {len(result.transformers_successful)}/{len(result.transformers_run)}")
             self.logger.info(f"Total mappings created: {result.total_mappings_created:,}")
-            self.logger.info(f"Total errors: {result.total_errors:,}")
-            self.logger.info(f"Average throughput: {result.total_mappings_created / processing_time:.0f} mappings/second")
-            self.logger.info("")
-            
-            # Individual transformer results
-            for transformer_name, transformer_result in result.transformer_results.items():
-                transformer = self.transformers[transformer_name]
-                status_emoji = "✅" if transformer_result.success_count > 0 else "❌"
-                self.logger.info(f"{status_emoji} {transformer.get_mapping_type()}: {transformer_result.success_count:,} mappings")
-            
-            self.logger.info("")
-            self.logger.info("📄 Output Files:")
-            for file_path in result.output_files:
-                self.logger.info(f"  {Path(file_path).name}")
+            self.logger.info(f"Output files generated: {len(result.output_files)}")
             
             if result.is_successful:
                 self.logger.info("")
-                self.logger.info("🎯 PHASE 3 STATUS: COMPLETE & SUCCESSFUL!")
+                self.logger.info("🎯 ROUND 1 STATUS: COMPLETE & SUCCESSFUL!")
                 self.logger.info("🚀 Ready for OCL bulk import!")
             else:
                 self.logger.info("")
-                self.logger.info("⚠️  PHASE 3 STATUS: PARTIAL SUCCESS")
+                self.logger.info("⚠️  ROUND 1 STATUS: PARTIAL SUCCESS")
                 self.logger.info(f"   {len(result.transformers_successful)}/{len(result.transformers_run)} transformers completed successfully")
             
             return result
@@ -484,21 +490,20 @@ class MappingOrchestrator:
             self.logger.error(f"❌ Orchestration failed: {str(e)}")
             
             # Return partial result even on failure
-            return OrchestrationResult(
-                total_processing_time=processing_time
-            )
+            result.total_processing_time = processing_time
+            return result
 
 
-def main():
-    """Main orchestration function"""
+# For standalone execution
+if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(
-        description="Phase 3 Complete Mapping Orchestrator",
+        description="Phase 3 Complete Round 1 Mapping Orchestrator",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python phase3_mapping_orchestrator.py                    # Run complete production orchestration
+  python phase3_mapping_orchestrator.py                    # Run complete Round 1 production orchestration
   python phase3_mapping_orchestrator.py --test-mode        # Run with limited test data
   python phase3_mapping_orchestrator.py --limit 1000       # Process max 1000 records per transformer
         """
@@ -542,38 +547,25 @@ Examples:
         ]
     )
     
-    try:
-        # Create orchestrator
-        orchestrator = MappingOrchestrator()
-        
-        if args.output_dir:
-            orchestrator.output_dir = Path(args.output_dir)
-        
-        # Determine processing limit
-        limit = args.limit
-        if args.test_mode and not limit:
-            limit = 1000
-        
-        # Progress callback for user feedback
-        def progress_callback(progress: float, status: str):
-            if progress % 10 == 0 or progress >= 99:  # Show every 10% or at completion
-                print(f"Progress: {progress:.1f}% - {status}")
-        
-        # Run orchestration
-        result = orchestrator.run_complete_orchestration(
-            limit=limit,
-            test_mode=args.test_mode,
-            progress_callback=progress_callback
-        )
-        
-        return 0 if result.is_successful else 1
-        
-    except Exception as e:
-        logging.error(f"Orchestration failed: {str(e)}")
-        return 1
-
-
-if __name__ == "__main__":
-    import sys
-    exit_code = main()
+    # Create orchestrator
+    orchestrator = MappingOrchestrator()
+    
+    if args.output_dir:
+        orchestrator.output_dir = Path(args.output_dir)
+    
+    # Progress callback
+    def progress_callback(progress: float, status: str):
+        print(f"Progress: {progress:.1f}% - {status}")
+    
+    # Run orchestration
+    limit = args.limit if args.limit else (1000 if args.test_mode else None)
+    
+    result = orchestrator.run_complete_orchestration(
+        limit=limit,
+        test_mode=args.test_mode,
+        progress_callback=progress_callback
+    )
+    
+    # Exit with appropriate code
+    exit_code = 0 if result.is_successful else 1
     sys.exit(exit_code)
