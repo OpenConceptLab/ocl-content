@@ -124,7 +124,7 @@ coverage.xml
 **/.ipynb_checkpoints/
 
 # Data Files (uncomment if you don't want to version control data)
-# *.csv
+*.csv
 # *.xlsx
 # *.xls
 # *.json
