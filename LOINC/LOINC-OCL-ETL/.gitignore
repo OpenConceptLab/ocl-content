@@ -119,8 +119,9 @@ coverage.xml
 *.cover
 .hypothesis/
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Jupyter Notebook Checkpoints (NOT the .ipynb files themselves)
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
 # Data Files (uncomment if you don't want to version control data)
 # *.csv
