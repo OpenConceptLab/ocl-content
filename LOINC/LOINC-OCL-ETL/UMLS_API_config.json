@@ -1,0 +1,14 @@
+{
+  "api_key": "ae6d805d-e4e5-4f8a-81db-cca41ef1af00",
+  "rate_limit_delay": 0.1,
+  "default_input_format": "csv",
+  "default_output_format": "csv",
+  "log_level": "INFO",
+  "output_directory": "./output",
+  "settings": {
+    "include_obsolete": false,
+    "include_suppressible": false,
+    "preferred_language": "ENG",
+    "max_retries": 3
+  }
+}

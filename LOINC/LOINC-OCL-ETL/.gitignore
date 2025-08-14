@@ -1,14 +1,16 @@
-# Byte-compiled / optimized / DLL files
+# UMLS Configuration Files
+umls_config.txt
+umls_config.json
+umls_config.ini
+umls-config.*
+config/umls*
+
+# Python Cache
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -20,47 +22,121 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Virtual Environments
+venv/
+venv*/
+env/
+ENV/
+.venv/
+.env/
+virtualenv/
+.virtualenv/
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+# Trash Folders
+trash/
+Trash/
+.trash/
+deleted/
+temp_delete/
+
+# Log Files
+*.log
+logs/
+log/
+*.log.*
+debug.log
+error.log
+access.log
+
+# LOINC FHIR Example JSON
+*fhir*example*.json
+loinc_fhir_examples/
+fhir_examples/
+**/examples/**/*.json
+
+# LOINC Data Files (typically large)
+LOINC_*
+LoincTable/
+loinc_table.*
+*.loinc
+loinc-*.csv
+loinc-*.txt
+
+# ETL Output Files
+output/
+processed/
+generated/
+export/
+transformed/
+
+# Configuration Files with Sensitive Data
+.env
+config.ini
+secrets.json
+database.conf
+*.key
+*.pem
+credentials.*
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# Testing
 .coverage
-.coverage.*
+.pytest_cache/
+.tox/
 .cache
 nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
-.pytest_cache/
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# pyenv
-.python-version
+# Data Files (uncomment if you don't want to version control data)
+# *.csv
+# *.xlsx
+# *.xls
+# *.json
+# *.xml
+# *.tsv
 
-# VS Code
-.vscode/
+# Large Files
+*.zip
+*.tar.gz
+*.rar
+*.7z
 
-# mypy
-.mypy_cache/
-.dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# Cython debug symbols
-cython_debug/
-
-# Ignore logs, output, and temp folders
-logs/
-output/
-temp/
+# Database Files
+*.db
+*.sqlite
+*.sqlite3

@@ -1,0 +1,13 @@
+{
+    "type": "Source",
+    "id": "LOINC",
+    "default_locale": "en",
+    "name": "LOINC",
+    "public_access": "View",
+    "supported_locales": "en",
+    "hierarchy_root_urls": [
+        "/orgs/Regenstrief-Institute/sources/LOINC/concepts/ROOT/"
+    ],
+    "owner_type": "Organization",
+    "owner": "Regenstrief"
+}

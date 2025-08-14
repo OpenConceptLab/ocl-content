@@ -98,3 +98,10 @@ LP173490-6,CHALLENGE,pre amniocentesis,pre amniocentesis,DEPRECATED
 LP173492-2,CHALLENGE,2nd specimen/Streptococcus pneumoniae 14 Ab,2nd specimen/Streptococcus pneumoniae 14 Ab,DEPRECATED
 LP173496-3,CHALLENGE,1H post 250 ug cortrosyn IM,1H post 250 ug cortrosyn IM,DEPRECATED
 LP173497-1,CHALLENGE,30M post 250 ug cortrosyn IM,30M post 250 ug cortrosyn IM,DEPRECATED
+LP29693-6,CLASS,Lab,Laboratory,ACTIVE
+LP343406-7,CLASS,Microbiology and Antimicrobial susceptibility,Microbiology and Antimicrobial susceptibility,ACTIVE
+LP7819-8,CLASS,MICRO,Microbiology,ACTIVE
+LP113735-7,COMPONENT,Bacterial heat-stable enterotoxin ST gene,Bacterial heat-stable enterotoxin ST gene,ACTIVE
+LP14082-9,COMPONENT,Bacteria,Bacteria,ACTIVE
+LP14559-6,COMPONENT,Microorganism,Microorganism,ACTIVE
+LP98185-9,COMPONENT,Bacteria.,Bacteria,ACTIVE

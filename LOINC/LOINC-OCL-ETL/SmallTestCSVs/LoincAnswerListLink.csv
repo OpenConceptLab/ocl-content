@@ -1,0 +1,1026 @@
+LoincNumber,LongCommonName,AnswerListId,AnswerListName,AnswerListLinkType,ApplicableContext
+100002-5,Specimen care is maintained,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100003-3,Team communication is maintained throughout care,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100004-1,Demonstrates knowledge of the expected psychosocial responses to the procedure,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100005-8,Demonstrates knowledge of nutritional management related to the procedure,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100006-6,Demonstrates knowledge of medication management,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100007-4,Demonstrates knowledge of pain management,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100008-2,Demonstrates knowledge of wound management,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100009-0,Demonstrates knowledge of the procedure and expected results,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100010-8,"No injury related to procedure equipment, medical supplies, or instrumentation",LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100011-6,No injury related to an electrical source,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100012-4,Participates in decisions affecting the patient's plan of care,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100013-2,Participates in the discharge process,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100014-0,Psychosocial health is maintained at or improved from baseline,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100015-7,No injury related to positioning due to care or procedure,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100016-5,No injury related to a laser source,LL6136-7,Met/Not met/Ongoing/Unable to assess,NORMATIVE,100017-3
+100019-9,ALK gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100020-7,GNA11 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100021-5,GNAQ gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100022-3,IDH1 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100023-1,IDH2 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100024-9,SETBP1 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100025-6,SRSF2 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100026-4,MET gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100027-2,SMAD4 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100028-0,FBXW7 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+100034-8,Provider of automated external defibrillator use,LL6214-2,NEMSIS_Provider of AED or CPR,EXAMPLE,
+100034-8,Provider of automated external defibrillator use,LL6214-2,NEMSIS_Provider of AED or CPR,NORMATIVE,84428-2
+100035-5,Exam finding location of Chest,LL6218-3,Chest exam finding location,NORMATIVE,84428-2
+100036-3,Exam finding location of Lung,LL6215-9,NEMSIS_Lung exam finding location,NORMATIVE,84428-2
+100037-1,Patient contact disposition EMS unit,LL6219-1,NEMSIS_Unit Disposition,NORMATIVE,84428-2
+100038-9,Patient evaluation disposition EMS unit,LL6220-9,NEMSIS_Patient evaluation disposition,NORMATIVE,84428-2
+100039-7,Crew disposition for patient care EMS unit,LL6221-7,NEMSIS_Crew disposition for patient care,NORMATIVE,84428-2
+100040-5,Patient transport disposition EMS unit,LL6222-5,NEMSIS_Patient transport disposition,NORMATIVE,84428-2
+100041-3,Aminoglycoside [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100042-1,Atovaquone [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100043-9,Azithromycin+Ethambutol [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100044-7,Cefcapene [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100045-4,Cefozopran [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100046-2,Cefquinome [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100047-0,Cefteram [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100048-8,Clarithromycin+Ethambutol [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100049-6,Eravacycline [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100050-4,Erythromycin+Ethambutol [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100051-2,Ethambutol+rifAMPin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100052-0,Flomoxef [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100053-8,Fluoroquinolone [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100054-6,Gamithromycin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100055-3,Optochin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100056-1,Panipenem [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100057-9,Prothionamide [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100058-7,Prulifloxacin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100059-5,Rifapentine [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100060-3,Tildipirosin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100061-1,Tosufloxacin [Susceptibility],LL360-9,Pos|Neg,EXAMPLE,
+100063-7,Primary skin concern,LL6216-7,Skin concerns,NORMATIVE,100062-9
+100064-5,Itch severity Reporting Period - Reported,LL6217-5,Itch severity 0-10,NORMATIVE,100062-9
+100065-2,Satisfied with treatment,LL5146-7,Clear|Almost clear|Mild|Moderate|Severe disease,NORMATIVE,100062-9
+100086-8,Right cornea Type of Analysis method by Specular microscopy,LL6226-6,Specular Microscopy Analysis Method,EXAMPLE,
+100114-8,Toxoplasma gondii 30kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100115-5,Toxoplasma gondii 31kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100116-3,Toxoplasma gondii 33kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100117-1,Toxoplasma gondii 40kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100118-9,Toxoplasma gondii 41kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100119-7,Toxoplasma gondii 45kD Ab [Presence] in Serum by Immunoblot,LL2431-6,Pos|Neg|Inconcl,EXAMPLE,
+100154-4,Specimen collection supervision level,LL6225-8,Specimen collection supervision level,EXAMPLE,
+100155-1,Left cornea Type of Analysis method by Specular microscopy,LL6226-6,Specular Microscopy Analysis Method,EXAMPLE,
+100156-9,SARS-CoV-2 (COVID-19) variant [Type] in Specimen by NAA with probe detection,LL5768-8,SARS-CoV-2 variants,EXAMPLE,
+100157-7,SARS-CoV-2 (COVID-19) lineage [Type] in Specimen by Sequencing,LL5807-4,SARS-CoV-2 lineages,EXAMPLE,
+100160-1,Knee replacement,LL6236-5,Primary/Revision,NORMATIVE,100159-3
+100160-1,Knee replacement,LL6236-5,Primary/Revision,NORMATIVE,100203-9
+100161-9,Charnley Functional Classification,LL6104-5,Charnley Functional Classification,NORMATIVE,100159-3
+100161-9,Charnley Functional Classification,LL6104-5,Charnley Functional Classification,NORMATIVE,100203-9
+100162-7,Knee alignment W standing X-ray measured,LL6238-1,Alignment,NORMATIVE,100159-3
+100162-7,Knee alignment W standing X-ray measured,LL6238-1,Alignment,NORMATIVE,100203-9
+100163-5,Knee medial AndOr lateral instability W full extension,LL6239-9,Medial / Lateral Instability,NORMATIVE,100159-3
+100163-5,Knee medial AndOr lateral instability W full extension,LL6239-9,Medial / Lateral Instability,NORMATIVE,100203-9
+100164-3,Knee AP instability W 90 degree flexion,LL6240-7,Anterior / Posterior Instability,NORMATIVE,100159-3
+100164-3,Knee AP instability W 90 degree flexion,LL6240-7,Anterior / Posterior Instability,NORMATIVE,100203-9
+100166-8,Flexion contracture range of Knee,LL6105-2,Flexion Contracture,NORMATIVE,100159-3
+100166-8,Flexion contracture range of Knee,LL6105-2,Flexion Contracture,NORMATIVE,100203-9
+100167-6,Extensor lag range of Knee,LL6106-0,Extensor Lag,NORMATIVE,100159-3
+100167-6,Extensor lag range of Knee,LL6106-0,Extensor Lag,NORMATIVE,100203-9
+100168-4,Knee pain severity with level walking,LL6108-6,0-10 None Severe,NORMATIVE,100159-3
+100168-4,Knee pain severity with level walking,LL6108-6,0-10 None Severe,NORMATIVE,100203-9
+100169-2,Knee pain severity with stairs or inclines,LL6108-6,0-10 None Severe,NORMATIVE,100159-3
+100169-2,Knee pain severity with stairs or inclines,LL6108-6,0-10 None Severe,NORMATIVE,100203-9
+100170-0,Knee feels normal,LL6115-1,Always/Sometimes/Never Scored,NORMATIVE,100159-3
+100170-0,Knee feels normal,LL6115-1,Always/Sometimes/Never Scored,NORMATIVE,100203-9
+100171-8,Satisfaction with level of knee pain while sitting,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100159-3
+100171-8,Satisfaction with level of knee pain while sitting,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100203-9
+100172-6,Satisfaction with level of knee pain while lying in bed,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100159-3
+100172-6,Satisfaction with level of knee pain while lying in bed,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100203-9
+100173-4,Satisfaction with knee function while getting out of bed,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100159-3
+100173-4,Satisfaction with knee function while getting out of bed,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100203-9
+100174-2,Satisfaction with knee function while performing light household duties,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100159-3
+100174-2,Satisfaction with knee function while performing light household duties,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100203-9
+100175-9,Satisfaction with knee function while performing recreational activities,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100159-3
+100175-9,Satisfaction with knee function while performing recreational activities,LL6124-3,Very satisfied to very dissatisfied Scored,NORMATIVE,100203-9
+100176-7,Expect surgery to relieve pain,LL6181-3,No not at all/Yes alot,NORMATIVE,100159-3
+100177-5,Expect surgery will improve ability to perform activities of daily living,LL6181-3,No not at all/Yes alot,NORMATIVE,100159-3
+100178-3,"Expect surgery will improve ability to perform leisure, recreational, or sports activities",LL6181-3,No not at all/Yes alot,NORMATIVE,100159-3
+100179-1,Walk without assistive mobility devices,LL361-7,Y/N,NORMATIVE,100159-3
+100179-1,Walk without assistive mobility devices,LL361-7,Y/N,NORMATIVE,100203-9
+100180-9,Assistive mobility devices used,LL6242-3,Assisted mobility devices,NORMATIVE,100159-3
+100180-9,Assistive mobility devices used,LL6242-3,Assisted mobility devices,NORMATIVE,100203-9
+100181-7,Assistive mobility devices used due to health condition,LL361-7,Y/N,NORMATIVE,100159-3
+100181-7,Assistive mobility devices used due to health condition,LL361-7,Y/N,NORMATIVE,100203-9
+100182-5,Duration of standing before sitting due to knee discomfort,LL6243-1,Stand time before discomfort,NORMATIVE,100159-3
+100182-5,Duration of standing before sitting due to knee discomfort,LL6243-1,Stand time before discomfort,NORMATIVE,100203-9
+100183-3,Duration of walking before stopping due to knee discomfort,LL6244-9,Walk time before discomfort,NORMATIVE,100159-3
+100183-3,Duration of walking before stopping due to knee discomfort,LL6244-9,Walk time before discomfort,NORMATIVE,100203-9
+100184-1,How bothersome is knee when walking on an uneven surface,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100184-1,How bothersome is knee when walking on an uneven surface,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100185-8,How bothersome is knee when turning or pivoting leg,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100185-8,How bothersome is knee when turning or pivoting leg,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100186-6,How bothersome is knee when climbing up or down a flight of stairs,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100186-6,How bothersome is knee when climbing up or down a flight of stairs,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100187-4,How bothersome is knee when getting up from a low seat without armrests,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100187-4,How bothersome is knee when getting up from a low seat without armrests,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100188-2,How bothersome is knee when getting into or out of a car,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100188-2,How bothersome is knee when getting into or out of a car,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100189-0,How bothersome is knee when moving laterally,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100189-0,How bothersome is knee when moving laterally,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100190-8,How bothersome is knee when climbing a ladder or step stool,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100190-8,How bothersome is knee when climbing a ladder or step stool,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100191-6,How bothersome is knee when carrying a bag for one block,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100191-6,How bothersome is knee when carrying a bag for one block,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100192-4,How bothersome is knee when squatting,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100192-4,How bothersome is knee when squatting,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100193-2,How bothersome is knee when kneeling,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100193-2,How bothersome is knee when kneeling,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100194-0,How bothersome is knee when running,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100159-3
+100194-0,How bothersome is knee when running,LL6245-6,No bother/Cannot do/Never,NORMATIVE,100203-9
+100195-7,Pain severity--during activity,LL6246-4,No bother/Cannot do,NORMATIVE,100159-3
+100195-7,Pain severity--during activity,LL6246-4,No bother/Cannot do,NORMATIVE,100203-9
+100204-7,Accuracy of pre-surgery expectations of pain relief,LL6254-8,Too High/Too Low,NORMATIVE,100203-9
+100205-4,Accuracy of pre-surgery expectations to perform activities of daily living,LL6254-8,Too High/Too Low,NORMATIVE,100203-9
+100206-2,"Accuracy of pre-surgery expectations to perform leisure, recreational, or sports activities",LL6254-8,Too High/Too Low,NORMATIVE,100203-9
+100256-7,Fallen in last 6 months,LL361-7,Y/N,EXAMPLE,
+100257-5,Feel unsteady when standing or walking,LL361-7,Y/N,EXAMPLE,
+100258-3,History of fall related injury,LL361-7,Y/N,EXAMPLE,
+100282-3,Vaccine exemption certificate,LL4353-0,Reason vaccine not received,EXAMPLE,
+100293-0,Hip Flexion range of motion,LL6234-0,Harris Hip Score - Range of Motion Scale,NORMATIVE,100283-1
+100294-8,Hip Abduction range of motion,LL6234-0,Harris Hip Score - Range of Motion Scale,NORMATIVE,100283-1
+100295-5,Hip Adduction range of motion,LL6234-0,Harris Hip Score - Range of Motion Scale,NORMATIVE,100283-1
+100296-3,Hip External rotation range of motion,LL6234-0,Harris Hip Score - Range of Motion Scale,NORMATIVE,100283-1
+100297-1,Hip Internal rotation range of motion,LL6234-0,Harris Hip Score - Range of Motion Scale,NORMATIVE,100283-1
+100305-2,IDH1 gene exon 4 targeted mutation analysis [Presence] in Blood or Marrow by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+100306-0,IDH2 gene exon 4 targeted mutation analysis [Presence] in Blood or Marrow by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+100308-6,Need help getting to essential places,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100309-4,Activity support person,LL6250-6,Yes 1 person|Yes >1 person|No|DK|Refused,NORMATIVE,100307-8
+100310-2,Reliability of support person,LL6249-8,Not at all |Somewhat |Vey |Completely |DK|Refused,NORMATIVE,100307-8
+100311-0,"Need help to make sure there is enough food, medicines or any other things needed in house",LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100312-8,"Person or persons that makes sure there is enough food, medicines or any other things needed in house",LL6250-6,Yes 1 person|Yes >1 person|No|DK|Refused,NORMATIVE,100307-8
+100313-6,"Need help with household things such as cook meals, help feed, or provide correct medicines each day",LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100314-4,Need help with house cleaning or yard work,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100315-1,"Need help getting out of bed, showered, or dressed",LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100316-9,Need help to make sure bills get paid,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100317-7,Relationship of usual support person for daily activities,LL6252-2,Relationship,NORMATIVE,100307-8
+100318-5,Have help with finances AndOr financial decisions,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100319-3,Relationship of financial support person,LL6252-2,Relationship,NORMATIVE,100307-8
+100320-1,Financial support person usually asks for permission before making decisions,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100321-9,Financial support person usually makes good decisions about finances,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100322-7,Have access to paperwork for financial decisions made,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100323-5,Financial support person forged signature,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100324-3,Coercion of financial support person for signing a document in order to get money or possessions,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100325-0,Experienced theft by support person,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100326-8,Money spent or property sold without permission,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100327-6,Stranger forged signature for financial gain,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100328-4,Stranger forced document signature for financial gain,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100329-2,Feared for safety due to verbal attack,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100330-0,Felt humiliated due to ridicule,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100331-8,Coerced to do something,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100332-6,Ignored by close friend or relative for extended period,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100333-4,Physically hit or threatened,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100334-2,Been physically hurt with some degree of injury,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100335-9,Coerced sexual activity,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100336-7,Coerced touching of private body parts of self or others,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100337-5,Coerced to undress or expose private body area,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100338-3,Photographed in any degree of nudity without consent,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100339-1,Experienced attempted physical restraint,LL4027-0,Yes | No | DK/NS | Refused,NORMATIVE,100307-8
+100351-6,Pioglitazone [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+100352-4,Rosiglitazone [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+100354-0,Frequency of participating in multi-modal communication without assistance,LL6183-9,NOMS Functional Communication Measures scoring,NORMATIVE,99828-6
+100355-7,Frequency of participating in spoken language expression communication without assistance,LL6183-9,NOMS Functional Communication Measures scoring,NORMATIVE,99844-3
+100356-5,Chlamydia trachomatis and Neisseria gonorrhoeae and Trichomonas vaginalis DNA [Identifier] in Specimen by NAA with probe detection,LL6259-7,CT&GC&TV,EXAMPLE,
+100357-3,Naloxone [Presence] in Cord tissue by Screen method,LL2872-1,pres/not detected,EXAMPLE,
+100358-1,Phentermine [Presence] in Cord tissue by Screen method,LL2872-1,pres/not detected,EXAMPLE,
+100361-5,Quickly recover from bad events,LL6255-5,Strong disagree/Disagree/Neut/Agree/ Strong agree,NORMATIVE,100360-7
+100362-3,Difficulty making it through stressful events,LL6256-3,SD/Disagree/Neut/Agree/SA,NORMATIVE,100360-7
+100363-1,Easily recover from a stressful event,LL6255-5,Strong disagree/Disagree/Neut/Agree/ Strong agree,NORMATIVE,100360-7
+100364-9,Difficulty recovering from bad events,LL6256-3,SD/Disagree/Neut/Agree/SA,NORMATIVE,100360-7
+100365-6,Easily recover from difficulties,LL6255-5,Strong disagree/Disagree/Neut/Agree/ Strong agree,NORMATIVE,100360-7
+100366-4,Lengthy recovery from setbacks,LL6256-3,SD/Disagree/Neut/Agree/SA,NORMATIVE,100360-7
+100370-6,Orthopoxvirus DNA [Identifier] in Specimen by NAA with probe detection,LL6260-5,Orthopoxvirus,EXAMPLE,
+100383-9,Monkeypox virus DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+100434-0,Orthopoxvirus.non-variola DNA [Presence] in Specimen by NAA with probe detection,LL3698-9,Detected|Not Det|Equiv|Inconcl|Not test,EXAMPLE,
+10061-0,S' wave amplitude in lead I,LL1311-1,PhenX12_44,EXAMPLE,
+100654-3,Pyruvate kinase M2 [Presence] in Stool,LL360-9,Pos|Neg,EXAMPLE,
+100663-4,TPMT gene c.460G>A and c.719A>G [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100664-2,NUDT15 gene c.50_55dup and c.415C>T [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100665-9,NUDT15 gene c.415C>T [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100666-7,NUDT15 gene c.416G>A [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100667-5,NUDT15 gene c.52G>A [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100668-3,NUDT15 gene c.50_55dup [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100669-1,NUDT15 gene c.50_55del [Presence] in Blood by Molecular genetics method,LL2014-0,Wild type-Hetero-Homo,EXAMPLE,
+100670-9,RHD gene allele [Identifier] in Plasma cell-free DNA Nominal--fetus,LL3288-9,RHD genotype,EXAMPLE,
+100671-7,Aspergillus sp DNA [Presence] in Blood by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100672-5,Aspergillus fumigatus DNA [Presence] in Blood by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100673-3,Aspergillus terreus DNA [Presence] in Blood by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100694-9,SMN1 gene silent carrier analysis [Presence] in Blood or Tissue by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+100696-4,CTNS related multigene analysis [Identifier] in Bodyfluid and Serum or Plasma by Molecular genetics method Nominal,LL360-9,Pos|Neg,EXAMPLE,
+100717-8,FCGR3A gene.p.Phe176Val [Presence] in Blood or Tissue by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+100737-6,Alkaline phosphatase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100738-4,Alanine aminotransferase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100739-2,Aspartate aminotransferase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100740-0,Amylase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100741-8,Gamma glutamyl transferase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100742-6,Lactate dehydrogenase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100743-4,Lipase.macromolecular [Presence] in Serum or Plasma,LL1937-3,Present|Absent,EXAMPLE,
+100748-3,Legionella spp [Presence] in Specimen by NAA with probe detection,LL3987-6,Detected|Not Det|Indeterm,EXAMPLE,
+100749-1,Legionella pneumophila serogroup 1 [Presence] in Specimen by NAA with probe detection,LL3987-6,Detected|Not Det|Indeterm,EXAMPLE,
+100750-9,Legionella pneumophila non-serogroup 1 [Presence] in Specimen by NAA with probe detection,LL3987-6,Detected|Not Det|Indeterm,EXAMPLE,
+100752-5,Exacerbating factors - Reported,LL6278-7,Exacerbating factors,EXAMPLE,
+100753-3,Alleviating factors - Reported,LL6279-5,Alleviating factors,EXAMPLE,
+100761-6,PALB2 gene targeted mutation analysis in Blood or Tissue by Molecular genetics method,LL759-2,Neg|Pos|Indeterm,EXAMPLE,
+100762-4,HBA2 gene.c.377T>C [Presence] in Blood by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+100764-0,Mycobacterium bovis reaction wheal [Diameter] Qualitative --3 days post dose mammalian tuberculin intradermal,LL1937-3,Present|Absent,EXAMPLE,
+100767-3,Bothered by things that are not usually bothersome,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100768-1,Poor appetite,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100769-9,Unhappy even with help from my family or friends,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100770-7,Feeling just as good as others,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100771-5,Trouble focusing,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100772-3,Feeling depressed,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100773-1,Feeling everything is too much of an effort,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100774-9,Feeling hopeful about the future,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100775-6,Feeling life had been a failure,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100776-4,Feeling fearful,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100777-2,Restless sleep,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100778-0,Feeling happy,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100779-8,Quieter than usual,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100780-6,Feeling lonely,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100781-4,People were unfriendly,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100782-2,Enjoying life,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100783-0,Crying spells,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100784-8,Feeling sad,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100785-5,Feeling people dislike me,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100786-3,Lack of energy,LL6277-9,Rare or Never|Some|Occas|Most,NORMATIVE,100766-5
+100822-6,Cardiopulmonary resuscitation orders,LL6263-9,POLST CPR,PREFERRED,
+100822-6,Cardiopulmonary resuscitation orders,LL6263-9,POLST CPR,PREFERRED,100821-8
+100823-4,Initial portable medical treatment orders,LL6264-7,POLST Initial Tx,PREFERRED,
+100823-4,Initial portable medical treatment orders,LL6264-7,POLST Initial Tx,PREFERRED,100821-8
+100825-9,Medically assisted nutrition orders,LL6267-0,POLST Med assist nutr,PREFERRED,
+100825-9,Medically assisted nutrition orders,LL6267-0,POLST Med assist nutr,PREFERRED,100821-8
+100826-7,Portable medical order AndOr advance directive review,LL6265-4,POLST review,PREFERRED,
+100826-7,Portable medical order AndOr advance directive review,LL6265-4,POLST review,PREFERRED,100821-8
+100827-5,Portable medical order discussion participants,LL6266-2,POLST discuss part,PREFERRED,
+100827-5,Portable medical order discussion participants,LL6266-2,POLST discuss part,PREFERRED,100821-8
+100841-6,Zinc finger protein of the cerebellum 4 Ab [Presence] in Cerebral spinal fluid by Line blot,LL5435-4,Present-1 or Absent-0,EXAMPLE,
+100845-7,Neurofascin155 IgG4 Ab [Presence] in Serum by Flow cytometry (FC),LL360-9,Pos|Neg,EXAMPLE,
+100846-5,Dengue virus 1+2+3+4 nsP1 IgG Ab [Presence] in Serum or Plasma by Immunoassay,LL759-2,Neg|Pos|Indeterm,EXAMPLE,
+100865-5,Avian schistosomes DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+100868-9,Cryptosporidium sp 18S-LC2 rRNA [Genotype] in Specimen by Molecular genetics method,LL5997-3,Cryptosporidium species,EXAMPLE,
+100869-7,Cryptosporidium gp60 gene [Type] in Specimen by Molecular genetics method,LL6268-8,Cryptospordium species subtypes,EXAMPLE,
+100870-5,Cryptosporidium 18S rRNA [Genotype] in Specimen by Molecular genetics method,LL5997-3,Cryptosporidium species,EXAMPLE,
+100871-3,Giardia lamblia gdh gene [Genotype] in Specimen by Molecular genetics method,LL6269-6,Giardia lamblia genotypes,EXAMPLE,
+100872-1,Bacteria producing polysaccharide from sucrose [Presence] in Isolate,LL360-9,Pos|Neg,EXAMPLE,
+100873-9,Giardia lamblia tpi gene [Genotype] in Specimen by Molecular genetics method,LL6269-6,Giardia lamblia genotypes,EXAMPLE,
+100874-7,Basidiobolus sp [Presence] in Specimen,LL3950-4,Present | Absent,EXAMPLE,
+100885-3,Parapoxvirus DNA [Presence] in Specimen by NAA with probe detection,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100886-1,Orf virus DNA [Presence] in Specimen by NAA with probe detection,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100887-9,Pseudocowpox virus DNA [Presence] in Specimen by NAA with probe detection,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100888-7,Monkeypox virus clade II DNA [Presence] in Specimen by NAA with probe detection,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100889-5,Monkeypox virus clade I DNA [Presence] in Specimen by NAA with probe detection,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100891-1,Orthopoxvirus IgG Ab [Presence] in Serum or Plasma by Immunoassay,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100892-9,Orthopoxvirus IgM Ab [Presence] in Serum or Plasma by Immunoassay,LL3713-6,Detected|Not det||Equiv|Invalid,EXAMPLE,
+100897-8,Staphylococcus aureus [Presence] in Specimen by Organism specific culture,LL744-4,Detected|Not det,EXAMPLE,
+100899-4,Enterobacteriaceae.extended spectrum beta lactamase resistance phenotype [Identifier] in Specimen by Organism specific culture,LL6272-0,ESBL enterobacter,EXAMPLE,
+100901-8,Enterobacteriaceae.carbapenemase resistance phenotype [Identifier] in Anal by Organism specific culture,LL6273-8,Carbapenemase bacteria detected,EXAMPLE,
+100902-6,Enterobacteriaceae.carbapenemase resistance phenotype.OXA-48 [Identifier] in Anal by Organism specific culture,LL6274-6,OXA-48 carbapenemase bacteria,EXAMPLE,
+100905-9,Gram positive bacteria identified in Isolate by Organism specific culture,LL6275-3,Fastidious gram positive,EXAMPLE,
+100907-5,Vancomycin resistant enterococcus [Identifier] in Specimen by Organism specific culture,LL6270-4,VRE species,EXAMPLE,
+100908-3,Pseudomonas aeruginosa [Presence] in Lower respiratory specimen by Organism specific culture,LL744-4,Detected|Not det,EXAMPLE,
+100909-1,Cronobacter sakazakii [Presence] by Organism specific culture,LL744-4,Detected|Not det,EXAMPLE,
+100910-9,Gram negative bacteria.colistin resistant identified in Stool by Organism specific culture,LL6271-2,Colistin Resistant,EXAMPLE,
+100911-7,Campylobacter sp [Presence] in Stool by Organism specific culture,LL744-4,Detected|Not det,EXAMPLE,
+100917-4,Product of interest effectiveness,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100921-6
+100918-2,Product of interest usability,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100921-6
+100919-0,Access to help with product of interest,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100921-6
+100920-8,Satisfied with product of interest,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100921-6
+100924-0,Safe and secure healthcare data,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100922-4
+100925-7,Healthcare data exchanged as needed,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100922-4
+100926-5,Access to review healthcare data,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100922-4
+100927-3,Satisfied with healthcare data use,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100922-4
+100930-7,Digital device use,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100928-1
+100930-7,Digital device use,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100958-8
+100931-5,Friends use digital devices,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100928-1
+100932-3,Access to help with digital devices,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100928-1
+100933-1,Confident using digital devices,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100928-1
+100933-1,Confident using digital devices,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100958-8
+100936-4,Feel safe at home,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100934-9
+100937-2,Feel respected at home,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100934-9
+100938-0,Feel safe outside home,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100934-9
+100939-8,Feel respected outside home,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100934-9
+100942-2,Neighbors and I know each other,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100940-6
+100943-0,Neighbors and I trust each other,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100940-6
+100944-8,Neighbors and I share information,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100940-6
+100945-5,Neighbors and I help each other,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100940-6
+100947-1,Frequency of having no one to talk to,LL6276-1,Hardly ever/Occasionally/Sometimes/Always,NORMATIVE,100951-3
+100948-9,Frequency of feeling left out,LL6276-1,Hardly ever/Occasionally/Sometimes/Always,NORMATIVE,100951-3
+100949-7,Frequency of feeling alone,LL6276-1,Hardly ever/Occasionally/Sometimes/Always,NORMATIVE,100951-3
+100950-5,Frequency of feeling lonely,LL6276-1,Hardly ever/Occasionally/Sometimes/Always,NORMATIVE,100951-3
+100954-7,Product of interest use,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100952-1
+100955-4,Confident using product of interest,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100952-1
+100956-2,Understand potential benefits of product of interest,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100952-1
+100957-0,Understand potential problems of product of interest,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100952-1
+100960-4,New ideas are needed in field of work,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100958-8
+100961-2,Follow new ideas in field of work,LL5780-3,Strongly agree/Agree/Neutral/Disagree,NORMATIVE,100958-8
+100964-6,"Dengue virus IgG Ab [Presence] in Serum, Plasma or Blood by Rapid immunoassay",LL759-2,Neg|Pos|Indeterm,EXAMPLE,
+100973-7,Influenza virus A RNA [Presence] in Nose by NAA with non-probe detection,LL6280-3,Flu A,EXAMPLE,
+100974-5,Influenza virus B RNA [Presence] in Nose by NAA with non-probe detection,LL6281-1,Flu B,EXAMPLE,
+100975-2,Induced abortion method,LL6283-7,Induced abortion methods,EXAMPLE,
+100979-4,Atopobium vaginae DNA [Presence] in Urine by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+100980-2,BK virus DNA [Log #/volume] (viral load) in Cerebral spinal fluid by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100981-0,Parvovirus B19 DNA [Log #/volume] (viral load) in Specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100982-8,Varicella zoster virus DNA [Log #/volume] (viral load) in Specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+100995-0,Laceyella sacchari IgG Ab [Presence] in Serum,LL744-4,Detected|Not det,EXAMPLE,
+101003-2,Monkeypox virus clade [Type] in Specimen by Sequencing,LL6290-2,Monkeypox virus clade,EXAMPLE,
+101004-0,Monkeypox virus lineage [Type] in Specimen by Sequencing,LL6291-0,Monkeypox virus lineage,EXAMPLE,
+101060-2,An^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101061-0,Be^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101062-8,BARC Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101063-6,Co3 Ag Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101064-4,Co3 Ag Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101065-1,Co4 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101066-9,Cr^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101067-7,Cs^b Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101068-5,Cs^b Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101069-3,CE Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101070-1,CEAG Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101071-9,CELO Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101072-7,CENR Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101073-5,CEST Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101074-3,CEVF Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101075-0,Crawford Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101076-8,Dh^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101077-6,Dr^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101078-4,Dw Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101079-2,DAK Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101080-0,En^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101081-8,Es^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101082-6,Evans Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101083-4,Fy5 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101084-2,FPTT Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101085-9,Ge1 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101086-7,Ge2 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101087-5,Ge2 Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101088-3,Ge3 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101089-1,Ge3 Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101090-9,Ge4 Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101091-7,Hr^s Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101092-5,Hr^B Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101093-3,Hut Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101094-1,In^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101095-8,IFC Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101096-6,Jo sup(a) Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101097-4,JAHK Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101098-2,JMH Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101099-0,Km Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101100-6,Ku Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101101-4,Kx Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101102-2,Kx Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101103-0,C^G Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101116-2,THSD7A Ag [Presence] in Tissue by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101120-4,Candida glabrata+krusei DNA [Presence] in Blood by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101121-2,Candida albicans and tropicalis DNA [Presence] in Blood by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101123-8,Bacterial carbapenem resistance blaIMI gene [Presence] by Molecular method,LL744-4,Detected|Not det,EXAMPLE,
+101124-6,Bacterial carbapenem resistance blaIMI+blaNMC genes [Presence] by Molecular method,LL744-4,Detected|Not det,EXAMPLE,
+101125-3,Bacterial carbapenem resistance blaOXA-235-like gene [Presence] by Molecular method,LL744-4,Detected|Not det,EXAMPLE,
+101126-1,Bacterial carbapenem resistance blaOXA-24+blaOXA-40 gene [Presence] by Molecular method,LL744-4,Detected|Not det,EXAMPLE,
+101127-9,Bacterial carbapenem resistance blaSIM gene [Presence] by Molecular method,LL744-4,Detected|Not det,EXAMPLE,
+101137-8,MNS29 [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101138-6,ER^a Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101139-4,Hro Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101140-2,Salmonella sp Ag [Presence] in Stool by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101141-0,NAT2 gene targeted mutation analysis in Blood or Tissue by Molecular genetics method,LL6293-6,NAT2 genotype results,EXAMPLE,
+101142-8,NAT2 gene allele [Genotype] in Blood or Tissue by Molecular genetics method Nominal,LL6292-8,Slow|Intermediate|Rapid,EXAMPLE,
+101143-6,NAT2 gene product metabolic activity interpretation in Blood or Tissue Qualitative by Molecular genetics method,LL3856-3,[CPIC metab act] Ultrarapid|Rapid|Nl|Interm|Poor,PREFERRED,
+101156-8,Alpha hydroxyetizolam [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101158-4,Flualprazolam [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101160-0,Flubromazolam [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101162-6,p-Fluorofentanyl [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101165-9,Brorphine [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101168-3,Metonitazene [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101180-8,2-methyl AP-237 [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101183-2,MDMB-4en-PINACA [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101186-5,4F-MDMB-BINACA [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101189-9,ADB-BUTINACA [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101192-3,5F-MDMB-PICA [Presence] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101193-1,Sphincter excision plane [Anatomy] in Colorectal cancer specimen,LL6284-5,Abdominoperineal excision for low rectal cancer,EXAMPLE,
+101194-9,Mesocolic excision plane [Anatomy] in Colorectal cancer specimen,LL6285-2,Colorectal cancer excision planes,EXAMPLE,
+101196-4,Inflammatory cell infiltrate in Colorectal cancer specimen,LL6294-4,Tumor lymphocytes,EXAMPLE,
+101207-9,Hepatitis E virus IgG Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101208-7,Hepatitis E virus IgM Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101210-3,Hantavirus puumala IgG Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101211-1,Hantavirus sin nombre IgG Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101212-9,Hantavirus hantaan IgG Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101213-7,Hantavirus dobrava [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101215-2,Hantavirus puumala IgM Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101216-0,Hantavirus sin nombre IgM Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101217-8,Hantavirus hantaan IgM Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101218-6,Hantavirus dobrava IgM Ab [Presence] in Serum or Plasma by Line blot,LL744-4,Detected|Not det,EXAMPLE,
+101219-4,Legionella sp DNA [Presence] in Specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101225-1,Hemosiderin [Presence] in Blood or Marrow by Prussian blue stain,LL6041-9,Increased|Normal|Decreased,EXAMPLE,
+101226-9,Recoverin Ab [Presence] in Serum by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101227-7,Recoverin Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101228-5,PCA-Tr Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101229-3,Zinc finger protein of the cerebellum 4 Ab [Presence] in Serum by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101230-1,Zinc finger protein of the cerebellum 4 Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101231-9,Neuronal nuclear Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101232-7,Glutamate decarboxylase 65 Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101233-5,Glutamate decarboxylase 65 Ab [Presence] in Serum by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101234-3,Glial nuclear type 1 Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101235-0,Glial nuclear type 1 Ab [Presence] in Serum by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101236-8,Titin Ab [Presence] in Cerebral spinal fluid by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101237-6,Titin Ab [Presence] in Serum by Immunoblot,LL360-9,Pos|Neg,EXAMPLE,
+101240-0,Contactin-associated protein 2 Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101241-8,Contactin-associated protein 2 Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101242-6,Dipeptidyl aminopeptidase-like protein 6 Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101243-4,Dipeptidyl aminopeptidase-like protein 6 Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101244-2,Leucine-rich glioma-inactivated protein 1 Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101245-9,Leucine-rich glioma-inactivated protein 1 Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101246-7,NMDAR Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101247-5,NMDAR Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101248-3,Pathologic casts [Presence] in Urine sediment by Light microscopy,LL1162-8,"Quantity (5 answers, ord)",EXAMPLE,
+101250-9,Aspergillus fumigatus [Presence] in Isolate,LL744-4,Detected|Not det,EXAMPLE,
+101251-7,Dense fine speckled 70 protein Ab [Presence] in Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101282-2,Mitragynine [Presence] in Cord tissue,LL744-4,Detected|Not det,EXAMPLE,
+101283-0,Speciociliatine [Presence] in Cord tissue,LL744-4,Detected|Not det,EXAMPLE,
+101284-8,Bordetella pertussis DNA [Presence] in Nasopharynx by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101286-3,Adenovirus DNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101287-1,Chlamydophila pneumoniae DNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101288-9,Human coronavirus 229E+HKU1+NL63+OC43 RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101289-7,SARS-CoV-2 (COVID-19) RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101290-5,Human metapneumovirus RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101291-3,Rhinovirus+Enterovirus RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101292-1,Influenza virus A RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101293-9,Influenza virus A H1 2009 pandemic RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101294-7,Influenza virus A H3 RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101295-4,Influenza virus B RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101296-2,Mycoplasma pneumoniae DNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101297-0,Parainfluenza virus 1+2+3+4 RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101298-8,Respiratory syncytial virus RNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101299-6,Streptococcus dysgalactiae subspecies equisimilis DNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101300-2,Streptococcus pyogenes DNA [Presence] in Throat by NAA with non-probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101302-8,Leptospira sp DNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101303-6,Chikungunya virus RNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101304-4,Dengue virus 1+2+3+4 RNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101305-1,Plasmodium sp DNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101306-9,Plasmodium falciparum DNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101307-7,Plasmodium vivax+ovale DNA [Presence] in Blood by NAA with non-probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101325-9,MDS v3.0 - RAI v1.18.11 - Tub/shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,
+101325-9,MDS v3.0 - RAI v1.18.11 - Tub/shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,101105-5
+101325-9,MDS v3.0 - RAI v1.18.11 - Tub/shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,103564-1
+101325-9,MDS v3.0 - RAI v1.18.11 - Tub/shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,104554-1
+101325-9,MDS v3.0 - RAI v1.18.11 - Tub/shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,104606-9
+101327-5,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,
+101327-5,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101105-5
+101328-3,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,
+101328-3,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101105-5
+101328-3,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101109-7
+101328-3,MDS v3.0 - RAI v1.18.11 - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,103564-1
+101329-1,MDS v3.0 - RAI v1.18.11 - Participation in assessment and goal setting [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,101105-5
+101329-1,MDS v3.0 - RAI v1.18.11 - Participation in assessment and goal setting [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,103564-1
+101329-1,MDS v3.0 - RAI v1.18.11 - Participation in assessment and goal setting [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,104552-5
+101329-1,MDS v3.0 - RAI v1.18.11 - Participation in assessment and goal setting [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,104554-1
+101329-1,MDS v3.0 - RAI v1.18.11 - Participation in assessment and goal setting [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,104609-3
+101331-7,"MDS v3.0 - RAI v1.18.11 - Ulcers, wounds and skin problems during assessment period [CMS Assessment]",LL4583-2,"CMS_MDS Ulcers, wounds, and skin problems",NORMATIVE,
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101105-5
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,103564-1
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,104552-5
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,104554-1
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,104606-9
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,104607-7
+101332-5,MDS v3.0 - RAI v1.18.11 - Reason referral to local contact agency not made [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,104609-3
+101333-3,MDS v3.0 - RAI v1.18.11 - Determination of pressure injury risk [CMS Assessment],LL4975-0,CMS MDS Pressure injury risk,NORMATIVE,
+101335-8,Etizolam [Presence] in Urine by Confirmatory method,LL744-4,Detected|Not det,EXAMPLE,
+101336-6,Wr sup(b) Ag [Presence] on Red Blood Cells,LL360-9,Pos|Neg,EXAMPLE,
+101340-8,Aeromonas sp DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101345-7,Candida krusei DNA [Presence] in Specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101349-9,Jurisdiction where advance directive is accepted [Location],LL6313-2,Jurisdiction,PREFERRED,
+101351-5,"Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living during assessment period [CMS Assessment]",LL6295-1,Lack of Transportation,NORMATIVE,
+101351-5,"Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living during assessment period [CMS Assessment]",LL6509-5,Transportation - CMS,NORMATIVE,103949-4
+101351-5,"Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living during assessment period [CMS Assessment]",LL6509-5,Transportation - CMS,NORMATIVE,93128-7
+101353-1,Borrelia burgdorferi Ab [Interpretation] in Serum Qualitative by IA.MTTT,LL744-4,Detected|Not det,EXAMPLE,
+101354-9,Borrelia afzelii+burgdorferi+garinii IgG+IgM Ab [Presence] in Serum by Immunoassay,LL2009-0,Pos|Neg|Equiv,EXAMPLE,
+101355-6,Borrelia afzelii+burgdorferi+garinii IgM Ab [Presence] in Serum by Immunoassay,LL2009-0,Pos|Neg|Equiv,EXAMPLE,
+101356-4,Borrelia afzelii+burgdorferi+garinii Ab [Interpretation] in Serum by IA.MTTT,LL2009-0,Pos|Neg|Equiv,EXAMPLE,
+101357-2,Borrelia burgdorferi.VlsE+OspC IgG+IgM Ab [Presence] in Serum by Immunoassay,LL2009-0,Pos|Neg|Equiv,EXAMPLE,
+101358-0,Borrelia burgdorferi Ab [Interpretation] in Serum by IA.MTTT,LL6315-7,Lymes MTTT Imp,EXAMPLE,
+101360-6,Bacillus anthracis plasmid pXO1 DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101361-4,Bacillus anthracis plasmid pXO2 DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101362-2,Bacillus anthracis DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101363-0,Yersinia pestis DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101364-8,Francisella tularensis DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101365-5,Coxiella burnetii DNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101366-3,Ebola virus RNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101367-1,Marburg virus RNA [Presence] in Blood by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101368-9,Bacillus anthracis DNA [Presence] by NAA with non-probe detection in Positive blood culture,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101369-7,Bacillus anthracis plasmid pXO1 DNA [Presence] by NAA with non-probe detection in Positive blood culture,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101370-5,Bacillus anthracis plasmid pXO2 DNA [Presence] by NAA with non-probe detection in Positive blood culture,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101371-3,Yersinia pestis DNA [Presence] by NAA with non-probe detection in Positive blood culture,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101372-1,Yersinia pestis DNA [Presence] in Sputum by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101373-9,Francisella tularensis DNA [Presence] in Sputum by NAA with non-probe detection,LL6314-0,Detected|Not det|Invalid,EXAMPLE,
+101374-7,MDS v3.0 - RAI v1.18.11 - Referral has been made to the local contact agency Patient education material [CMS Assessment],LL251-0,OASIS_M0200,NORMATIVE,
+101394-5,Sex [Type] in Embryo by Molecular genetics method,LL1-9,Gender_M/F,EXAMPLE,
+101399-4,Monkeypox virus and Orthopoxvirus.non-variola DNA [Identifier] in Specimen by NAA with probe detection,LL6316-5,Monkeypox virus & Orthopoxvirus.non-variola,EXAMPLE,
+101400-0,"Metanephrine, Normetanephrine, 3-Methoxytyramine panel - 24 hour Urine",LL744-4,Detected|Not det,EXAMPLE,
+101401-8,Tapentadol and Nortapentadol panel - Urine,LL744-4,Detected|Not det,EXAMPLE,
+101402-6,Phenylalanine and Tyrosine panel - Serum or Plasma,LL744-4,Detected|Not det,EXAMPLE,
+101403-4,Borrelia burgdorferi.VlsE1+pepC10 IgG+IgM Ab [Presence] in Serum by Immunoassay,LL2009-0,Pos|Neg|Equiv,EXAMPLE,
+101406-7,Sudan virus RNA [Presence] in Blood by NAA with probe detection,LL3250-9,Detected|Not det|Inconcl|Spec unsat for eval,EXAMPLE,
+101408-3,Deprecated Sesamum indicum 1 IgE Ab RAST class [Presence] in Serum,LL1927-4,RAST,EXAMPLE,
+101419-0,Human coronavirus 229E RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101420-8,Human coronavirus HKU1 RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101421-6,Human coronavirus NL63 RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101422-4,Human coronavirus OC43 RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101423-2,Influenza virus A H1 RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101424-0,Influenza virus A H3 RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101425-7,Respiratory syncytial virus A RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101426-5,Respiratory syncytial virus B RNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101427-3,Shigella sp DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101428-1,Varicella zoster virus DNA [Presence] in Respiratory system specimen by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101439-8,Change in mental status,LL6318-1,Observed|Not observed,EXAMPLE,
+101439-8,Change in mental status,LL6320-7,Champs Mental status,NORMATIVE,101438-0
+101440-6,History of Falls,LL6318-1,Observed|Not observed,EXAMPLE,
+101440-6,History of Falls,LL6324-9,Champs Fall Hx,NORMATIVE,101438-0
+101440-6,History of Falls,LL6329-8,Schmid fall,NORMATIVE,101549-4
+101441-4,CHAMPS pediatric fall risk assessment [Interpretation],LL6332-2,Champs Imp,NORMATIVE,
+101444-8,Solitary lung nod malignancy risk [Scale] Qualitative by Calculated.Nodify XL2,LL3198-0,High risk|Intermediate risk|Low risk,EXAMPLE,
+101445-5,Solitary lung nod malignancy risk [Scale] Qualitative by Calculated.Nodify CDT,LL3198-0,High risk|Intermediate risk|Low risk,EXAMPLE,
+101448-9,Contactin-associated protein 1 IgG Ab [Presence] in Serum or Plasma by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101449-7,Neurochondrin Ab [Presence] in Cerebral spinal fluid by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101450-5,Neurochondrin Ab [Presence] in Serum or Plasma by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101451-3,Neurochondrin Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101452-1,Neurochondrin Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101460-4,Septin-5 IgG Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101461-2,Septin-5 IgG Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101462-0,Septin-5 IgG Ab [Presence] in Cerebral spinal fluid by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101463-8,Septin-5 IgG Ab [Presence] in Serum or Plasma by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101464-6,Septin-7 IgG Ab [Presence] in Cerebral spinal fluid by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101465-3,Septin-7 IgG Ab [Presence] in Serum or Plasma by Immunofluorescence,LL360-9,Pos|Neg,EXAMPLE,
+101466-1,Septin-7 IgG Ab [Presence] in Cerebral spinal fluid by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101467-9,Septin-7 IgG Ab [Presence] in Serum or Plasma by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101469-5,HBA1+2 gene FIL deletion [Presence] in Blood by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+101470-3,HBA1+2 gene THAI deletion [Presence] in Blood by Molecular genetics method,LL744-4,Detected|Not det,EXAMPLE,
+101472-9,Catalase [Presence] in Urine,LL360-9,Pos|Neg,EXAMPLE,
+101508-0,Salmonella serogroup D1 [Presence] in Specimen by Immunoassay,LL360-9,Pos|Neg,EXAMPLE,
+101517-1,Canine parvovirus DNA VP2 gene [Presence] in Isolate by Sequencing,LL360-9,Pos|Neg,EXAMPLE,
+101518-9,Canine Parvovirus 2 DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101545-2,FCGR3A gene.p.Phe158 [Identifier] in Blood by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+101546-0,FCGR3A gene.p.Val158 [Identifier] in Blood by Molecular genetics method Nominal,LL744-4,Detected|Not det,EXAMPLE,
+101547-8,Hepatocyte Ag by paraffin 1 in Blood or Tissue Qualitative by Immune stain,LL744-4,Detected|Not det,EXAMPLE,
+101548-6,P63 protein [Interpretation] in Blood or Tissue Qualitative,LL744-4,Detected|Not det,EXAMPLE,
+101551-0,Schmid fall risk assessment [Interpretation],LL6321-5,Schmid score interp,NORMATIVE,
+101552-8,Campylobacter coli DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101553-6,Aeromonas hydrophila DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101554-4,Campylobacter jejuni DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101555-1,Campylobacter upsaliensis DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101556-9,Candida krusei DNA [Presence] in Urine by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101557-7,Clostridioides difficile DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101558-5,Escherichia coli enteroinvasive DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101559-3,Listeria monocytogenes DNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101560-1,Rotavirus B RNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101561-9,Rotavirus C RNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101562-7,Sapovirus genogroups I+II+IV RNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101563-5,Sapovirus genogroup V RNA [Presence] in Stool by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101571-8,Candida glabrata+krusei DNA [Presence] in Vaginal fluid by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101572-6,Prenatal visits for this pregnancy,LL6289-4,Prenatal visits,EXAMPLE,
+101573-4,Diet at discharge,LL6288-6,Diet at discharge,EXAMPLE,
+101575-9,Delayed cord clamping Newborn,LL5981-7,Yes 2 / No 0 / Don't Know 0,EXAMPLE,
+101583-3,ESBL by ceftazidime to ceftazidime-clavulanate IC ratio [Interpretation] by based on lab data in Positive blood culture Qualitative,LL744-4,Detected|Not det,EXAMPLE,
+101584-1,Bacterial Vaginosis Associated Bacteria-2+Atopobium vaginae+Megasphaera sp type 1 DNA [Presence] in Vaginal fluid by NAA with probe detection,LL744-4,Detected|Not det,EXAMPLE,
+101588-2,Histoplasma capsulatum+Blastomyces dermatitidis Ag [Presence] in Serum or Plasma by Immunoassay,LL744-4,Detected|Not det,EXAMPLE,
+101590-8,VKORC1 gene allele [Genotype] in Blood or Tissue by Molecular genetics method Nominal,LL6317-3,VKORC1,EXAMPLE,
+101597-3,CMS - Tub and or shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,
+101597-3,CMS - Tub and or shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,101106-3
+101597-3,CMS - Tub and or shower transfer - functional goal [CMS Assessment],LL4971-9,CMS MDS 1.16.1 Functional goals,NORMATIVE,101107-1
+101605-4,CMS - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,
+101605-4,CMS - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101106-3
+101605-4,CMS - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101107-1
+101605-4,CMS - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101112-1
+101605-4,CMS - Nutritional approaches - at discharge during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101113-9
+101608-8,CMS - Determination of Pressure Ulcer during assessment period [CMS Assessment],LL4975-0,CMS MDS Pressure injury risk,NORMATIVE,
+101608-8,CMS - Determination of Pressure Ulcer during assessment period [CMS Assessment],LL6336-3,MDS - Pressure Ulcer/Injury Risk,NORMATIVE,101107-1
+101608-8,CMS - Determination of Pressure Ulcer during assessment period [CMS Assessment],LL6336-3,MDS - Pressure Ulcer/Injury Risk,NORMATIVE,101113-9
+101608-8,CMS - Determination of Pressure Ulcer during assessment period [CMS Assessment],LL6336-3,MDS - Pressure Ulcer/Injury Risk,NORMATIVE,104606-9
+101608-8,CMS - Determination of Pressure Ulcer during assessment period [CMS Assessment],LL6336-3,MDS - Pressure Ulcer/Injury Risk,NORMATIVE,104607-7
+101610-4,"CMS - Other Ulcers, Wounds and Skin Problems during assessment period [CMS Assessment]",LL4583-2,"CMS_MDS Ulcers, wounds, and skin problems",NORMATIVE,
+101616-1,CMS - Participation in assessment and goal setting during assessment period [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,
+101616-1,CMS - Participation in assessment and goal setting during assessment period [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,101106-3
+101616-1,CMS - Participation in assessment and goal setting during assessment period [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,101110-5
+101616-1,CMS - Participation in assessment and goal setting during assessment period [CMS Assessment],LL6299-3,Assessment participants,NORMATIVE,101112-1
+101620-3,CMS - Referral has been made to the local contact agency during assessment period [CMS Assessment] Patient education material,LL251-0,OASIS_M0200,NORMATIVE,
+101621-1,CMS - Reason referral to local contact agency not made during assessment period [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101106-3
+101621-1,CMS - Reason referral to local contact agency not made during assessment period [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101107-1
+101621-1,CMS - Reason referral to local contact agency not made during assessment period [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101110-5
+101621-1,CMS - Reason referral to local contact agency not made during assessment period [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101112-1
+101621-1,CMS - Reason referral to local contact agency not made during assessment period [CMS Assessment],LL6302-5,Reason Referral to Local Contact Agency - CMS,NORMATIVE,101113-9
+101624-5,Spermatozoa Agglutinated [Score] in Urine Qualitative by Light microscopy --post ejaculation,LL6334-8,Sperm agglutinated,EXAMPLE,
+101625-2,Spermatozoa.motility [Score] in Semen Qualitative by Light microscopy,LL5993-2,Sperm_Motil_Grade,EXAMPLE,
+101627-8,Thyroglobulin heterophile Ab interference [Presence] in Serum,LL744-4,Detected|Not det,EXAMPLE,
+101632-8,CMS - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,
+101632-8,CMS - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101106-3
+101632-8,CMS - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101110-5
+101632-8,CMS - Nutritional approaches - on admission during assessment period [CMS Assessment],LL5387-7,CMS IRF_PAI v4.0 - Nutritional Approaches (K0520),NORMATIVE,101112-1
+101662-5,Abnormal Prion Protein [Presence] in Cerebral spinal fluid by RT-QuIC,LL2038-9,Pos|Neg|Indeterm,EXAMPLE,
+101666-6,Protein.monoclonal isotype [Identifier] in 24 hour Urine by MS.MALDI-TOF,LL5149-1,Monoclonal protein isotype,EXAMPLE,
+101667-4,Protein.monoclonal [Presence] in 24 hour Urine by MS.MALDI-TOF,LL360-9,Pos|Neg,EXAMPLE,
+101669-0,Protein.monoclonal isotype [Identifier] in Urine by MS.MALDI-TOF,LL5149-1,Monoclonal protein isotype,EXAMPLE,
+101673-2,KPC carbapenemase [Presence] in Isolate by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101674-0,OXA-48-like carbapenemase [Presence] in Isolate by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101675-7,IMP Carbapenemase [Presence] in Isolate by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101676-5,VIM Carbapenemase [Presence] in Isolate by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101677-3,NDM Carbapenemase [Presence] in Isolate by Rapid immunoassay,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101678-1,Blood group antibody screen [Presence] in Blood from Newborn,LL744-4,Detected|Not det,EXAMPLE,
+101699-7,"Having strong negative beliefs about yourself, others, or the world [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101700-3,Blaming yourself or someone else for the stressful experience or what happened after it [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101701-1,"Having strong negative feelings such as fear, horror, anger, guilt, or shame [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101702-9,Taking too many risks or doing things that could cause you harm [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101703-7,"Repeated, disturbing, and unwanted memories of the stressful experience [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101704-5,"Repeated, disturbing dreams of the stressful experience [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101705-2,Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it) [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101706-0,Feeling very upset when something reminded you of the stressful experience [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101707-8,"Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating) [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101708-6,"Avoiding memories, thoughts, or feelings related to the stressful experience [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101709-4,"Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations) [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101710-2,Trouble remembering important parts of the stressful experience [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101711-0,Loss of interest in activities that you used to enjoy [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101712-8,Feeling distant or cut off from other people [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101713-6,"Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you) [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101714-4,"Irritable behavior, angry outbursts, or acting aggressively [PCL-5]",LL5813-2,Not at all/Extremely,NORMATIVE,
+101715-1,Being superalert or watchful or on guard [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101716-9,Feeling jumpy or easily startled [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101717-7,Having difficulty concentrating [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101718-5,Trouble falling or staying asleep [PCL-5],LL5813-2,Not at all/Extremely,NORMATIVE,
+101740-9,3-Hydroxy-3-Methylglutaryl-coenzyme A reductase Ab in Serum by Immunoassay,LL744-4,Detected|Not det,EXAMPLE,
+101744-1,Toxoplasma gondii DNA [Presence] in Plasma by NAA with probe detection,LL3950-4,Present | Absent,EXAMPLE,
+101745-8,Dipeptidyl aminopeptidase-like protein 6 Ab [Presence] in Serum by Cell binding immunofluorescent assay,LL3950-4,Present | Absent,EXAMPLE,
+101746-6,PCA-Tr Ab [Presence] in Serum by Cell binding immunofluorescent assay,LL3950-4,Present | Absent,EXAMPLE,
+101747-4,PCA-Tr Ab [Titer] in Serum by Cell binding immunofluorescent assay,LL360-9,Pos|Neg,EXAMPLE,
+101753-2,Dermatophytes DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101754-0,Trichophyton tonsurans DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101755-7,Trichophyton equinum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101756-5,Trichophyton interdigitale DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101757-3,Trichophyton mentagrophytes DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101758-1,Trichophyton quinckeanum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101761-5,Trichophyton concentricum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101762-3,Trichophyton bullosum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101763-1,Trichophyton benhamiae (Afr.) DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101764-9,Trichophyton benhamiae (white) DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101765-6,Trichophyton benhamiae (yellow) DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101766-4,Trichophyton erinacei DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101767-2,Trichophyton verrucosum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101768-0,Trichophyton eriotrephon DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101769-8,Trichophyton rubrum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101770-6,Trichophyton violaceum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101771-4,Epidermophyton floccosum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101772-2,Microsporum canis DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101773-0,Microsporum audouinii DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101774-8,Microsporum ferrugineum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101775-5,Nannizzia fulva DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101776-3,Nannizzia gypsea DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101777-1,Nannizzia incurvata DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101778-9,Nannizzia persicolor DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101779-7,Deprecated Candida albicans DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101780-5,Deprecated Candida parapsilosis DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101781-3,Candida guilliermondii DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101782-1,Fusarium solani DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101783-9,Fusarium oxysporum DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101784-7,Scopulariopsis brevicaulis DNA [Presence] in Specimen by NAA with probe detection,LL360-9,Pos|Neg,EXAMPLE,
+101800-1,Lysergate diethylamide/Creatinine [Mass Ratio] in Urine by Confirmatory method,LL5243-2,Pos(+)|Neg(0),EXAMPLE,
+101802-7,Brucella sp IgA Ab [Presence] in Serum,LL2010-8,Pos|Neg|Borderline,EXAMPLE,
+101807-6,Malnutrition risk screen results indicator,LL6346-2,Malnutrition screening risk,NORMATIVE,
+101808-4,Xylazine [Mass/volume] in Urine by Confirmatory method,LL360-9,Pos|Neg,EXAMPLE,
+101813-4,"2,6-dimethylaniline [Mass/volume] in Urine by Confirmatory method",LL360-9,Pos|Neg,EXAMPLE,
+101819-1,Nutritional assessment for malnutrition status,LL6347-0,Malnutrition assessment,NORMATIVE,
+101906-6,Noninvasive esophageal cancer DNA and esophageal cell screening [Presence] in Esophagus by Sequencing,LL2021-5,Pos|Neg|Invalid,EXAMPLE,
+101911-6,Troponin T. cardiac [Mass/volume] in 2 hour 5th generation Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101912-4,Troponin T.cardiac delta [Mass concentration difference] in 2 hour Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101913-2,Troponin T.cardiac delta/Troponin T.cardiac in 2 hour Serum or Plasma --baseline,LL360-9,Pos|Neg,EXAMPLE,
+101914-0,Troponin T.cardiac delta [Interpretation] in 2 hour Serum or Plasma Qualitative,LL360-9,Pos|Neg,EXAMPLE,
+101915-7,Troponin T.cardiac [Mass/volume] in 6 hour Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101916-5,Troponin T.cardiac delta [Mass concentration difference] in 6 hour Serum or Plasma,LL360-9,Pos|Neg,EXAMPLE,
+101917-3,Troponin T.cardiac delta/Troponin T.cardiac in 6 hour Serum or Plasma --baseline,LL360-9,Pos|Neg,EXAMPLE,
+101918-1,Troponin T.cardiac delta [Interpretation] in 6 hour Serum or Plasma Qualitative,LL360-9,Pos|Neg,EXAMPLE,
+101951-2,NIPS assessment (interpretation),LL5953-6,NIPS - Pain Interpretation,NORMATIVE,
+101969-4,Deprecated Facial expression,LL6344-7,Facial expression (Not NIPS-specific),NORMATIVE,
+101970-2,Breathing patterns,LL5947-8,Breathing patterns,NORMATIVE,
+101971-0,Cry,LL6345-4,Cry,NORMATIVE,
+101972-8,State of arousal,LL5952-8,NIPS - State of arousal,NORMATIVE,
+101973-6,Total score (0 to 7),LL6349-6,Total score (0 to 7) - NIPS,NORMATIVE,
+101974-4,Arms,LL6348-8,Arms,NORMATIVE,
+101975-1,Legs,LL6342-1,Legs,NORMATIVE,
+101994-2,Foundation pain index Document by based on lab data,LL6343-9,Foundation Pain Index Score,EXAMPLE,
+102011-4,"Have you experienced a frightening, horrible, or traumatic event [PC-PTSD-5]",LL6359-5,Y/N score,NORMATIVE,
+102012-2,Have you had nightmares or thoughts about the event(s) when you did not want to [PC-PTSD-5],LL6359-5,Y/N score,NORMATIVE,
+102013-0,Have you tried not to think about or avoided situations that reminded you of the event(s) [PC-PTSD-5],LL6359-5,Y/N score,NORMATIVE,
+102014-8,"Have you been constantly on guard, watchful, or easily startled [PC-PTSD-5]",LL6359-5,Y/N score,NORMATIVE,
+102015-5,"Have you felt numb or detached from people, activities, or your surroundings [PC-PTSD-5]",LL6359-5,Y/N score,NORMATIVE,
+102016-3,Have you felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused [PC-PTSD-5],LL6359-5,Y/N score,NORMATIVE,
+102030-4,Ki-67 Nuclear Ag and p16INK4a Ag Ag [Presence] in Body fluid by Immune stain,LL3950-4,Present | Absent,EXAMPLE,
+102050-2,Diabetic diagnosis [Identifier],LL6350-4,Metabolic syndrome,EXAMPLE,
+102080-9,CAR-T cell [Type] in Blood product unit,LL6356-1,CAR-T Blood Products,EXAMPLE,
+102120-3,Carbapenemase [Type] in Isolate by Immunoassay,LL6358-7,Carbapenemases families detection,EXAMPLE,
+102124-5,Sesamum indicum 1 IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102125-2,Abalone IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102126-0,Wattle IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102127-8,Corticotropin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102128-6,White Alder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102129-4,Smooth Alder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102130-2,Alfalfa IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102131-0,Alkalase IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102132-8,Allspice IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102133-6,Almond IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102134-4,Almond Tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102135-1,Lactalbumin alpha IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102136-9,Alternaria alternata IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102137-7,Amoxicillin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102138-5,Ampicillin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102139-3,Anchovy IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102140-1,Anisakis IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102141-9,Anise IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102142-7,Red Imported Fire Ant IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102143-5,Apple IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102144-3,Apple Tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102145-0,Apricot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102146-8,Arrowroot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102147-6,Artichoke IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102148-4,Ascaris sp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102149-2,Arizona Ash IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102150-0,White Ash IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102151-8,Asparagus IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102152-6,Aspen IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102153-4,Aspergillus fumigatus IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102154-2,Aspergillus niger IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102155-9,Avocado IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102156-7,Groundsel Tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102157-5,Bamboo shoot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102158-3,Banana IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102159-1,Barley IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102160-9,Barley Pollen IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102161-7,Basil IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102162-5,"Bass, Black IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST)",LL1927-4,RAST,EXAMPLE,
+102163-3,Fivehook Bassia IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102164-1,Bayberry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102165-8,Bayleaf IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102166-6,Castor Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102167-4,Green Coffee Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102168-2,Green Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102169-0,Red Kidney Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102170-8,Lima Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102171-6,Pinto Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102172-4,Soybean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102173-2,White Bean IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102174-0,Honey bee IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102175-7,American Beech IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102176-5,Beef IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102177-3,Beet IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102178-1,Sugar Beet Seed (Beta vulgaris seed) IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102179-9,Berlin Beetle IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102180-7,Lactalbumin beta IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102181-5,Beta lactoglobulin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102182-3,Silver Birch IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102183-1,Blackberry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102184-9,Blomia tropicalis IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102185-6,Bloodworm IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102186-4,Blueberry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102187-2,Botrytis cinerea IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102188-0,Boxelder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102189-8,Brazil Nut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102190-6,Broccoli IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102191-4,Bromelin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102192-2,Brussel Sprouts IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102193-0,Bovine serum albumin (BSA) IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102194-8,Buckwheat IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102195-5,Budgerigar feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102196-3,Bumble Bee IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102197-1,Burrobrush IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102198-9,Burweed marshelder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102199-7,Cabbage IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102200-3,Cocoa IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102201-1,Canary feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102202-9,Candida albicans IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102203-7,Starfruit IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102204-5,Caraway IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102205-2,Careless Weed IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102206-0,Carob IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102207-8,Carrot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102208-6,Casein IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102209-4,Cashew nut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102210-2,Cat dander IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102211-0,Catfish IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102212-8,Cauliflower IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102213-6,Italian Cedar IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102214-4,Japanese Cedar IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102215-1,Mountain Juniper IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102216-9,Red Cedar IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102217-7,Saltcedar IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102218-5,Celery IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102219-3,Acremonium sp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102220-1,Chaetomium globosum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102221-9,Chamomile IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102222-7,American Cheese IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102223-5,Cheese cheddar type IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102224-3,Cottage Cheese IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102225-0,Mozzarella Cheese IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102226-8,Parmesan Cheese IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102227-6,Swiss Cheese IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102228-4,Cherry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102229-2,Chestnut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102230-0,Horse Chestnut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102231-8,Chestnut Pollen IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102232-6,Chicken feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102233-4,Chicken meat IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102234-2,Chicory IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102235-9,Chinchilla IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102236-7,Chloramin T IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102237-5,Chortoglyphus arcuatus IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102238-3,Chymopapain IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102239-1,Cinnamon IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102240-9,Cladosporium herbarum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102241-7,Clam IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102242-5,Clove IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102243-3,Clover IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102244-1,Cocklebur IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102245-8,Cockroach IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102246-6,Coconut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102247-4,Codfish IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102248-2,Coffee IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102249-0,Cola IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102250-8,Corn IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102251-6,Cultivated Corn IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102252-4,Cultivated Cotton IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102253-2,Cotton fibers IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102254-0,Cotton western IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102255-7,Cottonseed IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102256-5,Cottonwood IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102257-3,Western Cottonwood IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102258-1,Cow dander IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102259-9,Cow epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102260-7,Crab IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102261-5,Cranberry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102262-3,Crawfish IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102263-1,Cryptococcus terreus IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102264-9,Cucumber IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102265-6,Curry IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102266-4,Curvularia lunata IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102267-2,Curvularia specifera IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102268-0,Arizona Cypress IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102269-8,Bald Cypress IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102270-6,Italian Cypress IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102271-4,Daisy IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102272-2,Ox-eye daisy IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102273-0,Dandelion IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102274-8,Daphnia (fish feed) IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102275-5,Date Palm Pollen IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102276-3,Deer epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102277-1,American house dust mite IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102278-9,Dermatophagoides microceras IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102279-7,European house dust mite IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102280-5,Dill IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102281-3,Yellow Dock IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102282-1,Dog dander IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102283-9,Dog epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102284-7,Duck feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102285-4,Echinococcus sp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102286-2,Egg white IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102287-0,Whole Egg IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102288-8,Egg yolk IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102289-6,Eggplant IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102290-4,Rough Marsh Elder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102291-2,Elder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102292-0,Elk or Moose Meat IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102293-8,White Elm IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102294-6,Chinese Elm IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102295-3,Endive IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102296-1,Epicoccum purpurascens IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102297-9,Epidermophyton floccosum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102298-7,Ethylene oxide IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102299-5,Gum-Tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102300-1,Euroglyphus maynei IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102301-9,Dog Fennel IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102302-7,Fennel Fresh IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102303-5,Fennel Seed IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102304-3,Ferret epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102305-0,Meadow Fescue IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102306-8,Finch feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102307-6,Douglas Fir IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102308-4,Firebush IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102309-2,Fiscus sp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102310-0,Flea IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102311-8,Flounder IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102312-6,Black Fly IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102313-4,Horse Fly IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102314-2,Formaldehyde IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102315-9,Fox IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102316-7,Meadow Foxtail IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102317-5,Fusarium culmorum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102318-3,Fusarium moniliforme IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102319-1,Fusarium solani IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102320-9,Garlic IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102321-7,Gelatin IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102322-5,Geotrichum candidum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102323-3,Gerbil IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102324-1,Ginger IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102325-8,Gluten IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102326-6,Glycyphagus domesticus IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102327-4,Goat epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102328-2,Goat milk IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102329-0,Goldenrod IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102330-8,Goose feather IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102331-6,Grape IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102332-4,Grapefruit IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102333-2,Bahia grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102334-0,Bermuda grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102335-7,Canadian blue grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102336-5,Brome IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102337-3,False oat grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102338-1,Gramma grass (Bouteloua gracilis) IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102339-9,Johnson grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102340-7,Kentucky blue grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102341-5,Koehlers grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102342-3,Cocksfoot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102343-1,Quack grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102344-9,Red top grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102345-6,Perennial rye grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102346-4,Wild rye grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102347-2,Salt grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102348-0,Sorghum grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102349-8,Sudan grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102350-6,Sweet Vernal grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102351-4,Velvet grass IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102352-2,Guar gum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102353-0,Guava IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102354-8,Guinea pig epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102355-5,Gum arabic IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102356-3,Sweet gum IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102357-1,Hackberry tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102358-9,Haddock IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102359-7,Halibut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102360-5,Hamster epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102361-3,Hazelnut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102362-1,Hazelnut Pollen IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102363-9,Helminthosporium sp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102364-7,Setomelanomma rostrata IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102365-4,Eastern Hemlock IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102366-2,Water Hemp IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102367-0,Herring IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102368-8,Pecan or Hickory Nut IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102369-6,Pecan or Hickory Tree IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102370-4,Shellbark Hickory IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102371-2,White Hickory IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102372-0,Honey IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102373-8,Honeysuckle IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102374-6,Hop IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102375-3,Horn beam IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102376-1,Hornet IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102377-9,Whitefaced Hornet IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102378-7,Yellow Hornet IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102379-5,Horse dander IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102380-3,Horse epithelium IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102381-1,Horse serum proteins IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102382-9,Horseradish IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102383-7,House dust IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102384-5,House dust Greer IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102385-2,House dust Hausstaub IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102386-0,House dust Hollister Stier IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102387-8,Insulin bovine IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102388-6,Insulin human IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102389-4,Insulin porcine IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102390-2,Iodinebush IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102391-0,Isocyanate HDI IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102392-8,Isocyanate MDI IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102393-6,Isocyanate TDI IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102394-4,Ispaghula laxative IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102395-1,Juniper IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102396-9,Kapok IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102397-7,Kiwifruit IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102398-5,Lamb IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102399-3,Goosefoot IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102400-9,Latex IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102401-7,Latex glove extract IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102402-5,Latex glove extract ammoniated IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102403-3,Latex glove extract buffered IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102404-1,Legume IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102405-8,Lemon IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102406-6,Lenscale IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+102407-4,Lentils IgE Ab [Presence] in Serum by Radioallergosorbent test (RAST),LL1927-4,RAST,EXAMPLE,
+61459-4,"How often did you eat cooked dried beans, such as refried beans, baked beans, bean soup, and pork and beans in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61460-2,How often did you eat hot or cold cereals in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61462-8,How often did you eat any kind of cheese in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61463-6,"How often did you eat cookies, cake, pie, or brownies in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61464-4,"Deprecated How often did you eat DOUGHNUTS, sweet rolls, Danish, muffins, or pop-tarts in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61465-1,"How often did you eat french fries, home fries, or hash brown potatoes in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61466-9,"Deprecated How often did you drink FRUIT-FLAVORED DRINKS with sugar (such as Kool-aid, Hi-C, lemonade, or cranberry cocktail) in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61467-7,Deprecated How often did you eat FRUIT in past 30 days PhenX,LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61468-5,"How often did you drink 100 % fruit juice, such as orange, mango, apple, and grape juices in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61470-1,"Deprecated Not counting lettuce salads, white potatoes, cooked dried beans, and not counting rice, how often did you eat OTHER VEGETABLES in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61471-9,"Deprecated How often did you eat a green leafy or lettuce SALAD, with or without other vegetables, in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61472-7,How often did you have salsa in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61473-5,"How often did you drink regular, carbonated soda or soft drinks that contain sugar in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61474-3,How often did you have tomato sauces such as spaghetti sauce or pizza with tomato sauce in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61475-0,Deprecated How often did you eat other WHITE POTATOES in past 30 days PhenX,LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61476-8,"How often did you eat whole grain bread including toast, rolls and in sandwiches in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61506-2,Deprecated How often did you eat whole grain bread in past 30 days PhenX,LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61507-0,"Not counting lettuce salads, white potatoes, cooked dried beans, and not counting rice, how often did you eat other vegetables in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61508-8,"Deprecated How often did you have MILK, either to drink or on cereal in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61549-2,"How often did you have milk, either to drink or on cereal in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61550-0,"How often did you drink fruit flavored drinks with sugar (such as Kool-Aid, Hi-C, lemonade, or cranberry cocktail) in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61551-8,How often did you eat fruit in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61552-6,"How often did you eat a green leafy or lettuce salad, with or without other vegetables in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61553-4,How often did you eat other white potatoes in past 30 days [PhenX],LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61554-2,"How often did you eat doughnuts, sweet rolls, danish, muffins, or pop-tarts in past 30 days [PhenX]",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
+61555-9,"Deprecated How often did you eat COOKIES, CAKE, PIE, or BROWNIES in past 30 days PhenX",LL1001-8,PhenX05_14_30D freq amts,NORMATIVE,
