@@ -114,74 +114,108 @@ class UMLSLoincExtractor:
             mrconso_path: Path to MRCONSO.RRF file
             
         Returns:
-            Dictionary mapping LOINC codes to CUIs
+            Dictionary mapping LOINC codes to CUI information
         """
-        logger.info(f"Processing MRCONSO.RRF file: {mrconso_path}")
+        if not os.path.exists(mrconso_path):
+            raise FileNotFoundError(f"MRCONSO.RRF file not found: {mrconso_path}")
+        
+        logger.info(f"Extracting LOINC mappings from: {mrconso_path}")
+        logger.info(f"Settings: include_obsolete={self.include_obsolete}, include_suppressible={self.include_suppressible}, language={self.preferred_language}")
         
         loinc_mappings = {}
-        processed_count = 0
-        loinc_count = 0
+        processed_lines = 0
+        skipped_mth = 0
+        skipped_language = 0
+        skipped_suppressible = 0
         
-        try:
-            with open(mrconso_path, 'r', encoding='utf-8', errors='ignore') as f:
-                for line_num, line in enumerate(f, 1):
-                    try:
-                        # Split the pipe-delimited line
-                        fields = line.strip().split('|')
-                        
-                        if len(fields) < 18:
-                            continue
-                            
-                        # Extract relevant fields
-                        cui = fields[self.MRCONSO_COLUMNS['CUI']]
-                        sab = fields[self.MRCONSO_COLUMNS['SAB']]  # Source abbreviation
-                        code = fields[self.MRCONSO_COLUMNS['CODE']]  # Source code
-                        tty = fields[self.MRCONSO_COLUMNS['TTY']]   # Term type
-                        str_text = fields[self.MRCONSO_COLUMNS['STR']]  # String/name
-                        lat = fields[self.MRCONSO_COLUMNS['LAT']]   # Language
-                        suppress = fields[self.MRCONSO_COLUMNS['SUPPRESS']]  # Suppressible
-                        
-                        # Filter for LOINC entries based on config settings
-                        if (sab == 'LNC' and 
-                            lat == self.preferred_language and 
-                            (self.include_suppressible or suppress != 'Y')):
-                            
-                            # Skip obsolete entries if configured
-                            if not self.include_obsolete and 'obsolete' in str_text.lower():
-                                continue
-                                
-                            # Extract LOINC code from CODE field
-                            loinc_code = code.strip()
-                            
-                            # Store mapping (prefer preferred terms, but take any)
-                            if loinc_code and cui:
-                                if loinc_code not in loinc_mappings:
-                                    loinc_mappings[loinc_code] = {
-                                        'cui': cui,
-                                        'name': str_text,
-                                        'term_type': tty,
-                                        'source': 'UMLS_LOCAL',
-                                        'language': lat,
-                                        'suppressible': suppress == 'Y'
-                                    }
-                                    loinc_count += 1
-                        
-                        processed_count += 1
-                        
-                        # Progress reporting
-                        if processed_count % 100000 == 0:
-                            logger.info(f"Processed {processed_count:,} rows, found {loinc_count:,} LOINC mappings")
-                            
-                    except Exception as e:
-                        logger.warning(f"Error processing line {line_num}: {e}")
+        with open(mrconso_path, 'r', encoding='utf-8', errors='ignore') as f:
+            for line_num, line in enumerate(f, 1):
+                if line_num % 1000000 == 0:
+                    logger.info(f"Processed {line_num:,} lines, found {len(loinc_mappings):,} LOINC mappings")
+                
+                try:
+                    fields = line.strip().split('|')
+                    if len(fields) < 18:
                         continue
-                        
-        except FileNotFoundError:
-            logger.error(f"MRCONSO.RRF file not found: {mrconso_path}")
-            raise
-            
-        logger.info(f"Extraction complete: {loinc_count:,} LOINC-to-CUI mappings found")
+                    
+                    cui = fields[self.MRCONSO_COLUMNS['CUI']]
+                    language = fields[self.MRCONSO_COLUMNS['LAT']]
+                    source = fields[self.MRCONSO_COLUMNS['SAB']]
+                    code = fields[self.MRCONSO_COLUMNS['CODE']]
+                    term = fields[self.MRCONSO_COLUMNS['STR']]
+                    suppress = fields[self.MRCONSO_COLUMNS['SUPPRESS']]
+                    
+                    # Skip non-LOINC sources
+                    if source not in ['LNC', 'LOINC']:
+                        continue
+                    
+                    # CRITICAL: Filter out MTH codes at extraction time
+                    if code.startswith('MTH'):
+                        skipped_mth += 1
+                        continue
+                    
+                    # Language filter
+                    if language != self.preferred_language:
+                        skipped_language += 1
+                        continue
+                    
+                    # Suppressible filter
+                    if not self.include_suppressible and suppress in ['Y', 'E']:
+                        skipped_suppressible += 1
+                        continue
+                    
+                    # Additional LOINC code validation
+                    if not self._is_valid_loinc_code(code):
+                        continue
+                    
+                    # Store mapping (prefer first occurrence for duplicates)
+                    if code not in loinc_mappings:
+                        loinc_mappings[code] = {
+                            'cui': cui,
+                            'name': term,
+                            'source': source,
+                            'language': language,
+                            'suppress': suppress
+                        }
+                    
+                    processed_lines += 1
+                    
+                except Exception as e:
+                    logger.warning(f"Error processing line {line_num}: {e}")
+                    continue
+        
+        logger.info(f"Extraction complete:")
+        logger.info(f"  Total LOINC mappings found: {len(loinc_mappings):,}")
+        logger.info(f"  Lines processed: {processed_lines:,}")
+        logger.info(f"  MTH codes filtered out: {skipped_mth:,}")
+        logger.info(f"  Language mismatches skipped: {skipped_language:,}")
+        logger.info(f"  Suppressible codes skipped: {skipped_suppressible:,}")
+        
         return loinc_mappings
+
+    def _is_valid_loinc_code(self, code: str) -> bool:
+        """
+        Validate LOINC code format.
+        
+        Args:
+            code: Code to validate
+            
+        Returns:
+            True if valid LOINC code format
+        """
+        if not code or len(code) < 3:
+            return False
+        
+        # LOINC codes should have format like "12345-6" or similar
+        # Should not start with MTH, MTHU, or other UMLS prefixes
+        if code.startswith(('MTH', 'MTHU', 'NOCODE')):
+            return False
+        
+        # Should contain a hyphen for standard LOINC format
+        if '-' not in code:
+            return False
+        
+        return True
     
     def save_mappings(self, mappings: Dict, output_format: Optional[str] = None) -> str:
         """
