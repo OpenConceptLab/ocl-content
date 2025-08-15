@@ -1,19 +1,31 @@
 #!/usr/bin/env python3
 """
-Simple LOINC to UMLS CUI Mapper using Direct API Calls and Local Caching
-========================================================================
+Simple LOINC to UMLS CUI Mapper using Direct API Calls and Multi-Level Caching
+==============================================================================
 
-This script maps LOINC codes to their corresponding UMLS CUIs using direct
-HTTP requests to the UMLS REST API. It now includes a local caching mechanism
-to reduce redundant API calls and save time.
+This script maps LOINC codes to their corresponding UMLS CUIs using:
+1. Local UMLS cache (from MRCONSO.RRF extraction) - FASTEST
+2. Local API results cache - FAST  
+3. UMLS REST API calls - SLOWEST
 
 Requirements:
 - pip install requests pandas
 - UMLS API key (free from https://uts.nlm.nih.gov/uts/)
+- Optional: Local UMLS cache from umls_loinc_extractor.py
 
 Usage:
-    python simple_loinc_mapper.py --input loinc_codes.txt --output mappings.csv
-    python simple_loinc_mapper.py --input loinc_codes.txt --refresh
+    # Drop-in replacement for existing SimpleLOINCMapper
+    mapper = SimpleLOINCMapper(api_key="your_key")
+    result = mapper.search_loinc_code("100000-9")
+    
+    # With local UMLS cache (recommended)
+    mapper = SimpleLOINCMapper(
+        api_key="your_key",
+        umls_cache_file="output/loinc_cui_simple_lookup.json"
+    )
+    
+    # With config file support
+    mapper = SimpleLOINCMapper(config_path="UMLS_API_config.json")
 """
 
 import argparse
@@ -23,7 +35,7 @@ import logging
 import time
 import requests
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 import sys
 from datetime import datetime
 
@@ -45,52 +57,142 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class SimpleLOINCMapper:
-    """Simple LOINC to CUI mapper using direct UMLS REST API calls with caching."""
+def load_config(config_path: str = "UMLS_API_config.json") -> Dict[str, Any]:
+    """Load configuration from JSON file."""
+    if not Path(config_path).exists():
+        return {}
+    
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        logger.info(f"Loaded configuration from {config_path}")
+        return config
+    except Exception as e:
+        logger.warning(f"Error loading config file {config_path}: {e}")
+        return {}
 
-    def __init__(self, api_key: str, base_url: str = "https://uts-ws.nlm.nih.gov/rest", rate_limit: float = 0.2, cache_file_name: Optional[str] = None):
+
+class SimpleLOINCMapper:
+    """Enhanced LOINC to CUI mapper with multi-level caching and config support."""
+
+    def __init__(self, 
+                 api_key: Optional[str] = None, 
+                 base_url: str = "https://uts-ws.nlm.nih.gov/rest", 
+                 rate_limit: float = 0.2, 
+                 cache_file_name: Optional[str] = None,
+                 config_path: Optional[str] = None,
+                 umls_cache_file: Optional[str] = None):
         """
-        Initialize the mapper.
+        Initialize the mapper with multi-level caching.
 
         Args:
             api_key: UMLS API key
             base_url: UMLS REST API base URL
             rate_limit: Delay between API calls in seconds
-            cache_file_name: The name of the CSV file to use for caching.
+            cache_file_name: The name of the CSV file to use for API results caching
+            config_path: Path to config JSON file (overrides other parameters)
+            umls_cache_file: Path to local UMLS cache JSON file
         """
-        self.api_key = api_key
+        # Load config if provided
+        self.config = {}
+        if config_path:
+            self.config = load_config(config_path)
+        
+        # Set parameters with config override support
+        self.api_key = api_key or self.config.get("api_key")
         self.base_url = base_url
-        self.rate_limit = rate_limit
+        self.rate_limit = rate_limit if rate_limit != 0.2 else self.config.get("rate_limit_delay", 0.2)
+        
+        # Get settings from config
+        settings = self.config.get("settings", {})
+        self.max_retries = settings.get("max_retries", 3)
+        
+        # Initialize session
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'SimpleLOINCMapper/1.0',
+            'User-Agent': 'SimpleLOINCMapper/2.0',
             'Accept': 'application/json'
         })
+        
+        # Set up caching
         self.cache_file_name = cache_file_name or f"loinc_cui_cache_{datetime.now().strftime('%Y-%m-%d')}.csv"
-        self.cache = self._load_cache()
+        
+        # Load local UMLS cache (highest priority)
+        self.umls_cache = self._load_umls_cache(umls_cache_file)
+        
+        # Load API results cache (medium priority)
+        self.api_cache = self._load_api_cache()
+        
+        # Statistics tracking
+        self.stats = {
+            'umls_cache_hits': 0,
+            'api_cache_hits': 0,
+            'api_calls': 0,
+            'not_found': 0
+        }
+        
+        # Log initialization info
+        if self.umls_cache:
+            logger.info(f"Initialized with local UMLS cache: {len(self.umls_cache):,} mappings")
+        logger.info(f"Initialized with API cache: {len(self.api_cache):,} mappings")
+        if not self.api_key:
+            logger.warning("No API key provided. Only cached results will be available.")
 
-    def _load_cache(self) -> Dict:
+    def _load_umls_cache(self, cache_file: Optional[str]) -> Dict[str, str]:
+        """Load local UMLS cache file."""
+        if not cache_file:
+            # Try to find cache file in common locations
+            possible_locations = [
+                "output/loinc_cui_simple_lookup.json",
+                "umls_cache/loinc_cui_simple_lookup.json", 
+                "./loinc_cui_simple_lookup.json"
+            ]
+            
+            for location in possible_locations:
+                if Path(location).exists():
+                    cache_file = location
+                    break
+            
+            if not cache_file:
+                logger.info("No local UMLS cache file found. Will use API only.")
+                return {}
+        
+        cache_path = Path(cache_file)
+        if not cache_path.exists():
+            logger.info(f"UMLS cache file not found: {cache_file}")
+            return {}
+            
+        try:
+            with open(cache_path, 'r') as f:
+                cache = json.load(f)
+            logger.info(f"Loaded {len(cache):,} LOINC mappings from local UMLS cache: {cache_file}")
+            return cache
+        except Exception as e:
+            logger.error(f"Failed to load UMLS cache file {cache_file}: {e}")
+            return {}
+
+    def _load_api_cache(self) -> Dict[str, str]:
         """Load mappings from a local CSV cache file."""
         if Path(self.cache_file_name).exists():
             try:
                 df = pd.read_csv(self.cache_file_name)
-                logger.info(f"Loaded {len(df)} mappings from local cache: {self.cache_file_name}")
+                logger.info(f"Loaded {len(df)} mappings from API cache: {self.cache_file_name}")
                 return df.set_index('loinc_code')['cui'].to_dict()
             except Exception as e:
-                logger.error(f"Failed to load cache file {self.cache_file_name}: {e}")
+                logger.error(f"Failed to load API cache file {self.cache_file_name}: {e}")
                 return {}
         else:
-            logger.info("No existing cache file found. Starting with an empty cache.")
+            logger.info("No existing API cache file found. Starting with an empty cache.")
             return {}
 
-    def _save_cache(self, loinc_code: str, cui: str):
-        """Append a new mapping to the cache file."""
+    def _save_api_cache(self, loinc_code: str, cui: str):
+        """Append a new mapping to the API cache file."""
         df = pd.DataFrame([{'loinc_code': loinc_code, 'cui': cui}])
         df.to_csv(self.cache_file_name, mode='a', header=not Path(self.cache_file_name).exists(), index=False)
 
     def search_loinc_code(self, loinc_code: str) -> Optional[Dict]:
         """
-        Search for a LOINC code using the UMLS Search API, checking cache first.
+        Search for a LOINC code using multi-level caching, maintaining original interface.
 
         Args:
             loinc_code: The LOINC code to search for
@@ -98,12 +200,40 @@ class SimpleLOINCMapper:
         Returns:
             Dictionary with mapping information or None if failed
         """
-        # 1. Check local cache first
-        if loinc_code in self.cache:
-            logger.debug(f"Found {loinc_code} in cache: {self.cache[loinc_code]}")
-            return {'cui': self.cache[loinc_code], 'mapping_method': 'cache'}
+        loinc_code = str(loinc_code).strip()
+        
+        # Level 1: Check local UMLS cache first (fastest)
+        if loinc_code in self.umls_cache:
+            self.stats['umls_cache_hits'] += 1
+            cui = self.umls_cache[loinc_code]
+            logger.debug(f"Found {loinc_code} in local UMLS cache: {cui}")
+            return {
+                'cui': cui,
+                'cui_name': '',  # Not available in simple cache
+                'source_ui': loinc_code,
+                'source_name': 'LNC',
+                'mapping_method': 'umls_local_cache'
+            }
 
-        # 2. Try multiple search strategies via UMLS API
+        # Level 2: Check API results cache
+        if loinc_code in self.api_cache:
+            self.stats['api_cache_hits'] += 1
+            cui = self.api_cache[loinc_code]
+            logger.debug(f"Found {loinc_code} in API cache: {cui}")
+            return {
+                'cui': cui,
+                'cui_name': '',  # Not stored in simple cache
+                'source_ui': loinc_code,
+                'source_name': 'LNC',
+                'mapping_method': 'api_cache'
+            }
+
+        # Level 3: Try API search strategies (slowest)
+        if not self.api_key:
+            self.stats['not_found'] += 1
+            logger.debug(f"No API key available for {loinc_code}")
+            return None
+
         try:
             strategies = [
                 self._search_exact_in_loinc,
@@ -114,17 +244,24 @@ class SimpleLOINCMapper:
             for strategy in strategies:
                 result = strategy(loinc_code)
                 if result:
+                    self.stats['api_calls'] += 1
                     logger.debug(f"Successfully mapped {loinc_code} using {strategy.__name__}")
-                    # Save to cache before returning
-                    self._save_cache(loinc_code, result.get('cui'))
-                    self.cache[loinc_code] = result.get('cui')
+                    
+                    # Save to API cache
+                    cui = result.get('cui')
+                    if cui:
+                        self._save_api_cache(loinc_code, cui)
+                        self.api_cache[loinc_code] = cui
+                    
                     return result
 
             logger.warning(f"All search strategies failed for: {loinc_code}")
+            self.stats['not_found'] += 1
             return None
 
         except Exception as e:
             logger.error(f"Error searching for {loinc_code}: {str(e)}")
+            self.stats['not_found'] += 1
             return None
 
     def _search_exact_in_loinc(self, loinc_code: str) -> Optional[Dict]:
@@ -136,7 +273,6 @@ class SimpleLOINCMapper:
             'searchType': 'exact',
             'returnIdType': 'code'
         }
-
         return self._execute_search(loinc_code, params, "exact_loinc")
 
     def _search_general_in_loinc(self, loinc_code: str) -> Optional[Dict]:
@@ -147,7 +283,6 @@ class SimpleLOINCMapper:
             'sabs': 'LNC',
             'searchType': 'words'
         }
-
         return self._execute_search(loinc_code, params, "general_loinc")
 
     def _search_unrestricted(self, loinc_code: str) -> Optional[Dict]:
@@ -157,60 +292,50 @@ class SimpleLOINCMapper:
             'apiKey': self.api_key,
             'searchType': 'exact'
         }
-
         return self._execute_search(loinc_code, params, "unrestricted")
 
     def _execute_search(self, loinc_code: str, params: Dict, method: str) -> Optional[Dict]:
-        """Execute the actual API search request."""
-        try:
-            url = f"{self.base_url}/search/current"
+        """Execute API search with given parameters and retry logic."""
+        url = f"{self.base_url}/search/current"
+        
+        for attempt in range(self.max_retries):
+            try:
+                response = self.session.get(url, params=params, timeout=30)
+                
+                if response.status_code != 200:
+                    if attempt < self.max_retries - 1:
+                        logger.warning(f"API request failed for {loinc_code} (attempt {attempt + 1}): {response.status_code}. Retrying...")
+                        time.sleep(self.rate_limit * (attempt + 1))  # Exponential backoff
+                        continue
+                    else:
+                        logger.warning(f"API request failed for {loinc_code} after {self.max_retries} attempts: {response.status_code}")
+                        return None
 
-            logger.debug(f"Searching {loinc_code} using {method}: {url}")
-            response = self.session.get(url, params=params, timeout=30)
+                data = response.json()
+                results = data.get('result', {}).get('results', [])
 
-            if response.status_code != 200:
-                logger.warning(f"API returned status {response.status_code} for {loinc_code}")
-                return None
+                if not results:
+                    return None
 
-            data = response.json()
-            return self._process_search_results(loinc_code, data, method)
+                # Extract CUI from first result
+                first_result = results[0]
+                return self._extract_cui_info(loinc_code, first_result, method)
 
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Network error searching {loinc_code}: {str(e)}")
-            return None
-        except json.JSONDecodeError as e:
-            logger.error(f"JSON decode error for {loinc_code}: {str(e)}")
-            return None
+            except Exception as e:
+                if attempt < self.max_retries - 1:
+                    logger.warning(f"Error executing API search for {loinc_code} (attempt {attempt + 1}): {str(e)}. Retrying...")
+                    time.sleep(self.rate_limit * (attempt + 1))
+                    continue
+                else:
+                    logger.error(f"Error executing API search for {loinc_code} after {self.max_retries} attempts: {str(e)}")
+                    return None
 
-    def _process_search_results(self, loinc_code: str, data: Dict, method: str) -> Optional[Dict]:
-        """Process search results and extract CUI."""
-        try:
-            results = data.get('result', {}).get('results', [])
+        # Rate limiting for successful calls
+        time.sleep(self.rate_limit)
+        return None
 
-            if not results:
-                logger.debug(f"No results found for {loinc_code} using {method}")
-                return None
-
-            # Look for exact code match first
-            for result in results:
-                if result.get('ui') == loinc_code:
-                    return self._extract_cui_info(loinc_code, result, method, exact_match=True)
-
-            # If no exact match, try first result with valid CUI
-            for result in results:
-                cui_info = self._extract_cui_info(loinc_code, result, method, exact_match=False)
-                if cui_info:
-                    return cui_info
-
-            logger.debug(f"No valid CUI found in results for {loinc_code}")
-            return None
-
-        except Exception as e:
-            logger.error(f"Error processing results for {loinc_code}: {str(e)}")
-            return None
-
-    def _extract_cui_info(self, loinc_code: str, result: Dict, method: str, exact_match: bool) -> Optional[Dict]:
-        """Extract CUI information from a search result."""
+    def _extract_cui_info(self, loinc_code: str, result: Dict, method: str) -> Optional[Dict]:
+        """Extract CUI information from API result."""
         try:
             uri = result.get('uri', '')
 
@@ -223,18 +348,20 @@ class SimpleLOINCMapper:
             if not cui or cui == '':
                 return None
 
+            # Additional validation: skip MTH codes that might come from API
+            source_ui = result.get('ui', '')
+            if source_ui.startswith('MTH'):
+                logger.debug(f"Skipping MTH code from API result: {source_ui}")
+                return None
+
             mapping_info = {
                 'loinc_code': loinc_code,
                 'cui': cui,
                 'cui_name': result.get('name', ''),
-                'source_ui': result.get('ui', ''),
+                'source_ui': source_ui,
                 'source_name': result.get('rootSource', ''),
-                'mapping_method': method,
-                'exact_match': exact_match
+                'mapping_method': method
             }
-
-            if not exact_match:
-                mapping_info['note'] = f"Mapped to similar result: {result.get('ui', '')}"
 
             return mapping_info
 
@@ -249,7 +376,7 @@ class SimpleLOINCMapper:
         Args:
             loinc_codes: List of LOINC codes to process
             progress_interval: How often to show progress
-            force_refresh: If True, ignore cache and re-query all codes
+            force_refresh: If True, ignore all caches and re-query all codes
 
         Returns:
             Tuple of (successful_mappings, failed_codes)
@@ -259,12 +386,14 @@ class SimpleLOINCMapper:
         total_codes = len(loinc_codes)
 
         if force_refresh:
-            self.cache = {}
+            # Clear caches for fresh start
+            self.umls_cache = {}
+            self.api_cache = {}
             if Path(self.cache_file_name).exists():
                 Path(self.cache_file_name).unlink()
             logger.info("Forcing cache refresh. All LOINC codes will be re-queried.")
         else:
-            logger.info(f"Starting to process {total_codes} LOINC codes using cache...")
+            logger.info(f"Starting to process {total_codes} LOINC codes using multi-level caching...")
 
         for i, loinc_code in enumerate(loinc_codes, 1):
             loinc_code = str(loinc_code).strip()
@@ -275,212 +404,104 @@ class SimpleLOINCMapper:
             # Progress update
             if i % progress_interval == 0 or i == total_codes:
                 logger.info(f"Progress: {i}/{total_codes} ({i/total_codes*100:.1f}%)")
+                self._print_cache_stats()
 
-            # Search for mapping, now with caching logic
+            # Search for mapping
             mapping = self.search_loinc_code(loinc_code)
 
             if mapping and mapping.get('cui'):
                 successful_mappings.append(mapping)
-                logger.debug(f"✓ {loinc_code} -> {mapping['cui']} (Method: {mapping.get('mapping_method', 'cached')})")
+                logger.debug(f"✓ {loinc_code} -> {mapping['cui']} (Method: {mapping.get('mapping_method', 'unknown')})")
             else:
                 failed_codes.append(loinc_code)
                 logger.debug(f"✗ Failed to map {loinc_code}")
 
-            # Rate limiting only applies to API calls
-            if mapping and mapping.get('mapping_method') != 'cache':
-                time.sleep(self.rate_limit)
-
-        logger.info(f"Processing complete. Success: {len(successful_mappings)}, Failed: {len(failed_codes)}")
+        logger.info(f"Processing complete. Successfully mapped {len(successful_mappings)}/{total_codes} codes ({len(successful_mappings)/total_codes*100:.1f}%)")
+        self._print_cache_stats()
+        
         return successful_mappings, failed_codes
 
+    def _print_cache_stats(self):
+        """Print cache performance statistics."""
+        total_requests = sum(self.stats.values())
+        if total_requests == 0:
+            return
 
-def load_config(config_path: str = "config.json") -> Dict:
-    """Load configuration from JSON file."""
-    try:
-        with open(config_path, 'r') as f:
-            config = json.load(f)
+        logger.info("Cache Performance:")
+        logger.info(f"  UMLS cache hits: {self.stats['umls_cache_hits']:,} ({self.stats['umls_cache_hits']/total_requests*100:.1f}%)")
+        logger.info(f"  API cache hits: {self.stats['api_cache_hits']:,} ({self.stats['api_cache_hits']/total_requests*100:.1f}%)")
+        logger.info(f"  API calls made: {self.stats['api_calls']:,} ({self.stats['api_calls']/total_requests*100:.1f}%)")
+        logger.info(f"  Not found: {self.stats['not_found']:,} ({self.stats['not_found']/total_requests*100:.1f}%)")
 
-        if 'api_key' not in config:
-            raise ValueError("Configuration file must contain 'api_key' field")
+        # Calculate cache efficiency
+        cache_hits = self.stats['umls_cache_hits'] + self.stats['api_cache_hits']
+        if total_requests > 0:
+            cache_efficiency = cache_hits / total_requests * 100
+            logger.info(f"  Total cache efficiency: {cache_efficiency:.1f}%")
 
-        return config
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON in configuration file: {e}")
-
-
-def load_loinc_codes(file_path: str) -> List[str]:
-    """Load LOINC codes from file."""
-    file_path = Path(file_path)
-
-    if not file_path.exists():
-        raise FileNotFoundError(f"Input file not found: {file_path}")
-
-    loinc_codes = []
-
-    if file_path.suffix.lower() == '.csv':
-        df = pd.read_csv(file_path)
-        loinc_codes = df.iloc[:, 0].astype(str).tolist()
-    elif file_path.suffix.lower() == '.json':
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-            loinc_codes = [str(code) for code in data]
-    else:
-        with open(file_path, 'r') as f:
-            loinc_codes = [line.strip() for line in f if line.strip()]
-
-    logger.info(f"Loaded {len(loinc_codes)} LOINC codes from {file_path}")
-    return loinc_codes
-
-
-def save_results(mappings: List[Dict], output_file: str, format_type: str = 'csv'):
-    """Save mapping results."""
-    if not mappings:
-        logger.warning("No mappings to save")
-        return
-
-    # Filter out cached results before saving to a separate file
-    api_mappings = [m for m in mappings if m.get('mapping_method') != 'cache']
-    if not api_mappings:
-        logger.warning("No new mappings to save to output file.")
-        return
-
-    if format_type == 'json':
-        with open(output_file, 'w') as f:
-            json.dump(api_mappings, f, indent=2)
-    else:
-        df = pd.DataFrame(api_mappings)
-        df.to_csv(output_file, index=False)
-
-    logger.info(f"Saved {len(api_mappings)} new mappings to {output_file}")
-
-
-def create_test_codes() -> str:
-    """Create a test file with sample LOINC codes."""
-    test_codes = [
-        "718-7",      # Hemoglobin [Mass/volume] in Blood
-        "8462-4",     # Diastolic blood pressure
-        "8478-0",     # Systolic blood pressure
-        "33747-7",    # Body temperature
-        "29463-7",    # Body weight
-    ]
-
-    filename = "test_loinc_codes.txt"
-    with open(filename, 'w') as f:
-        for code in test_codes:
-            f.write(f"{code}\n")
-
-    print(f"Created test file: {filename}")
-    return filename
+    def get_cache_info(self) -> Dict[str, int]:
+        """Get information about loaded caches."""
+        return {
+            'umls_cache_size': len(self.umls_cache),
+            'api_cache_size': len(self.api_cache),
+            'total_cache_size': len(self.umls_cache) + len(self.api_cache)
+        }
 
 
 def main():
-    """Main function."""
-    parser = argparse.ArgumentParser(
-        description="Simple LOINC to UMLS CUI mapper with caching",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  %(prog)s --input loinc_codes.txt --output mappings.csv
-  %(prog)s --config my_config.json --input codes.csv --format json
-  %(prog)s --test  # Run with test data
-  %(prog)s --input loinc_codes.txt --refresh # Force re-querying all codes
-        """
-    )
-
-    parser.add_argument('--config', '-c', default='config.json',
-                        help='Configuration file (default: config.json)')
-    parser.add_argument('--input', '-i',
-                        help='Input file with LOINC codes')
-    parser.add_argument('--output', '-o',
-                        help='Output file for new mappings')
-    parser.add_argument('--format', '-f', choices=['csv', 'json'], default='csv',
-                        help='Output format (default: csv)')
-    parser.add_argument('--test', action='store_true',
-                        help='Run test with sample LOINC codes')
-    parser.add_argument('--verbose', '-v', action='store_true',
-                        help='Enable verbose logging')
-    parser.add_argument('--refresh', action='store_true',
-                        help='Ignore cache and re-query all LOINC codes')
+    """Main function for command line usage."""
+    parser = argparse.ArgumentParser(description="Simple LOINC to UMLS CUI Mapper with Enhanced Caching")
+    parser.add_argument('--input', type=str, required=True, help='Input file with LOINC codes (one per line)')
+    parser.add_argument('--output', type=str, default='loinc_mappings.csv', help='Output CSV file')
+    parser.add_argument('--api_key', type=str, help='UMLS API key')
+    parser.add_argument('--config', type=str, default='UMLS_API_config.json', help='Config file path')
+    parser.add_argument('--umls_cache', type=str, help='Path to local UMLS cache JSON file')
+    parser.add_argument('--refresh', action='store_true', help='Force refresh all caches')
+    parser.add_argument('--progress', type=int, default=100, help='Progress reporting interval')
 
     args = parser.parse_args()
 
-    if args.verbose:
-        logger.setLevel(logging.DEBUG)
+    # Initialize mapper
+    mapper = SimpleLOINCMapper(
+        api_key=args.api_key,
+        config_path=args.config,
+        umls_cache_file=args.umls_cache
+    )
 
+    # Print cache info
+    cache_info = mapper.get_cache_info()
+    logger.info(f"Initialized with {cache_info['total_cache_size']:,} total cached mappings")
+
+    # Read input codes
     try:
-        # Handle test mode
-        if args.test:
-            print("Running in test mode...")
-            test_file = create_test_codes()
-            args.input = test_file
-            args.output = "test_mappings.csv"
+        with open(args.input, 'r') as f:
+            loinc_codes = [line.strip() for line in f if line.strip()]
+        logger.info(f"Loaded {len(loinc_codes)} LOINC codes from {args.input}")
+    except FileNotFoundError:
+        logger.error(f"Input file not found: {args.input}")
+        return 1
 
-        # Load configuration
-        config = load_config(args.config)
-        api_key = config['api_key']
+    # Process codes
+    successful, failed = mapper.process_loinc_list(
+        loinc_codes, 
+        progress_interval=args.progress,
+        force_refresh=args.refresh
+    )
 
-        if api_key == "YOUR_UMLS_API_KEY_HERE":
-            print("Error: Please set your UMLS API key in config.json")
-            return
+    # Save results
+    if successful:
+        df = pd.DataFrame(successful)
+        df.to_csv(args.output, index=False)
+        logger.info(f"Saved {len(successful)} successful mappings to {args.output}")
 
-        # Validate input
-        if not args.input:
-            print("Error: Input file is required (use --test for testing)")
-            return
+    if failed:
+        failed_file = args.output.replace('.csv', '_failed.txt')
+        with open(failed_file, 'w') as f:
+            f.write('\n'.join(failed))
+        logger.info(f"Saved {len(failed)} failed codes to {failed_file}")
 
-        # Set output file
-        if not args.output:
-            input_path = Path(args.input)
-            args.output = f"{input_path.stem}_cui_mappings.{args.format}"
-
-        # Load LOINC codes
-        loinc_codes = load_loinc_codes(args.input)
-
-        if not loinc_codes:
-            logger.error("No LOINC codes found in input file")
-            return
-
-        # Initialize mapper with cache
-        rate_limit = config.get('rate_limit_delay', 0.2)
-        mapper = SimpleLOINCMapper(api_key, rate_limit=rate_limit)
-
-        # Process codes
-        successful_mappings, failed_codes = mapper.process_loinc_list(loinc_codes, force_refresh=args.refresh)
-
-        # Save new results
-        if successful_mappings:
-            save_results(successful_mappings, args.output, args.format)
-
-        # Save failed codes
-        if failed_codes:
-            failed_file = f"failed_codes_{int(time.time())}.txt"
-            with open(failed_file, 'w') as f:
-                for code in failed_codes:
-                    f.write(f"{code}\n")
-            logger.info(f"Saved {len(failed_codes)} failed codes to {failed_file}")
-
-        # Summary
-        total = len(successful_mappings) + len(failed_codes)
-        success_rate = (len(successful_mappings) / total * 100) if total > 0 else 0
-
-        print(f"\n{'='*50}")
-        print(f"MAPPING COMPLETE")
-        print(f"{'='*50}")
-        print(f"Total processed: {total}")
-        print(f"Successful: {len(successful_mappings)} ({success_rate:.1f}%)")
-        print(f"Failed: {len(failed_codes)}")
-        print(f"Output: {args.output}")
-
-        if args.test and successful_mappings:
-            print(f"\n✅ Test successful! The mapper is working.")
-            print(f"Sample mapping: {loinc_codes[0]} -> {successful_mappings[0]['cui']}")
-
-    except Exception as e:
-        logger.error(f"Error: {str(e)}")
-        raise
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

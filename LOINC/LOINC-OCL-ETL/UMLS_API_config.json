@@ -6,6 +6,7 @@
   "log_level": "INFO",
   "output_directory": "./output",
   "settings": {
+    "exclude_mth_codes": true,     
     "include_obsolete": false,
     "include_suppressible": false,
     "preferred_language": "ENG",
