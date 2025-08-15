@@ -67,6 +67,8 @@ loinc_table.*
 *.loinc
 loinc-*.csv
 loinc-*.txt
+AnswerList.csv
+ComponentHierarchyBySystem.csv
 
 # ETL Output Files
 output/
