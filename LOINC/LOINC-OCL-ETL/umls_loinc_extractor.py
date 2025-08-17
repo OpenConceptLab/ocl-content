@@ -144,6 +144,7 @@ class UMLSLoincExtractor:
                     code = fields[self.MRCONSO_COLUMNS['CODE']]
                     term = fields[self.MRCONSO_COLUMNS['STR']]
                     suppress = fields[self.MRCONSO_COLUMNS['SUPPRESS']]
+                    term_type = fields[self.MRCONSO_COLUMNS['TTY']]  
                     
                     # Skip non-LOINC sources
                     if source not in ['LNC', 'LOINC']:
@@ -175,7 +176,8 @@ class UMLSLoincExtractor:
                             'name': term,
                             'source': source,
                             'language': language,
-                            'suppress': suppress
+                            'suppress': suppress,
+                            'term_type': term_type  
                         }
                     
                     processed_lines += 1

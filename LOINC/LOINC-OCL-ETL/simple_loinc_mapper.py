@@ -255,7 +255,7 @@ class SimpleLOINCMapper:
                     
                     return result
 
-            logger.warning(f"All search strategies failed for: {loinc_code}")
+            # logger.warning(f"All search strategies failed for: {loinc_code}")
             self.stats['not_found'] += 1
             return None
 
