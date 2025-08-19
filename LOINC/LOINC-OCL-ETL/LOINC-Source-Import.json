@@ -1,1 +1,535 @@
-{ "type": "Source", "id": "LOINC", "default_locale": "en", "name": "LOINC", "public_access": "View", "supported_locales": "en", "full_name": "Logical Observation Identifiers Names and Codes (LOINC)", "description": "Reference labs, healthcare providers, government agencies, insurance companies, software and device manufacturers, researchers, and consumers from around the globe use LOINC to identify data and move it seamlessly between systems.", "source_type": "Reference Terminology", "hierarchy_root_url": "/orgs/Regenstrief/sources/LOINC/concepts/ROOT/", "owner_type": "Organization", "owner": "Regenstrief", "properties": [{ "code": "STATUS", "type": "string", "description": "Status of the term. Within LOINC, codes with STATUS=DEPRECATED are considered inactive. Current values: ACTIVE, TRIAL, DISCOURAGED, and DEPRECATED"},{ "code": "COMPONENT", "type": "Coding", "description": "First major axis-component or analyte: Analyte Name, Analyte sub-class, Challenge"},{ "code": "PROPERTY", "type": "Coding", "description": "Second major axis-property observed: Kind of Property (also called kind of quantity)"},{ "code": "TIME_ASPCT", "type": "Coding", "description": "Third major axis-timing of the measurement: Time Aspect (Point or moment in time vs. time interval)"},{ "code": "SYSTEM", "type": "Coding", "description": "Fourth major axis-type of specimen or system: System (Sample) Type"},{ "code": "SCALE_TYP", "type": "Coding", "description": "Fifth major axis-scale of measurement: Type of Scale"},{ "code": "METHOD_TYP", "type": "Coding", "description": "Sixth major axis-method of measurement: Type of Method"},{ "code": "CLASS", "type": "Coding", "description": "An arbitrary classification of terms for grouping related observations together"},{ "code": "ORDER_OBS", "type": "string", "description": "Provides users with an idea of the intended use of the term by categorizing it as an order only, observation only, or both"},{ "code": "VersionFirstReleased", "type": "string", "description": "This is the LOINC version number in which this LOINC term was first published"},{ "code": "VersionLastChanged", "type": "string", "description": "The LOINC version number in which the record has last changed. For new records, this field contains the same value as the VersionFirstReleased property"},{ "code": "CHNG_TYPE", "type": "string", "description": "DEL = delete (deprecate); ADD = add; PANEL = addition or removal of child elements or change in the conditionality of child elements in the panel or in sub-panels contained by the panel; NAM = change to Analyte/Component (field #2); MAJ = change to name field other than #2 (#3 - #7); MIN = change to field other than name; UND = undelete"},{ "code": "HL7_ATTACHMENT_STRUCTURE", "type": "string", "description": "This property is populated in collaboration with the HL7 Payer-Provider Exchange (PIE) Work Group (previously called Attachments Work Group) as described in the HL7 Attachment Specification: Supplement to Consolidated CDA Templated Guide"},{ "code": "LONG_COMMON_NAME", "type": "string", "description": "This field contains the LOINC name in a more readable format than the fully specified name. The long common names have been created via a tabledriven algorithmic process. Most abbreviations and acronyms that are used in the LOINC database have been fully spelled out in English"},{ "code": "SHORTNAME", "type": "string", "description": "Introduced in version 2.07, this field contains the short form of the LOINC name and is created via a table-driven algorithmic process. The short name often includes abbreviations and acronyms"},{ "code": "COMMON_TEST_RANK", "type": "string", "description": "Ranking of approximately 2000 common tests performed by laboratories in USA"},{ "code": "COMMON_ORDER_RANK", "type": "string", "description": "Ranking of approximately 300 common orders performed by laboratories in USA"},{ "code": "FORMULA", "type": "string", "description": "Contains the formula in human readable form, for calculating the value of any measure that is based on an algebraic or other formula except those for which the component expresses the formula. So Sodium/creatinine does not need a formula, but Free T3 index does"},{ "code": "EXAMPLE_UNITS", "type": "string", "description": "This field is populated with a combination of submitters units and units that people have sent us. Its purpose is to show users representative, but not necessarily recommended, units in which data could be sent for this term"},{ "code": "EXAMPLE_UCUM_UNITS", "type": "string", "description": "The Unified Code for Units of Measure (UCUM) is a code system intended to include all units of measures being contemporarily used in international science, engineering, and business. This field contains example units of measures for this term expressed as UCUM units"},{ "code": "PanelType", "type": "string", "description": "For LOINC terms that are panels, this attribute classifies them as a 'Convenience group', 'Organizer', or 'Panel'"},{ "code": "AskAtOrderEntry", "type": "Coding", "description": "A multi-valued, semicolon delimited list of LOINC codes that represent optional Ask at Order Entry (AOE) observations for a clinical observation or laboratory test. A LOINC term in this field may represent a single AOE observation or a panel containing several AOE observations"},{ "code": "AssociatedObservations", "type": "Coding", "description": "A multi-valued, semicolon delimited list of LOINC codes that represent optional associated observation(s) for a clinical observation or laboratory test. A LOINC term in this field may represent a single associated observation or panel containing several associated observations"},{ "code": "DisplayName", "type": "string", "description": "A name that is more 'clinician-friendly' compared to the current LOINC Short Name, Long Common Name, and Fully Specified Name. It is created algorithmically from the manually crafted display text for each Part and is generally more concise than the Long Common Name"},{ "code": "CLASSTYPE", "type": "string", "description": "1=Laboratory class; 2=Clinical class; 3=Claims attachments; 4=Surveys"},{ "code": "RELATEDNAMES2", "type": "string", "description": "This field was introduced in version 2.05. It contains synonyms for each of the parts of the fully specified LOINC name (component, property, time, system, scale, method)"},{ "code": "DefinitionDescription", "type": "string", "description": "Narrative text that describes the LOINC term taken as a whole (i.e., taking all of the parts of the term together) or relays information specific to the term, such as the context in which the term was requested or its clinical utility"},{ "code": "CONSUMER_NAME", "type": "string", "description": "An experimental (beta) consumer friendly name for this item. The intent is to provide a test name that health care consumers will recognize"},{ "code": "STATUS_REASON", "type": "string", "description": "Classification of the reason for concept status. This field will be Null for ACTIVE concepts, and optionally populated for terms in other status where the reason is clear. DEPRECATED or DISCOURAGED terms may take values of: AMBIGUOUS, DUPLICATE, or ERRONEOUS"},{ "code": "STATUS_TEXT", "type": "string", "description": "Explanation of concept status in narrative text. This field will be Null for ACTIVE concepts, and optionally populated for terms in other status"},{ "code": "CHANGE_REASON_PUBLIC", "type": "string", "description": "Detailed explanation about special changes to the term over time"},{ "code": "SURVEY_QUEST_TEXT", "type": "string", "description": "Verbatim question from the survey instrument"},{ "code": "SURVEY_QUEST_SRC", "type": "string", "description": "Exact name of the survey instrument and the item/question number"},{ "code": "EXMPL_ANSWERS", "type": "string", "description": "For some tests and measurements, we have supplied examples of valid answers, such as â€œ1:64â€, â€œnegative @ 1:16â€, or â€œ55â€"},{ "code": "UNITSREQUIRED", "type": "string", "description": "Y/N field that indicates that units are required when this LOINC is included as an OBX segment in a HIPAA attachment"},{ "code": "HL7_FIELD_SUBFIELD_ID", "type": "string", "description": "A value in this field means that the content should be delivered in the named field/subfield of the HL7 message. When NULL, the data for this data element should be sent in an OBX segment with this LOINC code stored in OBX-3 and with the value in the OBX-5"},{ "code": "EXTERNAL_COPYRIGHT_NOTICE", "type": "string", "description": "External copyright holders copyright notice for this LOINC code"},{ "code": "EXTERNAL_COPYRIGHT_LINK", "type": "string", "description": "For terms that have a third party copyright, this field is populated with the COPYRIGHT_ID from the Source Organization table (see below). It links an external copyright statement to a term"},{ "code": "ValidHL7AttachmentRequest", "type": "string", "description": "A value of Y in this field indicates that this LOINC code can be sent by a payer as part of an HL7 Attachment request for additional information"},{ "code": "answer-list", "type": "Coding", "description": "An answer list associated with this LOINC code (if there are matching answer lists defined)"},{ "code": "MAP_TO", "type": "Coding", "description": "A replacement term that is to be used in place of the deprecated or discouraged term"},{ "code": "parent", "type": "code", "description": "A parent code in the Component Hierarchy by System"},{ "code": "child", "type": "code", "description": "A child code in the Component Hierarchy by System"},{ "code": "analyte", "type": "Coding", "description": "First sub-part of the Component, i.e., the part of the Component before the first carat"},{ "code": "analyte-core", "type": "Coding", "description": "The primary part of the analyte without the suffix"},{ "code": "analyte-suffix", "type": "Coding", "description": "The suffix part of the analyte, if present, e.g., Ab or DNA"},{ "code": "challenge", "type": "Coding", "description": "Second sub-part of the Component, i.e., after the first carat"},{ "code": "adjustment", "type": "Coding", "description": "Third sub-part of the Component, i.e., after the second carat"},{ "code": "time-core", "type": "Coding", "description": "The primary part of the Time"},{ "code": "time-modifier", "type": "Coding", "description": "The modifier of the Time value, such as mean or max"},{ "code": "system-core", "type": "Coding", "description": "The primary part of the System, i.e., without the super system"},{ "code": "super-system", "type": "Coding", "description": "The super system part of the System, if present. The super system represents the source of the specimen when the source is someone or something other than the patient whose chart the result will be stored in"},{ "code": "category", "type": "Coding", "description": "A single LOINC term can be assigned one or more categories based on both programmatic and manual tagging. Category properties also utilize LOINC Class Parts"},{ "code": "search", "type": "Coding", "description": "Synonyms, fragments, and other Parts that are linked to a term to enable more encompassing search results"},{ "code": "type", "type": "string", "description": "LOINC type classification"},{ "code": "tags", "type": "string", "description": "Tags"},{ "code": "code_systems", "type": "string", "description": "Associated code systems"},{ "code": "ExtDefinedYN", "type": "string", "description": "Whether answer list is externally defined (Y/N)"},{ "code": "external_code_system", "type": "string", "description": "External code system for externally defined lists"},{ "code": "external_link", "type": "string", "description": "External link/URL for externally defined lists"},{ "code": "AnswerListOID", "type": "string", "description": "Object identifier for answer list"},{ "code": "anchored_to", "type": "string", "description": "What the answer list is anchored to"},{ "code": "answers", "type": "string", "description": "Number of answers in the list (numeric ranges)"},{ "code": "loincs", "type": "string", "description": "Number of LOINC terms using this list (numeric ranges)"},{ "code": "answer_list_id", "type": "string", "description": "Associated answer list ID"},{ "code": "common_panel_loinc", "type": "string", "description": "Common panel LOINC reference"},{ "code": "test_loinc_num", "type": "string", "description": "Test LOINC number reference"} ], "filters": [{ "code": "STATUS", "value": "ACTIVE,TRIAL,DISCOURAGED,DEPRECATED", "operator": ["=","in" ], "description": "Filter by LOINC status"},{ "code": "type", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by LOINC type"},{ "code": "CLASS", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"},{ "code": "ORDER_OBS", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by order/observation status"},{ "code": "COMPONENT", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by component"},{ "code": "PROPERTY", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by property type (Mass, Volume, Time, etc.)"},{ "code": "TIME_ASPCT", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by time aspect (Pt, 24H, etc.)"},{ "code": "SYSTEM", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by specimen/system (Blood, Urine, etc.)"},{ "code": "SCALE_TYP", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by measurement scale (Qn, Ord, Nom)"},{ "code": "METHOD_TYP", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by observation method"},{ "code": "PanelType", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by panel type"},{ "code": "tags", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by tags"},{ "code": "code_systems", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by associated code systems"},{ "code": "HL7_ATTACHMENT_STRUCTURE", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by HL7 attachment"},{ "code": "ExtDefinedYN", "value": "Y,N", "operator": ["=" ], "description": "Filter by externally defined status (Y/N)"},{ "code": "answers", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by number of answers in list (numeric ranges)"},{ "code": "loincs", "value": "Placeholder", "operator": ["=","in" ], "description": "Filter by number of LOINC terms using this list (numeric ranges)"},{ "code": "VersionFirstReleased", "value": "Placeholder", "operator": ["=" ], "description": "Filter by release version"},{ "code": "VersionLastChanged", "value": "Placeholder", "operator": ["=" ], "description": "Filter by last changed version"} ]}
+{
+    "type": "Source",
+    "id": "LOINC",
+    "default_locale": "en",
+    "name": "LOINC",
+    "public_access": "View",
+    "supported_locales": "en",
+    "full_name": "Logical Observation Identifiers Names and Codes (LOINC)",
+    "description": "Reference labs, healthcare providers, government agencies, insurance companies, software and device manufacturers, researchers, and consumers from around the globe use LOINC to identify data and move it seamlessly between systems.",
+    "source_type": "Reference Terminology",
+    "hierarchy_root_url": "/orgs/Regenstrief/sources/LOINC/concepts/ROOT/",
+    "owner_type": "Organization",
+    "owner": "Regenstrief",
+    "properties": [
+        {
+            "code": "concept_class",
+            "type": "string",
+            "description": "OCL's concept class for LOINCs, Parts, Answers, etc."
+        },
+        {
+            "code": "STATUS",
+            "type": "string",
+            "description": "Status of the term. Within LOINC, codes with STATUS=DEPRECATED are considered inactive. Current values: ACTIVE, TRIAL, DISCOURAGED, and DEPRECATED"
+        },
+        {
+            "code": "COMPONENT",
+            "type": "Coding",
+            "description": "First major axis-component or analyte: Analyte Name, Analyte sub-class, Challenge"
+        },
+        {
+            "code": "PROPERTY",
+            "type": "Coding",
+            "description": "Second major axis-property observed: Kind of Property (also called kind of quantity)"
+        },
+        {
+            "code": "TIME_ASPCT",
+            "type": "Coding",
+            "description": "Third major axis-timing of the measurement: Time Aspect (Point or moment in time vs. time interval)"
+        },
+        {
+            "code": "SYSTEM",
+            "type": "Coding",
+            "description": "Fourth major axis-type of specimen or system: System (Sample) Type"
+        },
+        {
+            "code": "SCALE_TYP",
+            "type": "Coding",
+            "description": "Fifth major axis-scale of measurement: Type of Scale"
+        },
+        {
+            "code": "METHOD_TYP",
+            "type": "Coding",
+            "description": "Sixth major axis-method of measurement: Type of Method"
+        },
+        {
+            "code": "CLASS",
+            "type": "Coding",
+            "description": "An arbitrary classification of terms for grouping related observations together"
+        },
+        {
+            "code": "ORDER_OBS",
+            "type": "string",
+            "description": "Provides users with an idea of the intended use of the term by categorizing it as an order only, observation only, or both"
+        },
+        {
+            "code": "VersionFirstReleased",
+            "type": "string",
+            "description": "This is the LOINC version number in which this LOINC term was first published"
+        },
+        {
+            "code": "VersionLastChanged",
+            "type": "string",
+            "description": "The LOINC version number in which the record has last changed. For new records, this field contains the same value as the VersionFirstReleased property"
+        },
+        {
+            "code": "CHNG_TYPE",
+            "type": "string",
+            "description": "DEL = delete (deprecate); ADD = add; PANEL = addition or removal of child elements or change in the conditionality of child elements in the panel or in sub-panels contained by the panel; NAM = change to Analyte/Component (field #2); MAJ = change to name field other than #2 (#3 - #7); MIN = change to field other than name; UND = undelete"
+        },
+        {
+            "code": "HL7_ATTACHMENT_STRUCTURE",
+            "type": "string",
+            "description": "This property is populated in collaboration with the HL7 Payer-Provider Exchange (PIE) Work Group (previously called Attachments Work Group) as described in the HL7 Attachment Specification: Supplement to Consolidated CDA Templated Guide"
+        },
+        {
+            "code": "LONG_COMMON_NAME",
+            "type": "string",
+            "description": "This field contains the LOINC name in a more readable format than the fully specified name. The long common names have been created via a tabledriven algorithmic process. Most abbreviations and acronyms that are used in the LOINC database have been fully spelled out in English"
+        },
+        {
+            "code": "SHORTNAME",
+            "type": "string",
+            "description": "Introduced in version 2.07, this field contains the short form of the LOINC name and is created via a table-driven algorithmic process. The short name often includes abbreviations and acronyms"
+        },
+        {
+            "code": "COMMON_TEST_RANK",
+            "type": "string",
+            "description": "Ranking of approximately 2000 common tests performed by laboratories in USA"
+        },
+        {
+            "code": "COMMON_ORDER_RANK",
+            "type": "string",
+            "description": "Ranking of approximately 300 common orders performed by laboratories in USA"
+        },
+        {
+            "code": "FORMULA",
+            "type": "string",
+            "description": "Contains the formula in human readable form, for calculating the value of any measure that is based on an algebraic or other formula except those for which the component expresses the formula. So Sodium/creatinine does not need a formula, but Free T3 index does"
+        },
+        {
+            "code": "EXAMPLE_UNITS",
+            "type": "string",
+            "description": "This field is populated with a combination of submitters units and units that people have sent us. Its purpose is to show users representative, but not necessarily recommended, units in which data could be sent for this term"
+        },
+        {
+            "code": "EXAMPLE_UCUM_UNITS",
+            "type": "string",
+            "description": "The Unified Code for Units of Measure (UCUM) is a code system intended to include all units of measures being contemporarily used in international science, engineering, and business. This field contains example units of measures for this term expressed as UCUM units"
+        },
+        {
+            "code": "PanelType",
+            "type": "string",
+            "description": "For LOINC terms that are panels, this attribute classifies them as a 'Convenience group', 'Organizer', or 'Panel'"
+        },
+        {
+            "code": "AskAtOrderEntry",
+            "type": "Coding",
+            "description": "A multi-valued, semicolon delimited list of LOINC codes that represent optional Ask at Order Entry (AOE) observations for a clinical observation or laboratory test. A LOINC term in this field may represent a single AOE observation or a panel containing several AOE observations"
+        },
+        {
+            "code": "AssociatedObservations",
+            "type": "Coding",
+            "description": "A multi-valued, semicolon delimited list of LOINC codes that represent optional associated observation(s) for a clinical observation or laboratory test. A LOINC term in this field may represent a single associated observation or panel containing several associated observations"
+        },
+        {
+            "code": "DisplayName",
+            "type": "string",
+            "description": "A name that is more 'clinician-friendly' compared to the current LOINC Short Name, Long Common Name, and Fully Specified Name. It is created algorithmically from the manually crafted display text for each Part and is generally more concise than the Long Common Name"
+        },
+        {
+            "code": "CLASSTYPE",
+            "type": "string",
+            "description": "1=Laboratory class; 2=Clinical class; 3=Claims attachments; 4=Surveys"
+        },
+        {
+            "code": "RELATEDNAMES2",
+            "type": "string",
+            "description": "This field was introduced in version 2.05. It contains synonyms for each of the parts of the fully specified LOINC name (component, property, time, system, scale, method)"
+        },
+        {
+            "code": "DefinitionDescription",
+            "type": "string",
+            "description": "Narrative text that describes the LOINC term taken as a whole (i.e., taking all of the parts of the term together) or relays information specific to the term, such as the context in which the term was requested or its clinical utility"
+        },
+        {
+            "code": "CONSUMER_NAME",
+            "type": "string",
+            "description": "An experimental (beta) consumer friendly name for this item. The intent is to provide a test name that health care consumers will recognize"
+        },
+        {
+            "code": "STATUS_REASON",
+            "type": "string",
+            "description": "Classification of the reason for concept status. This field will be Null for ACTIVE concepts, and optionally populated for terms in other status where the reason is clear. DEPRECATED or DISCOURAGED terms may take values of: AMBIGUOUS, DUPLICATE, or ERRONEOUS"
+        },
+        {
+            "code": "STATUS_TEXT",
+            "type": "string",
+            "description": "Explanation of concept status in narrative text. This field will be Null for ACTIVE concepts, and optionally populated for terms in other status"
+        },
+        {
+            "code": "CHANGE_REASON_PUBLIC",
+            "type": "string",
+            "description": "Detailed explanation about special changes to the term over time"
+        },
+        {
+            "code": "SURVEY_QUEST_TEXT",
+            "type": "string",
+            "description": "Verbatim question from the survey instrument"
+        },
+        {
+            "code": "SURVEY_QUEST_SRC",
+            "type": "string",
+            "description": "Exact name of the survey instrument and the item/question number"
+        },
+        {
+            "code": "EXMPL_ANSWERS",
+            "type": "string",
+            "description": "For some tests and measurements, we have supplied examples of valid answers, such as â€œ1:64â€, â€œnegative @ 1:16â€, or â€œ55â€"
+        },
+        {
+            "code": "UNITSREQUIRED",
+            "type": "string",
+            "description": "Y/N field that indicates that units are required when this LOINC is included as an OBX segment in a HIPAA attachment"
+        },
+        {
+            "code": "HL7_FIELD_SUBFIELD_ID",
+            "type": "string",
+            "description": "A value in this field means that the content should be delivered in the named field/subfield of the HL7 message. When NULL, the data for this data element should be sent in an OBX segment with this LOINC code stored in OBX-3 and with the value in the OBX-5"
+        },
+        {
+            "code": "EXTERNAL_COPYRIGHT_NOTICE",
+            "type": "string",
+            "description": "External copyright holders copyright notice for this LOINC code"
+        },
+        {
+            "code": "EXTERNAL_COPYRIGHT_LINK",
+            "type": "string",
+            "description": "For terms that have a third party copyright, this field is populated with the COPYRIGHT_ID from the Source Organization table (see below). It links an external copyright statement to a term"
+        },
+        {
+            "code": "ValidHL7AttachmentRequest",
+            "type": "string",
+            "description": "A value of Y in this field indicates that this LOINC code can be sent by a payer as part of an HL7 Attachment request for additional information"
+        },
+        {
+            "code": "answer-list",
+            "type": "Coding",
+            "description": "An answer list associated with this LOINC code (if there are matching answer lists defined)"
+        },
+        {
+            "code": "MAP_TO",
+            "type": "Coding",
+            "description": "A replacement term that is to be used in place of the deprecated or discouraged term"
+        },
+        {
+            "code": "parent",
+            "type": "code",
+            "description": "A parent code in the Component Hierarchy by System"
+        },
+        {
+            "code": "child",
+            "type": "code",
+            "description": "A child code in the Component Hierarchy by System"
+        },
+        {
+            "code": "analyte",
+            "type": "Coding",
+            "description": "First sub-part of the Component, i.e., the part of the Component before the first carat"
+        },
+        {
+            "code": "analyte-core",
+            "type": "Coding",
+            "description": "The primary part of the analyte without the suffix"
+        },
+        {
+            "code": "analyte-suffix",
+            "type": "Coding",
+            "description": "The suffix part of the analyte, if present, e.g., Ab or DNA"
+        },
+        {
+            "code": "challenge",
+            "type": "Coding",
+            "description": "Second sub-part of the Component, i.e., after the first carat"
+        },
+        {
+            "code": "adjustment",
+            "type": "Coding",
+            "description": "Third sub-part of the Component, i.e., after the second carat"
+        },
+        {
+            "code": "time-core",
+            "type": "Coding",
+            "description": "The primary part of the Time"
+        },
+        {
+            "code": "time-modifier",
+            "type": "Coding",
+            "description": "The modifier of the Time value, such as mean or max"
+        },
+        {
+            "code": "system-core",
+            "type": "Coding",
+            "description": "The primary part of the System, i.e., without the super system"
+        },
+        {
+            "code": "super-system",
+            "type": "Coding",
+            "description": "The super system part of the System, if present. The super system represents the source of the specimen when the source is someone or something other than the patient whose chart the result will be stored in"
+        },
+        {
+            "code": "category",
+            "type": "Coding",
+            "description": "A single LOINC term can be assigned one or more categories based on both programmatic and manual tagging. Category properties also utilize LOINC Class Parts"
+        },
+        {
+            "code": "search",
+            "type": "Coding",
+            "description": "Synonyms, fragments, and other Parts that are linked to a term to enable more encompassing search results"
+        },
+        {
+            "code": "type",
+            "type": "string",
+            "description": "LOINC type classification"
+        },
+        {
+            "code": "tags",
+            "type": "string",
+            "description": "Tags"
+        },
+        {
+            "code": "code_systems",
+            "type": "string",
+            "description": "Associated code systems"
+        },
+        {
+            "code": "ExtDefinedYN",
+            "type": "string",
+            "description": "Whether answer list is externally defined (Y/N)"
+        },
+        {
+            "code": "external_code_system",
+            "type": "string",
+            "description": "External code system for externally defined lists"
+        },
+        {
+            "code": "external_link",
+            "type": "string",
+            "description": "External link/URL for externally defined lists"
+        },
+        {
+            "code": "AnswerListOID",
+            "type": "string",
+            "description": "Object identifier for answer list"
+        },
+        {
+            "code": "anchored_to",
+            "type": "string",
+            "description": "What the answer list is anchored to"
+        },
+        {
+            "code": "answers",
+            "type": "string",
+            "description": "Number of answers in the list (numeric ranges)"
+        },
+        {
+            "code": "loincs",
+            "type": "string",
+            "description": "Number of LOINC terms using this list (numeric ranges)"
+        },
+        {
+            "code": "answer_list_id",
+            "type": "string",
+            "description": "Associated answer list ID"
+        },
+        {
+            "code": "common_panel_loinc",
+            "type": "string",
+            "description": "Common panel LOINC reference"
+        },
+        {
+            "code": "test_loinc_num",
+            "type": "string",
+            "description": "Test LOINC number reference"
+        }
+    ],
+    "filters": [
+        {
+            "code": "concept_class",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by Concept Class"
+        },
+        {
+            "code": "STATUS",
+            "value": "ACTIVE,TRIAL,DISCOURAGED,DEPRECATED",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by LOINC status"
+        },
+        {
+            "code": "type",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by LOINC type"
+        },
+        {
+            "code": "CLASS",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
+        },
+        {
+            "code": "ORDER_OBS",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by order/observation status"
+        },
+        {
+            "code": "PROPERTY",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by property type (Mass, Volume, Time, etc.)"
+        },
+        {
+            "code": "TIME_ASPCT",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by time aspect (Pt, 24H, etc.)"
+        },
+        {
+            "code": "SYSTEM",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by specimen/system (Blood, Urine, etc.)"
+        },
+        {
+            "code": "SCALE_TYP",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by measurement scale (Qn, Ord, Nom)"
+        },
+        {
+            "code": "METHOD_TYP",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by observation method"
+        },
+        {
+            "code": "COMPONENT",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by component"
+        },
+        {
+            "code": "PanelType",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by panel type"
+        },
+        {
+            "code": "tags",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by tags"
+        },
+        {
+            "code": "code_systems",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by associated code systems"
+        },
+        {
+            "code": "VersionFirstReleased",
+            "value": "Placeholder",
+            "operator": [
+                "="
+            ],
+            "description": "Filter by release version"
+        },
+        {
+            "code": "VersionLastChanged",
+            "value": "Placeholder",
+            "operator": [
+                "="
+            ],
+            "description": "Filter by last changed version"
+        },
+        {
+            "code": "HL7_ATTACHMENT_STRUCTURE",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by HL7 attachment"
+        },
+        {
+            "code": "ExtDefinedYN",
+            "value": "Y,N",
+            "operator": [
+                "="
+            ],
+            "description": "Filter by externally defined status (Y/N)"
+        },
+        {
+            "code": "answers",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by number of answers in list (numeric ranges)"
+        },
+        {
+            "code": "loincs",
+            "value": "Placeholder",
+            "operator": [
+                "=",
+                "in"
+            ],
+            "description": "Filter by number of LOINC terms using this list (numeric ranges)"
+        }
+    ]
+}
