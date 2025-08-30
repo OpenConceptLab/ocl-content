@@ -2,3 +2,4 @@
 LOINC/LOINC-OCL-ETL/UMLS_API_config.json
 /LOINC/LOINC-OCL-ETL/Saved-output
 *.RRF
+/LOINC/LOINC-OCL-ETL/output-arc
