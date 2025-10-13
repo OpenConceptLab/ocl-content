@@ -388,7 +388,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by component"
+            "description": "Component"
         },
         {
             "code": "PROPERTY",
@@ -397,7 +397,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by property type (Mass, Volume, Time, etc.)"
+            "description": "Property type (Mass, Volume, Time, etc.)"
         },
         {
             "code": "TIME_ASPCT",
@@ -406,7 +406,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by time aspect (Pt, 24H, etc.)"
+            "description": "Time aspect (Pt, 24H, etc.)"
         },
         {
             "code": "SYSTEM",
@@ -415,7 +415,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by specimen/system (Blood, Urine, etc.)"
+            "description": "Specimen/system (Blood, Urine, etc.)"
         },
         {
             "code": "SCALE_TYP",
@@ -424,7 +424,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by measurement scale (Qn, Ord, Nom)"
+            "description": "Measurement scale (Qn, Ord, Nom)"
         },
         {
             "code": "METHOD_TYP",
@@ -433,7 +433,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by observation method"
+            "description": "Observation method"
         },
         {
             "code": "answers",
@@ -442,7 +442,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by number of answers in list (numeric ranges)"
+            "description": "Number of answers in list (numeric ranges)"
         },
         {
             "code": "CLASS",
@@ -451,7 +451,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by LOINC class (CHEM, HEMA, MICRO, etc.)"
+            "description": "LOINC class (CHEM, HEMA, MICRO, etc.)"
         },
         {
             "code": "code_systems",
@@ -460,7 +460,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by associated code systems"
+            "description": "Associated code systems"
         },
         {
             "code": "concept_class",
@@ -469,7 +469,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by Concept Class"
+            "description": "Concept Class"
         },
         {
             "code": "ExtDefinedYN",
@@ -477,7 +477,7 @@
             "operator": [
                 "="
             ],
-            "description": "Filter by externally defined status (Y/N)"
+            "description": "Externally defined status (Y/N)"
         },
         {
             "code": "HL7_ATTACHMENT_STRUCTURE",
@@ -486,7 +486,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by HL7 attachment"
+            "description": "HL7 attachment"
         },
         {
             "code": "loincs",
@@ -495,7 +495,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by number of LOINC terms using this list (numeric ranges)"
+            "description": "Number of LOINC terms using this list (numeric ranges)"
         },
         {
             "code": "ORDER_OBS",
@@ -504,7 +504,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by order/observation status"
+            "description": "Order/observation status"
         },
         {
             "code": "PanelType",
@@ -513,7 +513,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by panel type"
+            "description": "Panel type"
         },
         {
             "code": "STATUS",
@@ -522,7 +522,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by LOINC status"
+            "description": "LOINC status"
         },
         {
             "code": "tags",
@@ -531,7 +531,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by tags"
+            "description": "Tags"
         },
         {
             "code": "type",
@@ -540,7 +540,7 @@
                 "=",
                 "in"
             ],
-            "description": "Filter by LOINC type"
+            "description": "LOINC type"
         },
         {
             "code": "VersionFirstReleased",
@@ -548,7 +548,7 @@
             "operator": [
                 "="
             ],
-            "description": "Filter by release version"
+            "description": "Release version"
         },
         {
             "code": "VersionLastChanged",
@@ -556,7 +556,7 @@
             "operator": [
                 "="
             ],
-            "description": "Filter by last changed version"
+            "description": "Last changed version"
         }
     ],
     "match_algorithms": [
@@ -588,8 +588,6 @@
                 "CLASS",
                 "EXAMPLE_UCUM_UNITS",
                 "ORDER_OBS",
-                "VersionFirstReleased",
-                "VersionLastChanged",
                 "COMMON_TEST_RANK"
             ],
             "default_filter": {
