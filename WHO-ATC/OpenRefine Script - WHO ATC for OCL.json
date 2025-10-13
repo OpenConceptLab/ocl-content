@@ -1,0 +1,465 @@
+[
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Class ID",
+    "guessCellType": true,
+    "removeOriginalColumn": false,
+    "mode": "separator",
+    "separator": "/",
+    "regex": false,
+    "maxColumns": 0,
+    "description": "Split column Class ID by separator"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Class ID 1",
+    "description": "Remove column Class ID 1"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Class ID 2",
+    "description": "Remove column Class ID 2"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Class ID 3",
+    "description": "Remove column Class ID 3"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Class ID 4",
+    "description": "Remove column Class ID 4"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Class ID 6",
+    "newColumnName": "id",
+    "description": "Rename column Class ID 6 to id"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Preferred Label",
+    "newColumnName": "name",
+    "description": "Rename column Preferred Label to name"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Definitions",
+    "description": "Remove column Definitions"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Obsolete",
+    "newColumnName": "retired",
+    "description": "Rename column Obsolete to retired"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Semantic Types",
+    "expression": "grel:\"[\\\"\"+replace(value,\"|\",\"\\\", \\\"\")+\"\\\"]\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Semantic Types using expression grel:\"[\\\"\"+replace(value,\"|\",\"\\\", \\\"\")+\"\\\"]\""
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Parents",
+    "expression": "grel:replace(value,\"http://purl.bioontology.org/ontology/ATC/\",\"/orgs/WHO/sources/WHOATC/concepts/\")+\"/\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Parents using expression grel:replace(value,\"http://purl.bioontology.org/ontology/ATC/\",\"/orgs/WHO/sources/WHOATC/concepts/\")+\"/\""
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Parents",
+    "expression": "grel:replace(value,\"http://purl.bioontology.org/ontology/STY/\",\"/orgs/WHO/sources/WHOATC/concepts/\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Parents using expression grel:replace(value,\"http://purl.bioontology.org/ontology/STY/\",\"/orgs/WHO/sources/WHOATC/concepts/\")"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Class ID",
+    "newColumnName": "attr:Class_ID",
+    "description": "Rename column Class ID to attr:Class_ID"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "CUI",
+    "newColumnName": "attr:CUI",
+    "description": "Rename column CUI to attr:CUI"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Semantic Types",
+    "newColumnName": "attr:Semantic_Types",
+    "description": "Rename column Semantic Types to attr:Semantic_Types"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "ATC LEVEL",
+    "newColumnName": "attr:ATC_LEVEL",
+    "description": "Rename column ATC LEVEL to attr:ATC_LEVEL"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Is Drug Class",
+    "newColumnName": "attr:Is_Drug_Class",
+    "description": "Rename column Is Drug Class to attr:Is_Drug_Class"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Semantic type UMLS property",
+    "newColumnName": "attr:Semantic_type_UMLS_property",
+    "description": "Rename column Semantic type UMLS property to attr:Semantic_type_UMLS_property"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Parents",
+    "newColumnName": "parent_concept_urls",
+    "description": "Rename column Parents to parent_concept_urls"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "parent_concept_urls",
+    "expression": "grel:\"[\\\"\" + value + \"\\\"]\"",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column parent_concept_urls using expression grel:\"[\\\"\" + value + \"\\\"]\""
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "name",
+    "newColumnName": "name[1]",
+    "description": "Rename column name to name[1]"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "name[1]",
+    "expression": "grel:\"Fully Specified\"",
+    "onError": "set-to-blank",
+    "newColumnName": "name_type[1]",
+    "columnInsertIndex": 4,
+    "description": "Create column name_type[1] at index 4 based on column name[1] using expression grel:\"Fully Specified\""
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Synonyms",
+    "newColumnName": "name[2]",
+    "description": "Rename column Synonyms to name[2]"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "name_type[1]",
+    "expression": "grel:value",
+    "onError": "set-to-blank",
+    "newColumnName": "name_type[2]",
+    "columnInsertIndex": 5,
+    "description": "Create column name_type[2] at index 5 based on column name_type[1] using expression grel:value"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "attr:Class_ID",
+    "expression": "grel:\"Concept\"",
+    "onError": "set-to-blank",
+    "newColumnName": "resource_type",
+    "columnInsertIndex": 1,
+    "description": "Create column resource_type at index 1 based on column attr:Class_ID using expression grel:\"Concept\""
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "resource_type",
+    "expression": "grel:\"WHO\"",
+    "onError": "set-to-blank",
+    "newColumnName": "owner_id",
+    "columnInsertIndex": 2,
+    "description": "Create column owner_id at index 2 based on column resource_type using expression grel:\"WHO\""
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "owner_id",
+    "expression": "grel:\"Organization\"",
+    "onError": "set-to-blank",
+    "newColumnName": "owner_type",
+    "columnInsertIndex": 3,
+    "description": "Create column owner_type at index 3 based on column owner_id using expression grel:\"Organization\""
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "owner_type",
+    "expression": "grel:\"WHOATC\"",
+    "onError": "set-to-blank",
+    "newColumnName": "source",
+    "columnInsertIndex": 4,
+    "description": "Create column source at index 4 based on column owner_type using expression grel:\"WHOATC\""
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "source",
+    "expression": "grel:\"Drug\"",
+    "onError": "set-to-blank",
+    "newColumnName": "concept_class",
+    "columnInsertIndex": 5,
+    "description": "Create column concept_class at index 5 based on column source using expression grel:\"Drug\""
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "concept_class",
+    "expression": "grel:\"None\"",
+    "onError": "set-to-blank",
+    "newColumnName": "datatype",
+    "columnInsertIndex": 6,
+    "description": "Create column datatype at index 6 based on column concept_class using expression grel:\"None\""
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "retired",
+    "expression": "value.toUppercase()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column retired using expression value.toUppercase()"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "Class ID 5",
+    "description": "Remove column Class ID 5"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "attr:ATC_LEVEL",
+          "expression": "value",
+          "columnName": "attr:ATC_LEVEL",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "1",
+                "l": "1"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "parent_concept_urls",
+    "expression": "grel:replace(value,\"http://www.w3.org/2002/07/owl#Thing/\",\"/orgs/WHO/sources/WHOATC/concepts/Root/\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column parent_concept_urls using expression grel:replace(value,\"http://www.w3.org/2002/07/owl#Thing/\",\"/orgs/WHO/sources/WHOATC/concepts/Root/\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "id",
+          "columnName": "id",
+          "query": "",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "name_type[2]",
+    "expression": "grel:if(isNonBlank(cells[\"name[2]\"].value),\"Short\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column name_type[2] using expression grel:if(isNonBlank(cells[\"name[2]\"].value),\"Short\",\"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "parent_concept_urls",
+    "expression": "value.replace(\"[\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column parent_concept_urls using expression value.replace(\"[\",\"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "parent_concept_urls",
+    "expression": "value.replace(\"]\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column parent_concept_urls using expression value.replace(\"]\",\"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "parent_concept_urls",
+    "expression": "value.replace(\"\\\"\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column parent_concept_urls using expression value.replace(\"\\\"\",\"\")"
+  },
+  {
+    "op": "core/row-reorder",
+    "mode": "row-based",
+    "sorting": {
+      "criteria": [
+        {
+          "valueType": "string",
+          "column": "id",
+          "blankPosition": 2,
+          "errorPosition": 1,
+          "reverse": false,
+          "caseSensitive": false
+        }
+      ]
+    },
+    "description": "Reorder rows"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "attr:Semantic_Types",
+    "newColumnName": "attr:Semantic_Types:list",
+    "description": "Rename column attr:Semantic_Types to attr:Semantic_Types:list"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "attr:Semantic_Types:list",
+    "expression": "value.replace(\"\\\"\",\"'\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column attr:Semantic_Types:list using expression value.replace(\"\\\"\",\"'\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "attr:Semantic_Types:list",
+    "expression": "value.replace(\"\\'\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column attr:Semantic_Types:list using expression value.replace(\"\\'\",\"\")"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "attr:Class_ID",
+          "columnName": "attr:Class_ID",
+          "query": "STY",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "attr:Semantic_Types:list",
+    "description": "Remove column attr:Semantic_Types:list"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "attr:Semantic_type_UMLS_property",
+    "description": "Remove column attr:Semantic_type_UMLS_property"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "attr:Class_ID",
+    "description": "Remove column attr:Class_ID"
+  }
+]
