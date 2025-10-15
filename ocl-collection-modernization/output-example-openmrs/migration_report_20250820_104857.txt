@@ -1,0 +1,52 @@
+OCL Reference Modernizer - Migration Report
+==================================================
+Generated: 2025-08-20T10:48:57.420538
+GitHub Issue: https://github.com/OpenConceptLab/ocl_issues/issues/2212
+Cascade Preset: OPENMRS_WITHOUT_TRANSFORM
+
+REFERENCE ANALYSIS
+--------------------
+Total references found: 4175
+Versioned references (to modernize): 1150
+Already unversioned (unchanged): 3025
+References processed: 1150
+
+REFERENCE TYPES
+---------------
+Concept references: 528
+Mapping references: 3647
+Other references: 0
+
+CASCADE HANDLING
+---------------
+Original cascade preserved: 0
+Preset cascade applied: 1145
+
+DUPLICATE HANDLING
+-----------------
+Duplicates found: 5
+Duplicates skipped: 5
+
+MIGRATION SUMMARY
+-----------------
+References to be deleted: 1150
+New unversioned references: 1140
+References left unchanged: 3025
+Net change in references: -10
+
+NEXT STEPS
+----------
+1. Review generated JSONL files
+2. Test import on a backup/test collection first
+3. Use OCL's Bulk Import Interface
+4. Import deletion file FIRST to remove versioned references
+5. Import unversioned references file SECOND
+6. Verify collection state and expansions
+
+DUPLICATE EXPRESSIONS FOUND
+---------------------------
+- /orgs/CIEL/sources/CIEL/mappings/2353/
+- /orgs/CIEL/sources/CIEL/mappings/1007207/
+- /orgs/CIEL/sources/CIEL/mappings/2659/
+- /orgs/CIEL/sources/CIEL/mappings/2349/
+- /orgs/CIEL/sources/CIEL/mappings/2139/

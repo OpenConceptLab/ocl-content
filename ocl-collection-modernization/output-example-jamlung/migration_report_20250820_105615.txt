@@ -1,0 +1,44 @@
+OCL Reference Modernizer - Migration Report
+==================================================
+Generated: 2025-08-20T10:56:15.209019
+GitHub Issue: https://github.com/OpenConceptLab/ocl_issues/issues/2212
+Cascade Preset: OPENMRS_WITHOUT_TRANSFORM
+
+REFERENCE ANALYSIS
+--------------------
+Total references found: 21
+Versioned references (to modernize): 18
+Already unversioned (unchanged): 3
+References processed: 18
+
+REFERENCE TYPES
+---------------
+Concept references: 6
+Mapping references: 15
+Other references: 0
+
+CASCADE HANDLING
+---------------
+Original cascade preserved: 0
+Preset cascade applied: 18
+
+DUPLICATE HANDLING
+-----------------
+Duplicates found: 0
+Duplicates skipped: 0
+
+MIGRATION SUMMARY
+-----------------
+References to be deleted: 18
+New unversioned references: 18
+References left unchanged: 3
+Net change in references: 0
+
+NEXT STEPS
+----------
+1. Review generated JSONL files
+2. Test import on a backup/test collection first
+3. Use OCL's Bulk Import Interface
+4. Import deletion file FIRST to remove versioned references
+5. Import unversioned references file SECOND
+6. Verify collection state and expansions

@@ -1,0 +1,18 @@
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/314250/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/312829/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/294405/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/309209/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/283281/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/1250430/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/1250382/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/312240/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/306434/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/1250424/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/293731/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/296641/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/1250374/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/mappings/315915/"]}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/concepts/159946/"]}, "__cascade": {"method": "sourcetoconcepts", "map_types": "Q-AND-A,CONCEPT-SET", "cascade_levels": "*", "return_map_types": "*"}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/concepts/159945/"]}, "__cascade": {"method": "sourcetoconcepts", "map_types": "Q-AND-A,CONCEPT-SET", "cascade_levels": "*", "return_map_types": "*"}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/concepts/159944/"]}, "__cascade": {"method": "sourcetoconcepts", "map_types": "Q-AND-A,CONCEPT-SET", "cascade_levels": "*", "return_map_types": "*"}}
+{"type": "Reference", "collection_url": "/users/jamlung/collections/facility-test/", "data": {"expressions": ["/orgs/CIEL/sources/CIEL/concepts/159943/"]}, "__cascade": {"method": "sourcetoconcepts", "map_types": "Q-AND-A,CONCEPT-SET", "cascade_levels": "*", "return_map_types": "*"}}
