@@ -13,3 +13,5 @@ LOINC/LOINC-OCL-ETL/UMLS_API_config.json
 /LOINC/LOINC-OCL-ETL/output-LOINC-2.81-22Sep25-Prod
 /LOINC/loinc-releases
 LOINC/LOINC-OCL-ETL/output-*
+LOINC/LOINC-OCL-ETL/loinc_cui_simple_lookup*.json
+LOINC/LOINC-OCL-ETL/loinc_cui_api_cache_*.csv

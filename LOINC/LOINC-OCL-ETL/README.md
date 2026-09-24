@@ -17,9 +17,13 @@ document is the step-by-step for doing that.
   `loinc-releases/Loinc_2.83/`). The zip's internal folder structure varies
   release to release, but the notebook searches recursively for the files it
   needs, so it's fine to unzip it as-is.
-- No UMLS account/API key is required. Phase 5 (UMLS Enhancement) is
-  optional CUI enrichment; the notebook runs correctly without it and simply
-  skips that enrichment (see "Known limitations" below).
+- **Recommended**: a UMLS/UTS account with Metathesaurus download access, for
+  Phase 5 (UMLS Enhancement) to attach a `UMLS_CUI` to each LOINC concept's
+  `extras`. Without it, the notebook still runs correctly and simply skips
+  that enrichment. See "Setting up UMLS CUI enrichment" below for how to get
+  and place the file — this needs a fresh download roughly whenever LOINC
+  publishes a new release, since UMLS periodically refreshes its LOINC
+  content too.
 
 ## One-time environment setup
 
@@ -35,6 +39,28 @@ requests) plus the `dev` group needed to execute the notebook headlessly
 interactively in an IDE with its own Jupyter integration, `uv sync` (without
 `--group dev`) is enough — just point your IDE's Python interpreter at
 `.venv/`.
+
+## Setting up UMLS CUI enrichment (optional but recommended)
+
+1. Log into [UTS](https://uts.nlm.nih.gov/uts/) and go to the
+   [UMLS Knowledge Sources download page](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
+2. Download the current release's **MRCONSO.RRF-only** file — not the full
+   multi-GB Metathesaurus release. The extractor only reads this one file,
+   filtered to `SAB == 'LNC'`.
+3. Unzip it and place `MRCONSO.RRF` at `LOINC-OCL-ETL/Input/MRCONSO.RRF`
+   (or update `rrf_file_path` in the "UMLS Cache Setup" cell to point wherever
+   you put it).
+4. In that same cell, update `umls_release` to a label for the release you
+   downloaded (e.g. `"2025AB"`). This is just used to name the local cache
+   file (`loinc_cui_simple_lookup_<release>.json`) so that swapping in a
+   newer `MRCONSO.RRF` later doesn't silently keep reusing an older release's
+   cache.
+
+The first run extracts LOINC's CUIs from the RRF (a few minutes for a
+~2GB file) into that cache file; every run after that is instant as long as
+the cache file exists. `MRCONSO.RRF` and the derived cache file are both
+git-ignored — the RRF file is UMLS-licensed content and much too large for
+git anyway, and the cache is a derivative of it.
 
 ## Running it for a new release
 
@@ -96,9 +122,9 @@ interactively in an IDE with its own Jupyter integration, `uv sync` (without
 5. **Use the QA Load sample to smoke-test the import first.** Phase 7 (the
    last cell in the notebook) writes a small, representative subset to
    `QA-Load-files/` — `qa_concepts.json`, `qa_mappings.json`, and
-   `qa_hierarchy_only.json`. It's small enough to commit, but is currently
-   git-ignored (see `.gitignore`), so treat it like `output/`: a local,
-   regenerated-every-run artifact, not a versioned fixture. Import it first
+   `qa_hierarchy_only.json`. These are small enough to commit and are
+   checked into git as a standing fixture (re-run Phase 7 and commit the
+   changes each release, rather than treating it as a one-off). Import it first
    against a QA OCL instance and confirm it loads cleanly before handing off
    the full files. See "What's
    in the QA Load sample" below for exactly what it contains.
@@ -130,10 +156,14 @@ interactively in an IDE with its own Jupyter integration, `uv sync` (without
 5. **Phase 4 — Hierarchy creation.** Consolidates parent/child relationships
    (a concept can have more than one parent) and produces a dependency-
    ordered concept list for output.
-6. **Phase 5 — UMLS enhancement (optional).** If a UMLS API key or a local
-   `MRCONSO.RRF`-derived cache is configured, adds a UMLS CUI to each
-   concept's `extras`. Without either, this phase is a no-op — every
-   concept simply ends up with no CUI, which is the expected/normal case.
+6. **Phase 5 — UMLS enhancement.** Extracts LOINC-to-CUI mappings from a
+   local `MRCONSO.RRF` (see "Setting up UMLS CUI enrichment" above), caches
+   them, and adds a `UMLS_CUI` to each matched LOINC concept's `extras`. On
+   the 2.82 run with the 2025AA UMLS release this matched 230,060 of 247,252
+   LOINC concepts (93.0%; the rest are recent/rare codes UMLS hasn't
+   ingested yet). Without an `MRCONSO.RRF` in place, this phase is a no-op —
+   every concept simply ends up with no CUI — the rest of the pipeline still
+   runs fine either way.
 7. **Phase 6 — Output generation.** Writes `output/concepts.json`,
    `output/mappings.json`, and `output/hierarchy_only.json`.
 8. **Phase 7 — QA Load sample.** Derives a small subset of the Phase 6
@@ -187,6 +217,16 @@ hand-edit these files.
 
 ## Known limitations (as of the 2.82 run)
 
+- **Fixed**: the UMLS extractor (`UMLSLoincExtractor._save_mappings`) used to
+  write its output to a hardcoded `loinc_cui_simple_lookup.json`, while
+  `setup_umls_cache()` reads the cache back from whatever `cache_file_path`
+  you configured. These happened to be the same literal string originally,
+  masking the bug, until `cache_file_path` was made release-specific
+  (`loinc_cui_simple_lookup_<release>.json`) — at which point extraction
+  would succeed (hundreds of thousands of mappings written) but the mapper
+  would load an empty cache and attach zero CUIs, with no error. Fixed by
+  making the extractor's output filename configurable and having
+  `setup_umls_cache()` pass through the real intended filename.
 - **Concepts with missing parents**: only the 4 root-exception LOINC Parts
   (`LP29693-6`, `LP29695-1`, `LP29696-9`, `LP7787-7`, whose real parent
   `LP432695-7` ("{component}") is intentionally omitted) show up here. This
