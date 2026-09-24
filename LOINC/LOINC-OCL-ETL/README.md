@@ -9,6 +9,10 @@ hierarchy-only file used to apply parent/child structure after import.
 This process is meant to be repeated for every new LOINC release. This
 document is the step-by-step for doing that.
 
+For the detailed reference (input and output data models, the full field
+crosswalk, the hierarchy model, the end-to-end OCL load runbook, and known
+issues), see [`docs/`](docs/README.md).
+
 ## Prerequisites
 
 - Python 3.13+ and [uv](https://docs.astral.sh/uv/) on your PATH.
