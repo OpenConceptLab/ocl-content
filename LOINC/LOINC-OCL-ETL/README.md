@@ -95,13 +95,12 @@ interactively in an IDE with its own Jupyter integration, `uv sync` (without
 
 5. **Use the QA Load sample to smoke-test the import first.** Phase 7 (the
    last cell in the notebook) writes a small, representative subset to
-   [`QA-Load-files/`](QA-Load-files/) — `qa_concepts.json`,
-   `qa_mappings.json`, and `qa_hierarchy_only.json`. Unlike the full output,
-   these are small enough to commit, so they're checked into git as a
-   standing fixture for testing the import pipeline itself (celery worker
-   reliability, monitoring, etc.) without waiting on or risking a full
-   ~250k-concept load. Import this first against a QA OCL instance and
-   confirm it loads cleanly before handing off the full files. See "What's
+   `QA-Load-files/` — `qa_concepts.json`, `qa_mappings.json`, and
+   `qa_hierarchy_only.json`. It's small enough to commit, but is currently
+   git-ignored (see `.gitignore`), so treat it like `output/`: a local,
+   regenerated-every-run artifact, not a versioned fixture. Import it first
+   against a QA OCL instance and confirm it loads cleanly before handing off
+   the full files. See "What's
    in the QA Load sample" below for exactly what it contains.
 
 6. **Follow the import steps in the notebook's final "Now What?" cell** for
@@ -210,5 +209,17 @@ hand-edit these files.
   it isn't the one Phase 2 used to produce — it comes from the Phase 4
   multi-parent hierarchy consolidation step and appears at a rate of about
   1 in 250k concepts. Filter it out of the final output if you see it.
+- **Fixed**: `extras.VersionLastChanged` was showing up as the literal
+  string `"None"` on every Container/`ROOT`/`LOINC Part`/`LOINC Part
+  (Multiaxial)`/Answer List/`LOINC Answer` concept (45 of 55 in the QA
+  sample) — none of these concept types ever populate that field, so the
+  underlying value was Python `None`, and the cleanup line in cell 41
+  (`.astype(str).replace('nan', '')`) only caught the `NaN`-derived
+  `"nan"` string, not `None`-derived `"None"`. Fixed by checking
+  `pd.isna()` first. A handful of *genuine* literal `"None"` values do
+  still appear in `extras` for a few `LOINC`/`LOINC Answer` concepts (e.g.
+  `EXAMPLE_UNITS`, answer `DisplayText`) — those are real source-CSV text
+  (LOINC's own convention for "no units"/"none of the above"-type answers),
+  not a bug, and should be left alone.
 - See the "Issues" note at the top of the notebook for the full list of
   what was fixed vs. still open, with the reasoning behind each.

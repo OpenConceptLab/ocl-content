@@ -1,0 +1,137 @@
+{
+  "/orgs/Regenstrief/sources/LOINC/concepts/ANSWER_LISTS_CONTAINER/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LL1032-3/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LL1032-3/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LA13967-7/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LA13968-5/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LA6576-8/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LA6577-6/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LOINC_PARTS_CONTAINER/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP100001-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP14259-3/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP388319-8/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP14482-1/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP14483-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP14483-9/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP15318-6/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP14531-5/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP399139-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP15318-6/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP433074-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP15705-4/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP14482-1/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP18046-0/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP31450-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP21200-8/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP14531-5/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP248770-2/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/1009-0/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP248771-0/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/18771-6/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/80399-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP248772-8/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/100002-5/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/100017-3/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP267482-0/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP431707-1/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP29693-6/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP248770-2/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP343406-7/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP343631-0/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7776-0/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7790-1/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7791-9/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7851-1/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP29696-9/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP248772-8/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP31426-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP267482-0/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP31434-1/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP14259-3/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP31450-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP31426-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP32806-9/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP21200-8/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP343406-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7755-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP343631-0/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7784-4/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7786-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP388319-8/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/10368-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP399139-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/1007-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP431707-1/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/100041-3/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/89490-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP433074-4/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP433360-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP433360-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/100736-8/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7755-4/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP31426-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7776-0/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP32806-9/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7784-4/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP14259-3/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP15705-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7786-9/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP15705-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7787-7/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP248771-0/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7790-1/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP18046-0/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP31434-1/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7791-9/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP31450-7/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/LP7851-1/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP15705-4/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/OTHER/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/ANSWER_LISTS_CONTAINER/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LOINC_ANSWERS_CONTAINER/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LOINC_CONTAINER/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LOINC_PARTS_CONTAINER/"
+  ],
+  "/orgs/Regenstrief/sources/LOINC/concepts/ROOT/": [
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP29693-6/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP29696-9/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/LP7787-7/",
+    "/orgs/Regenstrief/sources/LOINC/concepts/OTHER/"
+  ]
+}
