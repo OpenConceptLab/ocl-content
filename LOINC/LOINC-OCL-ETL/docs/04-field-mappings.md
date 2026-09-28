@@ -189,14 +189,11 @@ Every config sets `type: Mapping`, its `map_type`, `source: LOINC`,
 
 | Config key | `map_type` | Input rows | `from_concept_url` | `to_concept_url` | Extras (`extras["..."]` from column) |
 |---|---|---|---|---|---|
-| `Panel-to-Test` | `Has Element` | `PanelsAndForms.csv` | `ParentLoinc` | `Loinc` | `Sequence` from `SequenceInPanel`\*; `Required` from `Required`\*; `Cardinality` = `CardinalityMin..CardinalityMax`\*; `Answer List Override` from `AnswerListIdOverride`; `Answer List Type Override` from `AnswerListTypeOverride` |
+| `Panel-to-Test` | `Has Element` | `PanelsAndForms.csv` | `ParentLoinc` | `Loinc` | `Sequence` from `SEQUENCE`; `Required` from `ObservationRequiredInPanel`; `Cardinality` from `QuestionCardinality`; `Answer Cardinality` from `AnswerCardinality`; `Answer List Override` from `AnswerListIdOverride`; `Answer List Type Override` from `AnswerListTypeOverride` |
 | `Question-to-Answer` | `Has Answer` | `LoincAnswerListLink.csv` inner-joined to `AnswerList.csv` on `AnswerListId` | `LoincNumber` | `AnswerStringId` | `Answer List ID` from `AnswerListId`; `Answer List Type` from `AnswerListLinkType`; `Sequence` from `SequenceNumber`; `Score` from `Score`; `Local Answer Code` from `LocalAnswerCode` |
 | `Ask at Order Entry` | `Ask At Order Entry` | `Loinc.csv` rows with non-blank `AskAtOrderEntry` | `LOINC_NUM` | `AskAtOrderEntry` | none |
 | `Code Evolution` | `Map To` | `MapTo.csv` | `LOINC` | `MAP_TO` | `COMMENT` from `COMMENT` |
 | `Associated Observations` | `Associated Observations` | `Loinc.csv`, one row per code in `AssociatedObservations` | `LOINC_NUM` | each code | none |
-
-\* These columns do not exist in `PanelsAndForms.csv`, so these extras are never
-populated. See [02](02-input-model.md#panelsandformscsv-panel-structure).
 
 `Associated Observations` preprocessing: the field is split on `;`, `,` or `|`. Each
 piece is trimmed and kept only if it matches `^\d{1,5}-\d{1,2}$`. `AskAtOrderEntry` is

@@ -258,7 +258,7 @@ Mappings have no `id`. OCL assigns one on import. All targets are internal to th
 | `map_type` | Count | Meaning | From | To | Extras |
 |---|---:|---|---|---|---|
 | `Has Answer` | 114,448 | A term's answer list includes this answer | `LOINC` | `LOINC Answer` | `Answer List ID` (always), `Answer List Type` (always: NORMATIVE / EXAMPLE / PREFERRED), `Sequence` (always), `Local Answer Code` (35,005), `Score` (24,845) |
-| `Has Element` | 55,326 | A panel contains this element | `LOINC` (panel) | `LOINC` (element or sub-panel) | `Answer List Override`, `Answer List Type Override` (2,857 each) |
+| `Has Element` | 55,326 | A panel contains this element | `LOINC` (panel) | `LOINC` (element or sub-panel) | `Sequence` (always), `Required` (8,648), `Answer List Override` / `Answer List Type Override` (2,896 each), `Answer Cardinality` (1,917), `Cardinality` (404). Extras counts are from 2.83. |
 | `Associated Observations` | 17,712 | Term has an associated observation | `LOINC` | `LOINC` | none |
 | `Map To` | 4,657 | Deprecated term replaced by | `LOINC` (deprecated) | `LOINC` (replacement) | `COMMENT` (266) |
 | `Ask At Order Entry` | 65 | Question to ask when ordering this term | `LOINC` | `LOINC` | none |
@@ -271,7 +271,7 @@ Examples:
 
 ```json
 {"type": "Mapping", "map_type": "Has Answer", "from_concept_url": ".../concepts/100002-5/", "to_concept_url": ".../concepts/LA10105-7/", "...": "...", "extras": {"Answer List ID": "LL6136-7", "Answer List Type": "NORMATIVE", "Sequence": "4"}}
-{"type": "Mapping", "map_type": "Has Element", "from_concept_url": ".../concepts/100017-3/", "to_concept_url": ".../concepts/100002-5/", "...": "...", "extras": {"Answer List Override": "LL6136-7", "Answer List Type Override": "NORMATIVE"}}
+{"type": "Mapping", "map_type": "Has Element", "from_concept_url": ".../concepts/100017-3/", "to_concept_url": ".../concepts/100002-5/", "...": "...", "extras": {"Sequence": 26, "Answer List Override": "LL6136-7", "Answer List Type Override": "NORMATIVE"}}
 {"type": "Mapping", "map_type": "Map To", "from_concept_url": ".../concepts/1009-0/", "to_concept_url": ".../concepts/1007-4/", "...": "..."}
 ```
 

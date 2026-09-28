@@ -163,7 +163,7 @@ git anyway, and the cache is a derivative of it.
 6. **Phase 5 — UMLS enhancement.** Extracts LOINC-to-CUI mappings from a
    local `MRCONSO.RRF` (see "Setting up UMLS CUI enrichment" above), caches
    them, and adds a `UMLS_CUI` to each matched LOINC concept's `extras`. On
-   the 2.82 run with the 2025AA UMLS release this matched 230,060 of 247,252
+   the 2.82 run with the 2026AA UMLS release this matched 230,060 of 247,252
    LOINC concepts (93.0%; the rest are recent/rare codes UMLS hasn't
    ingested yet). Without an `MRCONSO.RRF` in place, this phase is a no-op —
    every concept simply ends up with no CUI — the rest of the pipeline still
@@ -245,10 +245,11 @@ hand-edit these files.
 - **Mapping `extras`**: `Has Answer` and `Map To` mappings should always/
   sometimes carry `extras` respectively; `Ask At Order Entry` and
   `Associated Observations` mappings never carry `extras` by design (their
-  `MAPPING_CONFIGS` entries define no extras fields). Most `Has Element`
-  (Panel-to-Test) mappings having no `extras` is expected too — those
-  fields (Required, Sequence, Cardinality, Answer List Override) are only
-  populated for a subset of panel rows in the source CSV.
+  `MAPPING_CONFIGS` entries define no extras fields). Every `Has Element`
+  (Panel-to-Test) mapping carries `Sequence`. `Required`, `Cardinality`,
+  `Answer Cardinality` and `Answer List Override` appear only on panel rows
+  where the source CSV fills them in. (Before 2.83 the config read the wrong
+  column names, so none of these except `Answer List Override` were ever set.)
 - **One blank `LOINC Answer` concept** (no `id`) can still slip through, but
   it isn't the one Phase 2 used to produce — it comes from the Phase 4
   multi-parent hierarchy consolidation step and appears at a rate of about

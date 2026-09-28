@@ -82,7 +82,7 @@ baseline when checking a new release. Counts should grow modestly, not swing wil
 | `Associated Observations` | 17,712 |
 | `Map To` | 4,657 |
 | `Ask At Order Entry` | 65 |
-| Concepts with a UMLS CUI | 230,060 (UMLS 2025AA) |
+| Concepts with a UMLS CUI | 230,060 (UMLS 2026AA) |
 | `hierarchy_only.json` parent keys / parent-child edges | 59,948 / 252,973 |
 
 ## Keeping these docs current

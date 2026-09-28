@@ -207,14 +207,8 @@ Used for `Has Element` mappings (panel to child term).
 | `ParentLoinc` | U: mapping `from` (the panel) |
 | `Loinc` | U: mapping `to` (the element) |
 | `AnswerListIdOverride`, `AnswerListTypeOverride` | U: mapping extras |
-| `SEQUENCE`, `ObservationRequiredInPanel`, `QuestionCardinality`, `AnswerCardinality` | - (see note) |
+| `SEQUENCE`, `ObservationRequiredInPanel`, `QuestionCardinality`, `AnswerCardinality` | U: mapping extras (`Sequence`, `Required`, `Cardinality`, `Answer Cardinality`) |
 | All other columns (`ParentId`, `ParentName`, `ID`, `LoincName`, `DisplayNameForForm`, `SkipLogicHelpText`, `DefaultValue`, `EntryType`, `DataTypeInForm`, `ConditionForInclusion`, `CodingInstructions`, ...) | - |
-
-> **Note.** The `Panel-to-Test` config asks for columns named `SequenceInPanel`,
-> `Required`, `CardinalityMin` and `CardinalityMax`. None of these exist in
-> `PanelsAndForms.csv`, so the `Sequence`, `Required` and `Cardinality` extras are never
-> populated. The closest real columns are listed in the table above. Tracked in
-> [07](07-data-quality-and-known-issues.md).
 
 ### `MapTo.csv`: code evolution
 

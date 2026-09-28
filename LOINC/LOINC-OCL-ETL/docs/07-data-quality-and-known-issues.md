@@ -106,7 +106,6 @@ Severity key:
 
 | ID | Severity | Issue | Evidence (2.82) | Suggested fix |
 |---|---|---|---|---|
-| C1 | High | `Has Element` extras `Sequence`, `Required` and `Cardinality` are never populated. The `Panel-to-Test` config reads `SequenceInPanel`, `Required`, `CardinalityMin` and `CardinalityMax`, and none of these columns exist in `PanelsAndForms.csv`. Panel order and required-ness are lost. (The top-level README describes these as only sometimes populated. In fact they never are.) | 0 of 55,326 `Has Element` mappings carry them | Map `SEQUENCE` to `Sequence` and `ObservationRequiredInPanel` to `Required`. Decide how to represent `QuestionCardinality` / `AnswerCardinality`. |
 | C2 | Medium | `Root` and `Container` concepts lose their `extras` (`Code_Type`, `Code_in_Source`, `Container_For`) and `descriptions`. Phase 6 rebuilds `extras` from flat `extras.*` columns and `descriptions` from `description`, which overwrites the nested dicts these concepts were built with. | All 6 have neither field | Merge existing nested `extras`/`descriptions` in cell 42, as is already done for mappings. |
 | C3 | Medium | `LOINC Part (Multiaxial)` concepts lose `extras.Code_in_Source` for the same reason. They never get `Code_Type` or `STATUS`, so they are the only classes you can't filter by `Code_Type`. | 41,693 concepts | Same fix as C2, and add `Code_Type: LOINC Part (Multiaxial)`. |
 | C4 | Low | Integer fields are written as floats: `CLASSTYPE` `1.0`, `COMMON_TEST_RANK` `7688.0`, `COMMON_ORDER_RANK`, `HIERARCHY_SEQUENCE` `2.0`. The int conversion in Phase 2 is undone by later DataFrame merges. | Every `LOINC` concept | Cast in cell 42 when building `extras`. |
@@ -172,3 +171,10 @@ notebook cell 1.
 - `extras.VersionLastChanged` held the literal string `"None"` on non-term concepts.
   Fixed by checking `pd.isna` first. Literal `"None"` in some source text fields (for
   example `EXAMPLE_UNITS`) is real LOINC data and should be left alone.
+- (Was C1) `Has Element` extras `Sequence`, `Required` and `Cardinality` were never
+  populated, because the `Panel-to-Test` config read columns that don't exist in
+  `PanelsAndForms.csv`. Fixed for 2.83: `Sequence` from `SEQUENCE`, `Required` from
+  `ObservationRequiredInPanel`, `Cardinality` from `QuestionCardinality`, and a new
+  `Answer Cardinality` from `AnswerCardinality`. In 2.83, all 56,156 `Has Element`
+  mappings carry `Sequence`; 8,648 carry `Required`; 404 carry `Cardinality`; 1,917
+  carry `Answer Cardinality`.
